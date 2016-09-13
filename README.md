@@ -1,2 +1,2 @@
-# ezlanguage
-Dépôt du langage "EZ Language"
+# EzLanguage
+Dépôt du projet pour compilateur du langage "EZ Language"
