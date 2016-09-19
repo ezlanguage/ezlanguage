@@ -1,0 +1,13 @@
+# Temp files
+~$*
+*~
+
+# Kdev files
+.kdev4/
+
+# Build results
+*.cmake
+
+# User-specific files
+*.user
+
