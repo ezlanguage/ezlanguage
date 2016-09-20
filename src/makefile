@@ -7,7 +7,7 @@ LEX_EXT = lex				#extension des fichiers lex (.XXX)
 LEX = flex				
 LEX_FlAGS =  
 
-YACC_EXT = y				#extension des fichiers yacc (.XXX)
+YACC_EXT = ypp				#extension des fichiers yacc (.XXX)
 YACC = bison 
 YACC_FLAGS = -d
 
@@ -17,19 +17,22 @@ EXEC = EZ					#nom de l'exe qui doit avoir le meme nom que le fichier lex
 all: $(EXEC)
 all: $(SPEC:%.$(LEX_EXT)=%)
 
-%  parse-% :: %.$(YACC_EXT) %.$(LEX_EXT) 
-	$(LEX)  -o yylex.c $*.$(LEX_EXT) $(LEX_FLAGS) 
-	$(YACC) -o yyparse.c $*.$(YACC_EXT) $(YACC_FLAGS) 
-	$(CC)   -o $@ yylex.c yyparse.c $(EXT_SRC) $(CC_FLAGS) 
+$(EXEC): yylex.c yyparse.cpp
+	$(CC)   -o $@ yylex.c yyparse.cpp $(EXT_SRC) $(CC_FLAGS)
 
-%  lex-% :: %.$(LEX_EXT)  
+yylex.c ::  yyparse.cpp %.$(LEX_EXT)
 	$(LEX)  -o yylex.c  $*.$(LEX_EXT) $(LEX_FLAGS) 
-	$(CC)   -o $@  yylex.c $(EXT_SRC) $(CC_FLAGS) 
+
+yyparse.cpp :: %.$(YACC_EXT)
+	$(YACC) -o yyparse.cpp $*.$(YACC_EXT) $(YACC_FLAGS)
+
 
 #clean  
 clean :
-	rm -rf yylex.c yyparse.c yyparse.h 
-	rm -rf *.o *~ a.out lex.yy.c
+	rm -rf yylex.c yyparse.cpp yyparse.h 
+	rm -rf *.tab*
+	rm -rf *~ a.out lex.yy.c
+	rm -rf ../obj/*
 	
 mrproper: clean	
 	rm -rf $(EXEC)
