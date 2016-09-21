@@ -6,7 +6,7 @@ int main ( int argc , char ** argv )
 {
         
     if(argc > 1) {
-	if(argc ==2) {
+        if(argc ==2) {
 	    yyin = fopen(argv[1], "r");
 	    cout << "Utilisation d'un fichier"<< endl;
 	}
