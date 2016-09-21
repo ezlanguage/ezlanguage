@@ -14,4 +14,7 @@
 # Kdev files
 .kdev4/
 
+#CLion files
+.idea/
+
 
