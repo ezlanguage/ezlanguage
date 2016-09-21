@@ -1,46 +1,42 @@
 #compilation
 CC = g++				
-CC_FLAGS = -ggdb -Wall 		#flags de compilation
-EXT_SRC = -ll 				#-ll pour yyparse yyerror...
+CC_FLAGS = -ggdb -Wall -ll 			#flags de compilation
+EXT_SRC = 
 
-LEX_EXT = lex				#extension des fichiers lex (.XXX)
+LEX_EXT = lex						#extension des fichiers lex (.XXX)
 LEX = flex				
 LEX_FlAGS =  
 
-YACC_EXT = ypp				#extension des fichiers yacc (.XXX)
+YACC_EXT = ypp						#extension des fichiers yacc (.XXX)
 YACC = bison 
-YACC_FLAGS = -d
+YACC_FLAGS = 
 
-EXEC = EZ					#nom de l'exe qui doit avoir le meme nom que le fichier lex
+EXEC = EZ_language_compiler			#nom de l'exe qui doit avoir le meme nom que le fichier lex
 
 #compilateur
 all: $(EXEC)
-all: $(SPEC:%.$(LEX_EXT)=%)
 
-$(EXEC): yylex.c yyparse.cpp
-	$(CC)   -o $@ yylex.c yyparse.cpp $(EXT_SRC) $(CC_FLAGS)
+EZ_language_compiler : ./cpp_files/lex.yy.c ./cpp_files/EZ_language_compiler.tab.cpp ./cpp_files/EZ_language_compiler.tab.hpp
+	$(CC) -o ../bin/$@ ./cpp_files/EZ_language_compiler.tab.cpp ./cpp_files/lex.yy.c $(CC_FLAGS)
 
-yylex.c ::  yyparse.cpp %.$(LEX_EXT)
-	$(LEX)  -o yylex.c  $*.$(LEX_EXT) $(LEX_FLAGS) 
-
-yyparse.cpp :: %.$(YACC_EXT)
-	$(YACC) -o yyparse.cpp $*.$(YACC_EXT) $(YACC_FLAGS)
-
+./cpp_files/lex.yy.c: EZ_language_compiler.$(LEX_EXT) ./cpp_files/EZ_language_compiler.tab.hpp
+	$(LEX) -o ./cpp_files/lex.yy.c $^ $(LEX_FLAGS) 
+	
+./cpp_files/EZ_language_compiler.tab.cpp ./cpp_files/EZ_language_compiler.tab.hpp:  EZ_language_compiler.$(YACC_EXT)
+	$(YACC) $^ --defines=./cpp_files/EZ_language_compiler.tab.hpp --output=./cpp_files/EZ_language_compiler.tab.cpp $(YACC_FLAGS) 
+	
 
 #clean  
 clean :
-	rm -rf yylex.c yyparse.cpp yyparse.h 
-	rm -rf *.tab*
-	rm -rf *~ a.out lex.yy.c
-	rm -rf ../obj/*
+	rm -rf *.o *~ ./cpp_files/lex.yy.c ./cpp_files/*.tab.cpp ./cpp_files/*.tab.hpp 
 	
 mrproper: clean	
-	rm -rf $(EXEC)
+	rm -rf ../bin
 
 
 #aide
 aide: help
 help:
-		@echo "Compiler ce projet : make "
+		@echo "Compiler le projet : make "
 		@echo "Nettoyer les fichier objets : clean"
 		@echo "Nettoyer les fichier objets + executable : mrproper"

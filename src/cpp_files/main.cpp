@@ -12,6 +12,4 @@ int main ( int argc , char ** argv )
 	}
 	else cerr << "Trop d'arguments en paramètre, ceux en trop sont ignorés"<< endl;
     }
-    
-    return app.exec();
 }

@@ -4,9 +4,7 @@
 
 # Build results
 *.cmake
-/obj
-/bin
-EZL_compiler
+#/bin/EZ_language_compiler
 
 
 
