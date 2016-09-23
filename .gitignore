@@ -2,12 +2,13 @@
 ~$*
 *~
 
-# Kdev files
-.kdev4/
-
 # Build results
 *.cmake
+bin/EZ_language_compiler
 
 # User-specific files
 *.user
+
+# Kdev files
+.kdev4/
 

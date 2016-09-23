@@ -1,0 +1,48 @@
+%{
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include <list>
+#include "global.h"
+
+#define YYERROR_VERBOSE
+#define USE(VALUE) /*empty*/
+
+extern "C" int yyparse (void);
+extern "C" int yylex(void);
+extern "C" void yyerror(const std::string&);
+extern FILE* yyin;
+
+%}
+
+%union{
+    int	valeur_numerique;
+    bool 	booleen; /* Inutilisé pour l'instant, pourrait être utile pour le remplissage, mais j'utilise un char* */
+					// On pourrait éventuellement utiliser un QColor pour les couleurs (les fonctions Qt sont présentess
+	char*	texte;
+}
+
+%token<valeur_numerique>	NOMBRE			// Nombre
+%token	VIRGULE EGAL DEGRE POURCENT DIESE	// Caractères
+%token<texte>	EST_REMPLIS					// Un remplissage ou non
+%token	PARENTHESE_GAUCHE PARENTHESE_DROITE ACCOLADE_GAUCHE ACCOLADE_DROITE CROCHET_GAUCHE CROCHET_DROIT	// Caractères spéciaux
+%token<texte>	VARIABLE					// Variable
+%token	END									// Fin du texte
+%token	FIN									// Fin de ligne
+%token 	ERREUR							// Erreurs
+
+%start Exemple
+%%
+
+/** Exemple. A supprimer **/
+
+Exemple:
+    /* Vide */
+    ;
+
+%%
+
+void yyerror(const std::string& mess){
+    std::cout << "Erreur trouvée :'( : "<<mess << std::endl;
+}
