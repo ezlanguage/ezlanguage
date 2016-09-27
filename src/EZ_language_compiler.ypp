@@ -32,12 +32,11 @@ extern FILE* yyin;
 %token	FIN									// Fin de ligne
 %token 	ERREUR							// Erreurs
 
-%start Exemple
+%start Programme
 %%
 
-/** Exemple. A supprimer **/
-
-Exemple:
+/* Entrée de l'analyseur */
+Programme:
     /* Vide */
     ;
 
