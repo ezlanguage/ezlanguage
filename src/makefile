@@ -39,8 +39,11 @@ mrproper: clean
 	rm -rf ../bin
 
 launch: all
-	@echo "- Lancement du compilateur"
-	exec ../bin/$(EXEC)
+	@echo "- Lancement du compilateur :"
+	@echo "=============================="
+	@echo ""
+	@exec ../bin/$(EXEC) ${ARGS}
+	@echo "-FIN-"
 
 #aide
 aide: help
