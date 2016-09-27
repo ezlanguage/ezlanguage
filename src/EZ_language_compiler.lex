@@ -26,6 +26,8 @@ commentaire		(\/\*(.*)\*\/)|(\/\/(.*))
 
 %%
 
+"program" return(DECL_PROG);
+
 {separateurs}   { /* On ignore */ }
 {commentaire}   { /* On ignore */ }
 {entier}		{ yylval.valeur_numerique=atoi(yytext); return(NOMBRE);}
@@ -51,6 +53,10 @@ commentaire		(\/\*(.*)\*\/)|(\/\/(.*))
 "["		return (CROCHET_GAUCHE);
 "]"		return (CROCHET_DROIT);
 
+{mot} {
+	yylval.texte=strdup(yytext);
+	return(MOT);
+}
 {variable}	{	yylval.texte= strdup(yytext);
 	    		return (VARIABLE);
 			}

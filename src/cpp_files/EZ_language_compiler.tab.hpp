@@ -59,9 +59,11 @@ extern int yydebug;
     CROCHET_GAUCHE = 269,
     CROCHET_DROIT = 270,
     VARIABLE = 271,
-    END = 272,
-    FIN = 273,
-    ERREUR = 274
+    MOT = 272,
+    DECL_PROG = 273,
+    END = 274,
+    FIN = 275,
+    ERREUR = 276
   };
 #endif
 
@@ -77,7 +79,7 @@ union YYSTYPE
 					// On pourrait éventuellement utiliser un QColor pour les couleurs (les fonctions Qt sont présentess
 	char*	texte;
 
-#line 81 "./cpp_files/EZ_language_compiler.tab.hpp" /* yacc.c:1909  */
+#line 83 "./cpp_files/EZ_language_compiler.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

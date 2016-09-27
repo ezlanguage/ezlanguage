@@ -27,7 +27,8 @@ extern FILE* yyin;
 %token	VIRGULE EGAL DEGRE POURCENT DIESE	// Caractères
 %token<texte>	EST_REMPLIS					// Un remplissage ou non
 %token	PARENTHESE_GAUCHE PARENTHESE_DROITE ACCOLADE_GAUCHE ACCOLADE_DROITE CROCHET_GAUCHE CROCHET_DROIT	// Caractères spéciaux
-%token<texte>	VARIABLE					// Variable
+%token<texte>	VARIABLE	MOT				// Variable
+%token  DECL_PROG
 %token	END									// Fin du texte
 %token	FIN									// Fin de ligne
 %token 	ERREUR							// Erreurs
@@ -38,10 +39,19 @@ extern FILE* yyin;
 /* Entrée de l'analyseur */
 Programme:
     /* Vide */
+    | NomProg
     ;
+
+NomProg:
+	DECL_PROG MOT  {printf("Resultat : %s\n", $2);}
+
 
 %%
 
 void yyerror(const std::string& mess){
     std::cout << "Erreur trouvée :'( : "<<mess << std::endl;
+}
+
+int main(void) {
+    yyparse();
 }
