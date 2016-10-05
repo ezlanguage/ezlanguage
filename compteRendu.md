@@ -2,7 +2,8 @@
 ##Groupe Language
 ### ce qui a été validé: 
 + les types 
-+ fonctions et syntaxe 
++ fonctions et syntaxe
+
 ### en cours :
 + opérateurs 
 + les conteneurs 
@@ -11,6 +12,7 @@
 ##groupe Architechture
 ### ce qui a été validé: 
 + structure de fichiers (makefile, dossier) 
+
 ###en cours : 
 + les options de compilation 
 + coloration syntaxique 
