@@ -2,6 +2,8 @@
 %option yylineno
 
 %{
+#include <stdlib.h> /* pour atoi - atof */
+#include <string.h> /* pour strdup */
 #include <iostream>
 //#include "MyClasses/maclasse.h"
 #include "global.h"
@@ -20,7 +22,7 @@ reel			{entier}("."{entier})?
 
 mot 		    [A-z]+
 
-variable 		([a-z])([A-z]|[0-9])*
+ID ([a-z]|[A-Z])([a-z]|[A-Z]|[0-9])*
 
 commentaire		(\/\*(.*)\*\/)|(\/\/(.*))
 
@@ -28,19 +30,29 @@ commentaire		(\/\*(.*)\*\/)|(\/\/(.*))
 
 {separateurs}   { /* On ignore */ }
 {commentaire}   { /* On ignore */ }
-{entier}		{ yylval.valeur_numerique=atoi(yytext); return(NOMBRE);}
-{reel}        	{ yylval.valeur_numerique=atof(yytext); return(NOMBRE);}
+{entier}	{ yylval.valeur_numerique=atoi(yytext); return(NOMBRE);}
+{reel}        	{ yylval.valeur_reel=atof(yytext); return(NUMBRE);}
 
 "fin"	return(END);
 
-"\n"	return (FIN);
+
 
 ","		return(VIRGULE);
 
 "°"		return(DEGRE);
 "%"		return(POURCENT);
-"="		return(EGAL);
 "#"		return(DIESE);
+
+"="		return(EGAL);
+"!="          { return NE; }
+"<"           { return LT; }
+"<="          { return LE; }
+">"           { return GT; }
+">="          { return GE; }
+"+"           { return PLUS; }
+"-"           { return MINUS; }
+"*"           { return MULT; }
+"/"   	      { return DIVISE; }
 
 "("		return (PARENTHESE_GAUCHE);
 ")"		return (PARENTHESE_DROITE);
@@ -50,9 +62,52 @@ commentaire		(\/\*(.*)\*\/)|(\/\/(.*))
 
 "["		return (CROCHET_GAUCHE);
 "]"		return (CROCHET_DROIT);
+"."	        return (POINT);
 
-{variable}	{	yylval.texte= strdup(yytext);
-	    		return (VARIABLE);
-			}
+
+(const|CONST)       { return(CONST);   }
+(local|LOCAL)       { return(LOCAL);   } 
+(global|GLOBAL)     { return(GLOBAL);  } 
+(is|IS)             { return(IS) ;     }
+(are|ARE)           { return(ARE) ;    }
+(integer|INTEGER)   { return(INTEGER); }
+(real|REAL)         { return(REAL); }  
+(string|STRING)     { return(STRING);  }
+(boolean|BOOLEAN)   { return(BOOLEAN); }
+
+(if|IF)             { return(IF);    } 
+(else|ELSE)         { return(ELSE);  } 
+(endif|ENDIF)    { return(ENDIF); }
+
+(when|WHEN)          { return(WHEN);           }
+(case|CASE)          { return(CASE);             }	  
+(endcase|ENDCASE)    { return(ENDCASE);            } 
+(default|DEFAULT)    { return(DEFAULT);           }
+(endwhen|ENDWHEN)      { return(ENDWHEN);         }
+
+(while|WHILE)      { return(WHILE);         }  
+(do|DO)   { return(DO);      }
+(endwhile|ENDWHILE)     { return(ENDWHILE);      }
+
+(repeat|REPEAT)          { return(REPEAT);            }
+(until|UNTIL)          { return(UNTIL);               }
+(endrepeat|ENDREPEAT)     { return(ENDREPEAT);        }
+
+(for|FOR)          { return(FOR);            }
+(in|IN)          { return(IN);               }
+(step|STEP)     { return(STEP);        }
+(endfor|ENDFOR)     { return(ENDFOR);        }
+
+(function|FUNCTION)     { return(FUNCTION);        }
+(procedure|PROCEDURE)     { return(PROCEDURE);        }
+(return|RETURN)     { return(RETURN);        }
+
+(print|PRINT)     { return(PRINT);        }
+
+{ID}	{	yylval.texte= strdup(yytext);
+	    		return (NAME);
+		}
+
+
 
 %%
