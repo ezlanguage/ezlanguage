@@ -10,8 +10,5 @@ obj/*
 # User-specific files
 *.user
 
-# Kdev files
-.kdev4/
-
 #CLion files
 .idea/
