@@ -46,24 +46,64 @@ extern int yydebug;
   enum yytokentype
   {
     NOMBRE = 258,
-    VIRGULE = 259,
-    EGAL = 260,
-    DEGRE = 261,
-    POURCENT = 262,
-    DIESE = 263,
-    EST_REMPLIS = 264,
-    PARENTHESE_GAUCHE = 265,
-    PARENTHESE_DROITE = 266,
-    ACCOLADE_GAUCHE = 267,
-    ACCOLADE_DROITE = 268,
-    CROCHET_GAUCHE = 269,
-    CROCHET_DROIT = 270,
-    VARIABLE = 271,
-    MOT = 272,
-    DECL_PROG = 273,
-    END = 274,
-    FIN = 275,
-    ERREUR = 276
+    NUMBRE = 259,
+    NAME = 260,
+    VIRGULE = 261,
+    DEGRE = 262,
+    POURCENT = 263,
+    DIESE = 264,
+    POINT = 265,
+    INTEGER = 266,
+    REAL = 267,
+    STRING = 268,
+    BOOLEAN = 269,
+    EGAL = 270,
+    NE = 271,
+    LT = 272,
+    LE = 273,
+    GT = 274,
+    GE = 275,
+    PLUS = 276,
+    MINUS = 277,
+    MULT = 278,
+    DIVISE = 279,
+    PARENTHESE_GAUCHE = 280,
+    PARENTHESE_DROITE = 281,
+    ACCOLADE_GAUCHE = 282,
+    ACCOLADE_DROITE = 283,
+    CROCHET_GAUCHE = 284,
+    CROCHET_DROIT = 285,
+    FIN = 286,
+    END = 287,
+    CONST = 288,
+    LOCAL = 289,
+    GLOBAL = 290,
+    IS = 291,
+    ARE = 292,
+    IF = 293,
+    DO = 294,
+    ELSE = 295,
+    ENDIF = 296,
+    WHEN = 297,
+    CASE = 298,
+    ENDCASE = 299,
+    DEFAULT = 300,
+    ENDWHEN = 301,
+    WHILE = 302,
+    ENDWHILE = 303,
+    REPEAT = 304,
+    UNTIL = 305,
+    ENDREPEAT = 306,
+    FOR = 307,
+    IN = 308,
+    STEP = 309,
+    ENDFOR = 310,
+    FUNCTION = 311,
+    PROCEDURE = 312,
+    RETURN = 313,
+    ENDFUNCTION = 314,
+    ENDPROCEDURE = 315,
+    PRINT = 316
   };
 #endif
 
@@ -72,14 +112,15 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 19 "EZ_language_compiler.ypp" /* yacc.c:1909  */
+#line 22 "EZ_language_compiler.ypp" /* yacc.c:1909  */
 
     int	valeur_numerique;
-    bool 	booleen; /* Inutilisé pour l'instant, pourrait être utile pour le remplissage, mais j'utilise un char* */
-					// On pourrait éventuellement utiliser un QColor pour les couleurs (les fonctions Qt sont présentess
-	char*	texte;
+    double	valeur_reel;
+    bool booleen; /* Inutilisé pour l'instant, pourrait être utile pour le remplissage, mais j'utilise un char* */
+					
+    char* texte;
 
-#line 83 "./cpp_files/EZ_language_compiler.tab.hpp" /* yacc.c:1909  */
+#line 124 "./cpp_files/EZ_language_compiler.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
