@@ -7,7 +7,6 @@
 
 #include "../src/global.h"	 // on part du dossier ../obj car il y est necessaire
 #include "../src/main.cpp"	 // on part du dossier ../obj car il y est necessaire
-
 //#include "global.h"
 
 #define YYERROR_VERBOSE

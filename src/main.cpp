@@ -1,5 +1,5 @@
 extern FILE* yyin;
-
+extern int yyparse ();
 using namespace std;
 
 int main ( int argc , char ** argv )
