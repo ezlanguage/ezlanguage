@@ -3,8 +3,7 @@
 
 %{
 #include <iostream>
-//#include "MyClasses/maclasse.h"
-#include "global.h"
+#include "../src/global.h" // on part du dossier ../obj car il y est necessaire
 
 #include "EZ_language_compiler.tab.hpp"
 
