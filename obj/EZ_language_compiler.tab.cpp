@@ -62,25 +62,32 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 1 "EZ_language_compiler.ypp" /* yacc.c:339  */
+#line 1 "src/EZ_language_compiler.ypp" /* yacc.c:339  */
 
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
 #include <list>
-#include "global.h"
+
+#include "../src/global.h"	 // on part du dossier ../obj car il y est necessaire
+#include "../src/main.cpp"	 // on part du dossier ../obj car il y est necessaire
+
+//#include "global.h"
 
 #define YYERROR_VERBOSE
 #define USE(VALUE) /*empty*/
-
-extern "C" int yyparse (void);
-extern "C" int yylex(void);
-extern "C" void yyerror(const std::string&);
+//#include "EZ_language_compiler.tab.cpp"
 extern FILE* yyin;
+using namespace std;
+
+ int yyparse (void);
+ extern "C" int yylex();
+ extern "C" void yyerror(const std::string&);
 
 
-#line 84 "./cpp_files/EZ_language_compiler.tab.cpp" /* yacc.c:339  */
+
+#line 91 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -100,8 +107,8 @@ extern FILE* yyin;
 
 /* In a future release of Bison, this section will be replaced
    by #include "EZ_language_compiler.tab.hpp".  */
-#ifndef YY_YY_CPP_FILES_EZ_LANGUAGE_COMPILER_TAB_HPP_INCLUDED
-# define YY_YY_CPP_FILES_EZ_LANGUAGE_COMPILER_TAB_HPP_INCLUDED
+#ifndef YY_YY_OBJ_EZ_LANGUAGE_COMPILER_TAB_HPP_INCLUDED
+# define YY_YY_OBJ_EZ_LANGUAGE_COMPILER_TAB_HPP_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -116,24 +123,62 @@ extern int yydebug;
   enum yytokentype
   {
     NOMBRE = 258,
-    VIRGULE = 259,
-    EGAL = 260,
-    DEGRE = 261,
-    POURCENT = 262,
-    DIESE = 263,
-    EST_REMPLIS = 264,
-    PARENTHESE_GAUCHE = 265,
-    PARENTHESE_DROITE = 266,
-    ACCOLADE_GAUCHE = 267,
-    ACCOLADE_DROITE = 268,
-    CROCHET_GAUCHE = 269,
-    CROCHET_DROIT = 270,
-    VARIABLE = 271,
-    MOT = 272,
-    DECL_PROG = 273,
-    END = 274,
-    FIN = 275,
-    ERREUR = 276
+    NUMBRE = 259,
+    NAME = 260,
+    VIRGULE = 261,
+    DEGRE = 262,
+    POURCENT = 263,
+    DIESE = 264,
+    POINT = 265,
+    INTEGER = 266,
+    REAL = 267,
+    STRING = 268,
+    BOOLEAN = 269,
+    EGAL = 270,
+    NE = 271,
+    LT = 272,
+    LE = 273,
+    GT = 274,
+    GE = 275,
+    PLUS = 276,
+    MINUS = 277,
+    MULT = 278,
+    DIVISE = 279,
+    PARENTHESE_GAUCHE = 280,
+    PARENTHESE_DROITE = 281,
+    ACCOLADE_GAUCHE = 282,
+    ACCOLADE_DROITE = 283,
+    CROCHET_GAUCHE = 284,
+    CROCHET_DROIT = 285,
+    FIN = 286,
+    END = 287,
+    CONST = 288,
+    LOCAL = 289,
+    GLOBAL = 290,
+    IS = 291,
+    ARE = 292,
+    IF = 293,
+    DO = 294,
+    ELSE = 295,
+    ENDIF = 296,
+    WHEN = 297,
+    CASE = 298,
+    ENDCASE = 299,
+    DEFAULT = 300,
+    ENDWHEN = 301,
+    WHILE = 302,
+    ENDWHILE = 303,
+    REPEAT = 304,
+    UNTIL = 305,
+    ENDREPEAT = 306,
+    FOR = 307,
+    IN = 308,
+    STEP = 309,
+    ENDFOR = 310,
+    FUNCTION = 311,
+    PROCEDURE = 312,
+    RETURN = 313,
+    PRINT = 314
   };
 #endif
 
@@ -142,14 +187,15 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 19 "EZ_language_compiler.ypp" /* yacc.c:355  */
+#line 26 "src/EZ_language_compiler.ypp" /* yacc.c:355  */
 
     int	valeur_numerique;
-    bool 	booleen; /* Inutilisé pour l'instant, pourrait être utile pour le remplissage, mais j'utilise un char* */
-					// On pourrait éventuellement utiliser un QColor pour les couleurs (les fonctions Qt sont présentess
-	char*	texte;
+    int	valeur_reel;
+    bool booleen; /* Inutilisé pour l'instant, pourrait être utile pour le remplissage, mais j'utilise un char* */
+					
+    char* texte;
 
-#line 153 "./cpp_files/EZ_language_compiler.tab.cpp" /* yacc.c:355  */
+#line 199 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -162,11 +208,11 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_CPP_FILES_EZ_LANGUAGE_COMPILER_TAB_HPP_INCLUDED  */
+#endif /* !YY_YY_OBJ_EZ_LANGUAGE_COMPILER_TAB_HPP_INCLUDED  */
 
 /* Copy the second part of user declarations.  */
 
-#line 170 "./cpp_files/EZ_language_compiler.tab.cpp" /* yacc.c:358  */
+#line 216 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -406,23 +452,23 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  5
+#define YYFINAL  4
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   2
+#define YYLAST   238
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  22
+#define YYNTOKENS  60
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  3
+#define YYNNTS  18
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  4
+#define YYNRULES  53
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  6
+#define YYNSTATES  119
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   276
+#define YYMAXUTOK   314
 
 #define YYTRANSLATE(YYX)                                                \
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -458,14 +504,23 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
-      15,    16,    17,    18,    19,    20,    21
+      15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
+      25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
+      35,    36,    37,    38,    39,    40,    41,    42,    43,    44,
+      45,    46,    47,    48,    49,    50,    51,    52,    53,    54,
+      55,    56,    57,    58,    59
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    40,    40,    42,    46
+       0,    58,    58,    61,    62,    63,    66,    70,    71,    76,
+      77,    78,    79,    80,    81,    82,    83,    84,    85,    89,
+      90,    92,    93,    97,    98,    99,   100,   104,   105,   109,
+     110,   114,   117,   118,   123,   124,   125,   126,   127,   128,
+     129,   133,   134,   135,   139,   140,   141,   145,   146,   147,
+     148,   149,   150,   154
 };
 #endif
 
@@ -474,11 +529,18 @@ static const yytype_uint8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "NOMBRE", "VIRGULE", "EGAL", "DEGRE",
-  "POURCENT", "DIESE", "EST_REMPLIS", "PARENTHESE_GAUCHE",
-  "PARENTHESE_DROITE", "ACCOLADE_GAUCHE", "ACCOLADE_DROITE",
-  "CROCHET_GAUCHE", "CROCHET_DROIT", "VARIABLE", "MOT", "DECL_PROG", "END",
-  "FIN", "ERREUR", "$accept", "Programme", "NomProg", YY_NULLPTR
+  "$end", "error", "$undefined", "NOMBRE", "NUMBRE", "NAME", "VIRGULE",
+  "DEGRE", "POURCENT", "DIESE", "POINT", "INTEGER", "REAL", "STRING",
+  "BOOLEAN", "EGAL", "NE", "LT", "LE", "GT", "GE", "PLUS", "MINUS", "MULT",
+  "DIVISE", "PARENTHESE_GAUCHE", "PARENTHESE_DROITE", "ACCOLADE_GAUCHE",
+  "ACCOLADE_DROITE", "CROCHET_GAUCHE", "CROCHET_DROIT", "FIN", "END",
+  "CONST", "LOCAL", "GLOBAL", "IS", "ARE", "IF", "DO", "ELSE", "ENDIF",
+  "WHEN", "CASE", "ENDCASE", "DEFAULT", "ENDWHEN", "WHILE", "ENDWHILE",
+  "REPEAT", "UNTIL", "ENDREPEAT", "FOR", "IN", "STEP", "ENDFOR",
+  "FUNCTION", "PROCEDURE", "RETURN", "PRINT", "$accept", "ROOT",
+  "functions", "function", "stmtseq", "statement", "nbrOrName", "portee",
+  "type", "noms", "whenbody", "whendefault", "typeInFor", "expression",
+  "expr2", "expr3", "expr4", "designator", YY_NULLPTR
 };
 #endif
 
@@ -489,14 +551,17 @@ static const yytype_uint16 yytoknum[] =
 {
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
      265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
-     275,   276
+     275,   276,   277,   278,   279,   280,   281,   282,   283,   284,
+     285,   286,   287,   288,   289,   290,   291,   292,   293,   294,
+     295,   296,   297,   298,   299,   300,   301,   302,   303,   304,
+     305,   306,   307,   308,   309,   310,   311,   312,   313,   314
 };
 # endif
 
-#define YYPACT_NINF -19
+#define YYPACT_NINF -55
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-19)))
+  (!!((Yystate) == (-55)))
 
 #define YYTABLE_NINF -1
 
@@ -505,9 +570,20 @@ static const yytype_uint16 yytoknum[] =
 
   /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
      STATE-NUM.  */
-static const yytype_int8 yypact[] =
+static const yytype_int16 yypact[] =
 {
-     -18,   -16,     2,   -19,   -19,   -19
+     -55,    11,    34,   -55,   -55,    20,   -55,   -55,   193,    35,
+     193,    34,    46,   193,   -55,    34,   -55,    53,   193,   -55,
+     -55,   -55,   193,   193,   193,    22,     7,     9,   -55,   -55,
+      23,    24,    60,    30,   -55,   -55,     0,   -55,   -55,   -55,
+      41,    34,    55,   193,   193,   193,   193,   193,   193,   193,
+     193,   193,    31,    34,   193,     1,    26,    68,     1,    -3,
+     -55,     3,   193,    32,    32,    32,    32,    32,     9,     9,
+     -55,   -55,   193,   -36,    66,    37,   -55,   -55,   -55,   -55,
+     -55,    72,   -55,   -55,    85,     1,    34,   -55,    32,    34,
+     193,    34,    50,   -55,   -55,    87,   -55,   -55,    86,   106,
+      34,   125,   -55,    89,   -55,   -55,   141,   -55,   101,   -55,
+      62,    14,   -55,   -55,    30,    78,    34,   157,   -55
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -515,19 +591,32 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       2,     0,     0,     3,     4,     1
+       3,     0,     0,     5,     1,     0,    21,    22,     0,     0,
+       0,     0,     0,     0,     4,     2,     8,     0,     0,    51,
+      50,    53,     0,     0,     0,     0,    34,    41,    44,    52,
+       0,     0,     0,    32,    12,     7,     0,    11,    47,    48,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+      49,     0,     0,    36,    37,    38,    39,    40,    42,    43,
+      45,    46,     0,     0,     0,     0,    23,    24,    25,    26,
+      33,     0,    28,     9,     0,     0,     0,    14,    35,     0,
+       0,     0,     0,    16,    17,     0,    27,    10,     0,     0,
+       0,     0,    15,     0,    13,    30,     0,    31,     0,    29,
+       0,     0,    19,    20,    32,     0,     0,     0,    18
 };
 
   /* YYPGOTO[NTERM-NUM].  */
-static const yytype_int8 yypgoto[] =
+static const yytype_int16 yypgoto[] =
 {
-     -19,   -19,   -19
+     -55,   -55,   -55,   120,   -11,   -14,   -55,   -55,   -54,   -55,
+     -55,   -55,    12,    -8,   176,     8,    -2,   -55
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     2,     3
+      -1,     1,     2,     3,    15,    16,   114,    17,    80,    59,
+      73,    92,    56,    25,    26,    27,    28,    29
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -535,31 +624,98 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-       1,     4,     5
+      32,    35,    31,    84,    83,    34,    57,    90,     5,    91,
+      37,     4,    76,    77,    78,    79,    40,   112,    35,   113,
+      38,    39,    42,    43,    44,    45,    46,    47,    48,    49,
+      61,    97,    50,    51,    85,    18,    58,     6,     7,     5,
+      30,     8,    74,    86,    87,     9,    75,    35,    70,    71,
+      10,    33,    11,    48,    49,    12,    68,    69,    36,    52,
+      35,    41,    13,    53,    89,     5,    55,    60,     6,     7,
+      62,     5,     8,    82,    72,    98,     9,    95,    99,    81,
+     101,    10,   100,    11,    35,    35,    12,    35,    94,   106,
+      96,     5,    35,    13,     6,     7,   102,   103,     8,   108,
+       6,     7,     9,    35,     8,   117,   110,    10,     9,    11,
+      54,     5,    12,    10,    93,    11,   111,   116,    12,    13,
+       6,     7,    14,     0,     8,    13,   115,   104,     9,     0,
+       5,     0,     0,    10,     0,    11,     0,     0,    12,     0,
+       6,     7,     0,     0,     8,    13,     5,     0,     9,     0,
+     105,     0,     0,    10,     0,    11,     0,     0,    12,     6,
+       7,     0,     5,     8,     0,    13,     0,     9,     0,   107,
+       0,     0,    10,     0,    11,     6,     7,    12,     0,     8,
+       0,     0,     0,     9,    13,   109,     0,     0,    10,     0,
+      11,     6,     7,    12,     0,     8,    19,    20,    21,     9,
+      13,     0,     0,     0,    10,     0,    11,     0,     0,    12,
+       0,     0,   118,     0,    22,    23,    13,     0,    24,    63,
+      64,    65,    66,    67,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,    88
 };
 
-static const yytype_uint8 yycheck[] =
+static const yytype_int8 yycheck[] =
 {
-      18,    17,     0
+      11,    15,    10,     6,    58,    13,     6,    43,     5,    45,
+      18,     0,    11,    12,    13,    14,    24,     3,    32,     5,
+      22,    23,    15,    16,    17,    18,    19,    20,    21,    22,
+      41,    85,    23,    24,    37,    15,    36,    34,    35,     5,
+       5,    38,    53,    40,    41,    42,    54,    61,    50,    51,
+      47,     5,    49,    21,    22,    52,    48,    49,     5,    36,
+      74,    39,    59,    39,    72,     5,    36,    26,    34,    35,
+      15,     5,    38,     5,    43,    86,    42,     5,    89,    53,
+      91,    47,    90,    49,    98,    99,    52,   101,    51,   100,
+       5,     5,   106,    59,    34,    35,    46,    10,    38,    10,
+      34,    35,    42,   117,    38,   116,     5,    47,    42,    49,
+      50,     5,    52,    47,    48,    49,    54,    39,    52,    59,
+      34,    35,     2,    -1,    38,    59,   114,    41,    42,    -1,
+       5,    -1,    -1,    47,    -1,    49,    -1,    -1,    52,    -1,
+      34,    35,    -1,    -1,    38,    59,     5,    -1,    42,    -1,
+      44,    -1,    -1,    47,    -1,    49,    -1,    -1,    52,    34,
+      35,    -1,     5,    38,    -1,    59,    -1,    42,    -1,    44,
+      -1,    -1,    47,    -1,    49,    34,    35,    52,    -1,    38,
+      -1,    -1,    -1,    42,    59,    44,    -1,    -1,    47,    -1,
+      49,    34,    35,    52,    -1,    38,     3,     4,     5,    42,
+      59,    -1,    -1,    -1,    47,    -1,    49,    -1,    -1,    52,
+      -1,    -1,    55,    -1,    21,    22,    59,    -1,    25,    43,
+      44,    45,    46,    47,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    62
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    18,    23,    24,    17,     0
+       0,    61,    62,    63,     0,     5,    34,    35,    38,    42,
+      47,    49,    52,    59,    63,    64,    65,    67,    15,     3,
+       4,     5,    21,    22,    25,    73,    74,    75,    76,    77,
+       5,    73,    64,     5,    73,    65,     5,    73,    76,    76,
+      73,    39,    15,    16,    17,    18,    19,    20,    21,    22,
+      23,    24,    36,    39,    50,    36,    72,     6,    36,    69,
+      26,    64,    15,    74,    74,    74,    74,    74,    75,    75,
+      76,    76,    43,    70,    64,    73,    11,    12,    13,    14,
+      68,    53,     5,    68,     6,    37,    40,    41,    74,    73,
+      43,    45,    71,    48,    51,     5,     5,    68,    64,    64,
+      73,    64,    46,    10,    41,    44,    64,    44,    10,    44,
+       5,    54,     3,     5,    66,    72,    39,    64,    55
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    22,    23,    23,    24
+       0,    60,    61,    62,    62,    62,    63,    64,    64,    65,
+      65,    65,    65,    65,    65,    65,    65,    65,    65,    66,
+      66,    67,    67,    68,    68,    68,    68,    69,    69,    70,
+      70,    71,    72,    72,    73,    73,    73,    73,    73,    73,
+      73,    74,    74,    74,    75,    75,    75,    76,    76,    76,
+      76,    76,    76,    77
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     0,     1,     2
+       0,     2,     2,     0,     2,     1,     0,     2,     1,     4,
+       5,     3,     2,     7,     5,     6,     5,     5,    14,     1,
+       1,     1,     1,     1,     1,     1,     1,     3,     2,     5,
+       4,     3,     0,     2,     1,     4,     3,     3,     3,     3,
+       3,     1,     3,     3,     1,     3,     3,     2,     2,     3,
+       1,     1,     1,     1
 };
 
 
@@ -1235,14 +1391,302 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-        case 4:
-#line 46 "EZ_language_compiler.ypp" /* yacc.c:1646  */
-    {printf("Resultat : %s\n", (yyvsp[0].texte));}
-#line 1242 "./cpp_files/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+        case 2:
+#line 58 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    { }
+#line 1398 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 4:
+#line 62 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    { }
+#line 1404 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 5:
+#line 63 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    { }
+#line 1410 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 7:
+#line 70 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    { }
+#line 1416 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 8:
+#line 71 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    { /*printf("  statement \n");*/ }
+#line 1422 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 9:
+#line 76 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    {  printf ("declaration d'une seule variable :\n"); }
+#line 1428 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 10:
+#line 77 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    { printf("declaration d'un ensemble des variables \n") ;}
+#line 1434 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 11:
+#line 78 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    { printf("affectation \n");}
+#line 1440 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 12:
+#line 79 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    { printf("affichage \n"); }
+#line 1446 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 13:
+#line 80 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    { printf("SI_SINON_ALORS \n"); }
+#line 1452 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 14:
+#line 81 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    { printf("SI   ALORS \n"); }
+#line 1458 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 15:
+#line 82 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    {  printf("when .. case .. \n"); }
+#line 1464 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 16:
+#line 83 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    { printf("WHILE .. DO .. \n"); }
+#line 1470 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 17:
+#line 84 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    { printf("REPEAT .. UNTIL .. \n"); }
+#line 1476 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 18:
+#line 85 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    { printf("FOR .. IN ... \n");}
+#line 1482 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 19:
+#line 89 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    {}
+#line 1488 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 20:
+#line 90 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    {}
+#line 1494 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 21:
+#line 92 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    {}
+#line 1500 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 22:
+#line 93 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    {}
+#line 1506 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 23:
+#line 97 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    { }
+#line 1512 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 24:
+#line 98 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    { }
+#line 1518 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 25:
+#line 99 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    { }
+#line 1524 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 26:
+#line 100 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    { }
+#line 1530 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 27:
+#line 104 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    {}
+#line 1536 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 28:
+#line 105 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    {}
+#line 1542 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 29:
+#line 109 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    {}
+#line 1548 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 30:
+#line 110 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    {}
+#line 1554 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 31:
+#line 114 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    {}
+#line 1560 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 33:
+#line 118 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    {}
+#line 1566 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 34:
+#line 123 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    { (yyval.valeur_reel) = (yyvsp[0].valeur_reel) ;}
+#line 1572 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 35:
+#line 124 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    {  }
+#line 1578 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 36:
+#line 125 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    { }
+#line 1584 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 37:
+#line 126 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    {  }
+#line 1590 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 38:
+#line 127 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    { }
+#line 1596 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 39:
+#line 128 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    { }
+#line 1602 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 40:
+#line 129 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    { }
+#line 1608 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 41:
+#line 133 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    { (yyval.valeur_reel) = (yyvsp[0].valeur_reel) ;}
+#line 1614 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 42:
+#line 134 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    {(yyval.valeur_reel) = (yyvsp[-2].valeur_reel) + (yyvsp[0].valeur_reel); }
+#line 1620 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 43:
+#line 135 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    { }
+#line 1626 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 44:
+#line 139 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    { (yyval.valeur_reel) = (yyvsp[0].valeur_reel);}
+#line 1632 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 45:
+#line 140 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    { }
+#line 1638 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 46:
+#line 141 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    {  }
+#line 1644 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 47:
+#line 145 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    {    }
+#line 1650 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 48:
+#line 146 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    { }
+#line 1656 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 49:
+#line 147 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    {  }
+#line 1662 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 50:
+#line 148 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    {  }
+#line 1668 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 51:
+#line 149 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    { }
+#line 1674 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 52:
+#line 150 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    { }
+#line 1680 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 53:
+#line 154 "src/EZ_language_compiler.ypp" /* yacc.c:1646  */
+    { }
+#line 1686 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 1246 "./cpp_files/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
+#line 1690 "./obj/EZ_language_compiler.tab.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1470,13 +1914,9 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 49 "EZ_language_compiler.ypp" /* yacc.c:1906  */
+#line 157 "src/EZ_language_compiler.ypp" /* yacc.c:1906  */
 
 
 void yyerror(const std::string& mess){
-    std::cout << "Erreur trouvée :'( : "<<mess << std::endl;
-}
-
-int main(void) {
-    yyparse();
+    std::cout << "Erreur trouvée : '( "<<mess << " )'" << std::endl;
 }

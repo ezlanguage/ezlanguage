@@ -1,7 +1,6 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
-//#include "MyClasses/maclasse.h"
 
 typedef struct s_mon_type {
     int valeur_numerique;
