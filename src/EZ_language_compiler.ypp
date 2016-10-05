@@ -25,7 +25,7 @@ using namespace std;
 
 %union{
     int	valeur_numerique;
-    int	valeur_reel;
+    double	valeur_reel;
     bool booleen; /* Inutilisé pour l'instant, pourrait être utile pour le remplissage, mais j'utilise un char* */
 					
     char* texte;
@@ -44,7 +44,7 @@ using namespace std;
 %token WHILE ENDWHILE							 // while .. do ..
 %token REPEAT UNTIL ENDREPEAT 						 // do .. while ...
 %token FOR IN STEP ENDFOR
-%token FUNCTION PROCEDURE RETURN					 // fonctions
+%token FUNCTION PROCEDURE RETURN ENDFUNCTION ENDPROCEDURE	 // fonctions
 %token PRINT							         // boucle for
 
 %type<valeur_reel> expression designator expr2 expr3 expr4  stmtseq statement
@@ -61,16 +61,27 @@ ROOT:
 functions: /* aucune fonction déclarée */ 
 | functions function { }
 | function { }
+| procedure { }
 ;
 
 function:
-//FUNCTION NAME PARENTHESE_GAUCHE liste_argument PARENTHESE_GAUCHE 
-;
-stmtseq:
-  stmtseq statement { }
-  | statement { /*printf("  statement \n");*/ }
+FUNCTION NAME PARENTHESE_GAUCHE liste_argument PARENTHESE_DROITE RETURN type stmtseq RETURN NAME ENDFUNCTION {}
 ;
 
+procedure:
+PROCEDURE NAME PARENTHESE_GAUCHE liste_argument PARENTHESE_DROITE stmtseq ENDPROCEDURE {}
+;
+
+stmtseq:
+  stmtseq statement { }
+| statement { /*printf("  statement \n");*/ }
+;
+
+liste_argument:
+ // Aucun argument
+ | NAME IS type { }
+ | NAME IS type VIRGULE liste_argument { } 
+;
 
 statement:
   portee NAME IS type {  printf ("declaration d'une seule variable :\n"); }
@@ -86,10 +97,11 @@ statement:
 ;
 
 nbrOrName:
-NOMBRE  {}
+  NOMBRE  {}
 | NAME {}
+
 portee: /* rien ( local par default) */ 
- LOCAL {}
+  LOCAL {}
 | GLOBAL {}
 ;
 
@@ -106,7 +118,7 @@ noms:
 ;
 
 whenbody: /* casebody ne peut pas etre vide */
- whenbody CASE expression stmtseq ENDCASE {}  
+  whenbody CASE expression stmtseq ENDCASE {}  
 | CASE expression stmtseq ENDCASE {} 
 ;
 
@@ -114,7 +126,8 @@ whendefault:
 DEFAULT stmtseq ENDCASE {}
 ;
 
-typeInFor: /* peut etre vide */
+typeInFor: 
+  /* peut etre vide */
 | IS  type {}
 ;
 

@@ -30,10 +30,11 @@ commentaire		(\/\*(.*)\*\/)|(\/\/(.*))
 {separateurs}   { /* On ignore */ }
 {commentaire}   { /* On ignore */ }
 {entier}	{ yylval.valeur_numerique=atoi(yytext); return(NOMBRE);}
-{reel}        	{ yylval.valeur_reel=atof(yytext); return(NUMBRE);}
+{reel}      { yylval.valeur_reel=atof(yytext); return(NUMBRE);}
 
 "fin"	return(END);
 
+"endprocedure" return(ENDPROCEDURE);
 
 
 ","		return(VIRGULE);
@@ -100,6 +101,8 @@ commentaire		(\/\*(.*)\*\/)|(\/\/(.*))
 (function|FUNCTION)     { return(FUNCTION);        }
 (procedure|PROCEDURE)     { return(PROCEDURE);        }
 (return|RETURN)     { return(RETURN);        }
+(endfunction|ENDFUNCTION) {return(ENDFUNCTION); }
+
 
 (print|PRINT)     { return(PRINT);        }
 

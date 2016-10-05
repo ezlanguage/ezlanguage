@@ -4,6 +4,7 @@
 
 typedef struct s_mon_type {
     int valeur_numerique;
+    double valeur_reel;
     bool booleen;
     char *texte;
 //    MaClasse	une_maclasse;
