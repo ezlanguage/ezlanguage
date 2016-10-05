@@ -4,9 +4,8 @@
 
 # Build results
 *.cmake
-/bin/EZ_language_compiler
-
-
+bin/*
+obj/*
 
 # User-specific files
 *.user
