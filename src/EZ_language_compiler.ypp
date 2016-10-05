@@ -4,47 +4,158 @@
 #include <stdlib.h>
 #include <iostream>
 #include <list>
+
 #include "../src/global.h"	 // on part du dossier ../obj car il y est necessaire
 #include "../src/main.cpp"	 // on part du dossier ../obj car il y est necessaire
 
+//#include "global.h"
+
 #define YYERROR_VERBOSE
 #define USE(VALUE) /*empty*/
-
-extern "C" int yyparse (void);
-extern "C" int yylex(void);
-extern "C" void yyerror(const std::string&);
+//#include "EZ_language_compiler.tab.cpp"
 extern FILE* yyin;
+using namespace std;
+
+ int yyparse (void);
+ extern "C" int yylex();
+ extern "C" void yyerror(const std::string&);
+
 
 %}
 
 %union{
     int	valeur_numerique;
-    bool 	booleen; /* Inutilisé pour l'instant, pourrait être utile pour le remplissage, mais j'utilise un char* */
-					// On pourrait éventuellement utiliser un QColor pour les couleurs (les fonctions Qt sont présentess
-	char*	texte;
+    int	valeur_reel;
+    bool booleen; /* Inutilisé pour l'instant, pourrait être utile pour le remplissage, mais j'utilise un char* */
+					
+    char* texte;
 }
 
-%token<valeur_numerique>	NOMBRE			// Nombre
-%token	VIRGULE EGAL DEGRE POURCENT DIESE	// Caractères
-%token<texte>	EST_REMPLIS					// Un remplissage ou non
-%token	PARENTHESE_GAUCHE PARENTHESE_DROITE ACCOLADE_GAUCHE ACCOLADE_DROITE CROCHET_GAUCHE CROCHET_DROIT	// Caractères spéciaux
-%token<texte>	VARIABLE					// Variable
-%token	END									// Fin du texte
-%token	FIN									// Fin de ligne
-%token 	ERREUR							// Erreurs
+%token<valeur_numerique>	NOMBRE			// ENTIER
+%token<valeur_reel>	NUMBRE				// REEL
+%token<texte>	NAME					// NOM
+%token	VIRGULE  DEGRE POURCENT DIESE POINT	// Caractères
+%token INTEGER REAL STRING BOOLEAN			// Type des variables
+%token  EGAL NE LT LE GT GE PLUS MINUS MULT DIVISE
+%token	PARENTHESE_GAUCHE PARENTHESE_DROITE ACCOLADE_GAUCHE ACCOLADE_DROITE CROCHET_GAUCHE CROCHET_DROIT FIN END	// Caractères spéciaux
+%token CONST  LOCAL  GLOBAL  IS  ARE 		      		      // declaration des variables
+%token IF DO ELSE  ENDIF 						 // if else 
+%token WHEN CASE ENDCASE DEFAULT ENDWHEN				 // switch case ...
+%token WHILE ENDWHILE							 // while .. do ..
+%token REPEAT UNTIL ENDREPEAT 						 // do .. while ...
+%token FOR IN STEP ENDFOR
+%token FUNCTION PROCEDURE RETURN					 // fonctions
+%token PRINT							         // boucle for
 
-%start Exemple
+%type<valeur_reel> expression designator expr2 expr3 expr4  stmtseq statement
+
+
+%start ROOT
 %%
 
-/** Exemple. A supprimer **/
 
-Exemple:
-    /* Vide */
-    ;
-    
+ROOT:
+  functions stmtseq { } 
+;
+
+functions: /* aucune fonction déclarée */ 
+| functions function { }
+| function { }
+;
+
+function:
+//FUNCTION NAME PARENTHESE_GAUCHE liste_argument PARENTHESE_GAUCHE 
+;
+stmtseq:
+  stmtseq statement { }
+  | statement { /*printf("  statement \n");*/ }
+;
+
+
+statement:
+  portee NAME IS type {  printf ("declaration d'une seule variable :\n"); }
+| portee NAME  noms ARE type { printf("declaration d'un ensemble des variables \n") ;}
+| NAME EGAL expression { printf("affectation \n");} 
+| PRINT expression { printf("affichage \n"); } 
+| IF expression DO stmtseq ELSE stmtseq ENDIF { printf("SI_SINON_ALORS \n"); }
+| IF expression DO stmtseq ENDIF { printf("SI   ALORS \n"); }
+| WHEN NAME IS whenbody whendefault ENDWHEN {  printf("when .. case .. \n"); }
+| WHILE expression DO stmtseq ENDWHILE { printf("WHILE .. DO .. \n"); }
+| REPEAT stmtseq UNTIL expression ENDREPEAT { printf("REPEAT .. UNTIL .. \n"); }
+| FOR NAME typeInFor IN NAME POINT POINT NAME STEP nbrOrName typeInFor DO stmtseq ENDFOR { printf("FOR .. IN ... \n");}
+;
+
+nbrOrName:
+NOMBRE  {}
+| NAME {}
+portee: /* rien ( local par default) */ 
+ LOCAL {}
+| GLOBAL {}
+;
+
+type:
+  INTEGER { }
+| REAL   { } 
+| STRING  { } 
+| BOOLEAN  { }
+;
+
+noms:
+  noms VIRGULE NAME {}
+| VIRGULE NAME {}
+;
+
+whenbody: /* casebody ne peut pas etre vide */
+ whenbody CASE expression stmtseq ENDCASE {}  
+| CASE expression stmtseq ENDCASE {} 
+;
+
+whendefault:
+DEFAULT stmtseq ENDCASE {}
+;
+
+typeInFor: /* peut etre vide */
+| IS  type {}
+;
+
+
+expression:
+  expr2 { $$ = $1 ;} 
+| expr2 EGAL EGAL expr2 {  }
+| expr2 NE expr2 { }
+| expr2 LT expr2 {  }
+| expr2 LE expr2 { }
+| expr2 GT expr2 { }
+| expr2 GE expr2 { }
+;
+
+expr2:
+  expr3 { $$ = $1 ;}
+| expr2 PLUS expr3 {$$ = $1 + $3; }
+| expr2 MINUS expr3 { }
+;
+
+expr3:
+  expr4 { $$ = $1;}
+| expr3 MULT expr4 { }
+| expr3 DIVISE expr4 {  }
+;
+
+expr4:
+  PLUS expr4 {    }
+| MINUS expr4 { }
+| PARENTHESE_GAUCHE expression PARENTHESE_DROITE {  }
+| NUMBRE {  } //reel
+| NOMBRE { }  // entier
+| designator { }
+;
+
+designator:
+  NAME { }
+;
 
 %%
 
 void yyerror(const std::string& mess){
-    std::cout << "Erreur trouvée :'( : "<<mess << std::endl;
+    std::cout << "Erreur trouvée : '( "<<mess << " )'" << std::endl;
 }
