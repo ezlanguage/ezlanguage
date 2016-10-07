@@ -25,6 +25,7 @@ ID ([a-z]|[A-Z])([a-z]|[A-Z]|[0-9])*
 
 commentaire		(\/\*(.*)\*\/)|(\/\/(.*))
 
+retourligne 	\n
 %%
 
 {separateurs}   { /* On ignore */ }
@@ -32,9 +33,9 @@ commentaire		(\/\*(.*)\*\/)|(\/\/(.*))
 {entier}	{ yylval.valeur_numerique=atoi(yytext); return(NOMBRE);}
 {reel}      { yylval.valeur_reel=atof(yytext); return(NUMBRE);}
 
-"fin"	return(END);
+{retourligne}	return(retourLigne);
 
-"endprocedure" return(ENDPROCEDURE);
+
 
 
 ","		return(VIRGULE);
@@ -44,15 +45,15 @@ commentaire		(\/\*(.*)\*\/)|(\/\/(.*))
 "#"		return(DIESE);
 
 "="		return(EGAL);
-"!="          { return NE; }
-"<"           { return LT; }
-"<="          { return LE; }
-">"           { return GT; }
-">="          { return GE; }
-"+"           { return PLUS; }
-"-"           { return MINUS; }
-"*"           { return MULT; }
-"/"   	      { return DIVISE; }
+"!="            return NE; 
+"<"             return LT; 
+"<="            return LE; 
+">"             return GT; 
+">="            return GE; 
+"+"             return PLUS; 
+"-"             return MINUS; 
+"*"             return MULT; 
+"/"   	        return DIVISE; 
 
 "("		return (PARENTHESE_GAUCHE);
 ")"		return (PARENTHESE_DROITE);
@@ -65,43 +66,44 @@ commentaire		(\/\*(.*)\*\/)|(\/\/(.*))
 "."	        return (POINT);
 
 
-(const|CONST)       { return(CONST);   }
-(local|LOCAL)       { return(LOCAL);   } 
-(global|GLOBAL)     { return(GLOBAL);  } 
-(is|IS)             { return(IS) ;     }
-(are|ARE)           { return(ARE) ;    }
-(integer|INTEGER)   { return(INTEGER); }
-(real|REAL)         { return(REAL); }  
-(string|STRING)     { return(STRING);  }
-(boolean|BOOLEAN)   { return(BOOLEAN); }
+(const|CONST)        return(CONST);
+(local|LOCAL)        return(LOCAL);
+(global|GLOBAL)      return(GLOBAL);
+(is|IS)              return(IS) ;
+(are|ARE)            return(ARE) ;
+(integer|INTEGER)    return(INTEGER);
+(real|REAL)          return(REAL);
+(string|STRING)      return(STRING);
+(boolean|BOOLEAN)    return(BOOLEAN);
 
-(if|IF)             { return(IF);    } 
-(else|ELSE)         { return(ELSE);  } 
-(endif|ENDIF)    { return(ENDIF); }
+(if|IF)              return(IF);
+(else|ELSE)          return(ELSE);
+(endif|ENDIF)     return(ENDIF);
 
-(when|WHEN)          { return(WHEN);           }
-(case|CASE)          { return(CASE);             }	  
-(endcase|ENDCASE)    { return(ENDCASE);            } 
-(default|DEFAULT)    { return(DEFAULT);           }
-(endwhen|ENDWHEN)      { return(ENDWHEN);         }
+(when|WHEN)           return(WHEN);
+(case|CASE)           return(CASE);
+(endcase|ENDCASE)     return(ENDCASE);
+(default|DEFAULT)     return(DEFAULT);
+(endwhen|ENDWHEN)       return(ENDWHEN);
 
-(while|WHILE)      { return(WHILE);         }  
-(do|DO)   { return(DO);      }
-(endwhile|ENDWHILE)     { return(ENDWHILE);      }
+(while|WHILE)       return(WHILE);
+(do|DO)    return(DO);
+(endwhile|ENDWHILE)      return(ENDWHILE);
 
-(repeat|REPEAT)          { return(REPEAT);            }
-(until|UNTIL)          { return(UNTIL);               }
-(endrepeat|ENDREPEAT)     { return(ENDREPEAT);        }
+(repeat|REPEAT)           return(REPEAT);
+(until|UNTIL)           return(UNTIL);
+(endrepeat|ENDREPEAT)      return(ENDREPEAT);
 
-(for|FOR)          { return(FOR);            }
-(in|IN)          { return(IN);               }
-(step|STEP)     { return(STEP);        }
-(endfor|ENDFOR)     { return(ENDFOR);        }
+(for|FOR)           return(FOR);
+(in|IN)           return(IN);
+(step|STEP)      return(STEP);
+(endfor|ENDFOR)      return(ENDFOR);
 
-(function|FUNCTION)     { return(FUNCTION);        }
-(procedure|PROCEDURE)     { return(PROCEDURE);        }
-(return|RETURN)     { return(RETURN);        }
-(endfunction|ENDFUNCTION) {return(ENDFUNCTION); }
+(function|FUNCTION)      return(FUNCTION);
+(procedure|PROCEDURE)      return(PROCEDURE);
+(return|RETURN)      return(RETURN);
+(endfunction|ENDFUNCTION) return(ENDFUNCTION);
+(endprocedure|ENDPROCEDURE) return(ENDPROCEDURE);
 
 
 (print|PRINT)     { return(PRINT);        }

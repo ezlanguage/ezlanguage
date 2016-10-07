@@ -25,7 +25,7 @@ using namespace std;
 %union{
     int	valeur_numerique;
     double	valeur_reel;
-    bool booleen; /* Inutilisé pour l'instant, pourrait être utile pour le remplissage, mais j'utilise un char* */
+    bool booleen; 
 					
     char* texte;
 }
@@ -36,7 +36,7 @@ using namespace std;
 %token	VIRGULE  DEGRE POURCENT DIESE POINT	// Caractères
 %token INTEGER REAL STRING BOOLEAN			// Type des variables
 %token  EGAL NE LT LE GT GE PLUS MINUS MULT DIVISE
-%token	PARENTHESE_GAUCHE PARENTHESE_DROITE ACCOLADE_GAUCHE ACCOLADE_DROITE CROCHET_GAUCHE CROCHET_DROIT FIN END	// Caractères spéciaux
+%token	PARENTHESE_GAUCHE PARENTHESE_DROITE ACCOLADE_GAUCHE ACCOLADE_DROITE CROCHET_GAUCHE CROCHET_DROIT FIN retourLigne	// Caractères spéciaux
 %token CONST  LOCAL  GLOBAL  IS  ARE 		      		      // declaration des variables
 %token IF DO ELSE  ENDIF 						 // if else 
 %token WHEN CASE ENDCASE DEFAULT ENDWHEN				 // switch case ...
@@ -54,26 +54,42 @@ using namespace std;
 
 
 ROOT:
-  functions stmtseq { } 
+  liste_declaration stmtseq { } 
 ;
 
-functions: /* aucune fonction déclarée */ 
-| functions function { }
-| function { }
-| procedure { }
+NL:  // un seule retour ou plusieurs retour en ligne 
+ retourLigne NL {} 
+| retourLigne {}
+;
+
+liste_declaration:
+/* aucune declaration */
+| liste_declaration NL {} 
+| liste_declaration declaration_methodes   {}
+| liste_declaration declaration_variables NL  {}
+;
+
+declaration_methodes: 
+   function NL { }  // NL <==> New Line <==> retour en Ligne 
+|  procedure NL { }
+;
+
+declaration_variables:
+  portee NAME IS type {  printf ("declaration d'une seule variable :\n"); }
+| portee NAME  noms ARE type { printf("declaration d'un ensemble des variables \n") ;}
 ;
 
 function:
-FUNCTION NAME PARENTHESE_GAUCHE liste_argument PARENTHESE_DROITE RETURN type stmtseq RETURN NAME ENDFUNCTION {}
+FUNCTION NAME PARENTHESE_GAUCHE liste_argument PARENTHESE_DROITE RETURN type NL stmtseq RETURN expression NL ENDFUNCTION { printf( "declaration d'une fonction \n");}
 ;
 
 procedure:
-PROCEDURE NAME PARENTHESE_GAUCHE liste_argument PARENTHESE_DROITE stmtseq ENDPROCEDURE {}
+PROCEDURE NAME PARENTHESE_GAUCHE liste_argument PARENTHESE_DROITE NL stmtseq  ENDPROCEDURE { printf( "declaration d'une procedure  \n");}
 ;
 
 stmtseq:
-  stmtseq statement { }
-| statement { /*printf("  statement \n");*/ }
+  stmtseq statement NL { }
+| statement NL { /*printf("  statement \n");*/ }
 ;
 
 liste_argument:
@@ -83,14 +99,13 @@ liste_argument:
 ;
 
 statement:
-  portee NAME IS type {  printf ("declaration d'une seule variable :\n"); }
-| portee NAME  noms ARE type { printf("declaration d'un ensemble des variables \n") ;}
+| declaration_variables {} // declration des variables
 | NAME EGAL expression { printf("affectation \n");} 
 | PRINT expression { printf("affichage \n"); } 
 | IF expression DO stmtseq ELSE stmtseq ENDIF { printf("SI_SINON_ALORS \n"); }
 | IF expression DO stmtseq ENDIF { printf("SI   ALORS \n"); }
 | WHEN NAME IS whenbody whendefault ENDWHEN {  printf("when .. case .. \n"); }
-| WHILE expression DO stmtseq ENDWHILE { printf("WHILE .. DO .. \n"); }
+| WHILE expression DO  stmtseq ENDWHILE { printf("WHILE .. DO .. \n"); }
 | REPEAT stmtseq UNTIL expression ENDREPEAT { printf("REPEAT .. UNTIL .. \n"); }
 | FOR NAME typeInFor IN NAME POINT POINT NAME STEP nbrOrName typeInFor DO stmtseq ENDFOR { printf("FOR .. IN ... \n");}
 ;
