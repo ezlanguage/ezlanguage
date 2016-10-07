@@ -5,10 +5,12 @@
 # Build results
 *.cmake
 bin/*
+!bin/dummy.txt
 obj/*
+!obj/dummy.txt
 
 # User-specific files
-*.user
+*.userl
 
 #CLion files
 .idea/
