@@ -74,7 +74,7 @@ int main ( int argc , char ** argv ){
 	//arguments qui ne sont pas prévus, donc des fichiers si la bonne extension, erreur sinon
 	for (int i = optind; i < argc; ++i) {
 		//test de l'extension
-		char* ext_ez = ".ezl";
+		const char* ext_ez = ".ezl";
 		for(unsigned int j = 0; j < strlen(ext_ez) ; ++j){
 			//si l'extension est mauvaise
 			if(ext_ez[j] != argv[i][strlen(argv[i])-strlen(ext_ez)+j]){
