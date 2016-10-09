@@ -1,6 +1,7 @@
 # Temp files
 ~$*
 *~
+*/.directory
 
 # Build results
 *.cmake
