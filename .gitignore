@@ -4,11 +4,14 @@
 
 # Build results
 *.cmake
-bin/EZ_language_compiler
+bin/*
+!bin/dummy.txt
+obj/*
+!obj/dummy.txt
 
 # User-specific files
-*.user
+*.userl
 
-# Kdev files
-.kdev4/
+#CLion files
+.idea/
 
