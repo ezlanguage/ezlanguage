@@ -1,6 +1,7 @@
 # Temp files
 ~$*
 *~
+.directory
 
 # Build results
 *.cmake
@@ -10,8 +11,7 @@ obj/*
 !obj/dummy.txt
 
 # User-specific files
-*.userl
+*.user
 
 #CLion files
 .idea/
-
