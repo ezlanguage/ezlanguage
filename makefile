@@ -41,12 +41,12 @@ EZ_language_compiler : ./obj/lex.yy.c ./obj/EZ_language_compiler.tab.cpp ./obj/E
 #clean  
 clean :
 	@echo "\033[1;33mSuppression des fichiers générés et des fichiers objets\033[0m"
-	rm -rf ./obj/*
+	rm -rf ./obj/lex.yy.c ./obj/*.tab.*
 	@echo ""
 	
 mrproper: clean	
 	@echo "\033[1;33mSuppression de l'exécutable\033[0m"
-	rm -rf ./bin/*
+	rm -rf ./bin/$(EXEC)
 
 launch: all
 	@echo "\033[1;33mLancement du compilateur"
