@@ -6,9 +6,9 @@
 # Build results
 *.cmake
 bin/*
-!bin/dummy.txt
+!bin/.dummy.txt
 obj/*
-!obj/dummy.txt
+!obj/.dummy.txt
 
 # User-specific files
 *.user
