@@ -8,6 +8,7 @@ bin/*
 !bin/dummy.txt
 obj/*
 !obj/dummy.txt
+*.o
 
 # User-specific files
 *.userl
