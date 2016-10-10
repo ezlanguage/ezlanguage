@@ -3,12 +3,10 @@
 
 #include "Node.h"
 
-using namespace std;
-
 class Operateur
         : public Node{
 
-private:
+protected:
     //dans le fichier yacc on pourra appeler (Operateur(LOGIQUE, "and") avec un token explicite)
     int nb_ope; //nombre d'operandes, 1 = operateur unaire, 2 = operateur binaire...etc
     int type_ope; //type d'operateur (1 : logique, 2 : arithmetique, 3 : comparaison...etc)

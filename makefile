@@ -20,6 +20,9 @@ YACC_FLAGS =
 # nom de l'exe, doit avoir le meme nom que le fichier lex
 EXEC = EZ_language_compiler
 
+# dossier de modules
+MOD= modules
+
 #compilateur
 all: $(EXEC)
 
@@ -37,16 +40,18 @@ EZ_language_compiler : ./obj/lex.yy.c ./obj/EZ_language_compiler.tab.cpp ./obj/E
 	$(YACC) $^ --defines=./obj/EZ_language_compiler.tab.hpp --output=./obj/EZ_language_compiler.tab.cpp $(YACC_FLAGS) 
 	@echo ""
 	
+modules:
+	 $(CC) -c src/$(MOD)/*
 
 #clean  
 clean :
 	@echo "\033[1;33mSuppression des fichiers générés et des fichiers objets\033[0m"
-	rm -rf ./obj/*
+	rm -rf ./obj/lex.yy.c ./obj/*.tab.*
 	@echo ""
 	
 mrproper: clean	
 	@echo "\033[1;33mSuppression de l'exécutable\033[0m"
-	rm -rf ./bin/*
+	rm -rf ./bin/$(EXEC)
 
 launch: all
 	@echo "\033[1;33mLancement du compilateur"

@@ -1,11 +1,12 @@
 #include "Operateur.h"
+#include <iostream>
+
+using namespace std;
 
 Operateur::Operateur() {
-    super();
 }
 
 Operateur::Operateur(int type_ope, string ope) {
-    super();
     name= "Operateur";
 
     type_ope= type_ope;

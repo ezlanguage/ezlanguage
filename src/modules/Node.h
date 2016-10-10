@@ -7,7 +7,7 @@ using namespace std;
 
 //classe basique dont les autres classes vont heriter pour en avoir la structure
 class Node{
-private:
+protected:
     string name;
     Node* left_son;
     Node* right_son;
