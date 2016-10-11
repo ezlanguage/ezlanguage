@@ -1,3 +1,4 @@
+//@author : GARNIER Antoine
 #include "Operateur.h"
 #include <iostream>
 

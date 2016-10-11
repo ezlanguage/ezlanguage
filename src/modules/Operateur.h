@@ -1,3 +1,4 @@
+//@author : GARNIER Antoine
 #ifndef OPERATEUR_H
 #define OPERATEUR_H
 

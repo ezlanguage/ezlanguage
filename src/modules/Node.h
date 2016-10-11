@@ -1,3 +1,4 @@
+//@author : GARNIER Antoine
 #ifndef NODE_H
 #define NODE_H
 
