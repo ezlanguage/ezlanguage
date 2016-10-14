@@ -19,16 +19,16 @@ string Operateur::traduire() {
 
     switch(type_ope){
         //operateur logique (and, or, xor, not)
-        case 1:
+        case LOGIQUE:
             cout << "Type d'operateur : logique" << endl;
             switch(nb_ope){
-                case 1:
+                case UNAIRE:
                     //operateur unaire
                     if(ope == "not"){res= "!" + this->left_son->traduire();} //TODO fils gauche ou droit ?
                     else {};//aucun operateur logique reconnu
                     break;
 
-                case 2:
+                case BINAIRE:
                     //operateur binaire
                     if(ope == "and"){res= this->left_son->traduire() + "&&" + this->right_son->traduire();} else
                     if(ope == "or"){res= this->left_son->traduire() + "||" + this->right_son->traduire();} else
@@ -43,16 +43,16 @@ string Operateur::traduire() {
             }
             break;
         //operateur arithmetique (-a, a+b, a-b, a*b, a/b, a mod b, a pow b)
-        case 2:
+        case ARITHMETIQUE:
             cout << "Type d'operateur : arithmetique" << endl;
             switch(nb_ope){
-                case 1:
+                case UNAIRE:
                     //operateur unaire
                     if(ope == "-"){res= "-" + this->left_son->traduire();} //recuperation fils gauche ou droit pour le "-a" ?
                     else {};//aucun operateur logique reconnu
                     break;
 
-                case 2:
+                case BINAIRE:
                     //operateur binaire
                     if(ope == "-"){res= this->left_son->traduire() + "-" + this->right_son->traduire();} else
                     if(ope == "+"){res= this->left_son->traduire() + "+" + this->right_son->traduire();} else
@@ -70,7 +70,7 @@ string Operateur::traduire() {
             break;
 
         //operateur d'affectation (=, +=, -=, *=, /=)
-        case 3:
+        case AFFECTATION:
             cout << "Type d'operateur : affectation" << endl;
             if(ope == "="){res= this->left_son->traduire() + "=" + this->right_son->traduire();} else
             if(ope == "+="){res= this->left_son->traduire() + "+=" + this->right_son->traduire();} else
@@ -81,7 +81,7 @@ string Operateur::traduire() {
             break;
 
         //operateur de comparaison (==, !=, <, >, <=, >=)
-        case 4:
+        case COMPARAISON:
             cout << "Type d'operateur : comparaison" << endl;
             if(ope == "=="){res= this->left_son->traduire() + "==" + this->right_son->traduire();} else
             if(ope == "!="){res= this->left_son->traduire() + "!=" + this->right_son->traduire();} else
@@ -93,7 +93,7 @@ string Operateur::traduire() {
             break;
 
         //operateur d'incrementation/decrementation (a++, ++a, a--, --a)
-        case 5:
+        case INCREMENTATION:
             cout << "Type d'operateur : incrementation/decrementation" << endl;
             if(ope == "++"){res= "++" + this->left_son->traduire();} else
             if(ope == "--"){res= "--" + this->left_son->traduire();} else {};//aucun operateur logique reconnu
