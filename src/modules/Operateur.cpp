@@ -98,7 +98,6 @@ string Operateur::traduire() {
             if(ope == "++"){res= "++" + this->left_son->traduire();} else
             if(ope == "--"){res= "--" + this->left_son->traduire();} else {};//aucun operateur logique reconnu
             break;
-
     }
 
 
