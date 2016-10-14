@@ -1,6 +1,6 @@
 #compilation
 # compilateur utilisé
-CC = g++
+CC = g++-5
 # flags de compilation
 CC_FLAGS = -ggdb -Wall -std=c++11
 EXT_SRC = 
