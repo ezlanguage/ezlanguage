@@ -24,7 +24,7 @@ EXEC = EZ_language_compiler
 MOD= modules
 
 #compilateur
-all: $(EXEC)
+all: help $(EXEC)
 
 EZ_language_compiler : ./obj/lex.yy.c ./obj/EZ_language_compiler.tab.cpp ./obj/EZ_language_compiler.tab.hpp
 	@echo  "\033[1;33mCréation du compilateur en compilant ses sources\033[0m"
@@ -32,7 +32,7 @@ EZ_language_compiler : ./obj/lex.yy.c ./obj/EZ_language_compiler.tab.cpp ./obj/E
 
 ./obj/lex.yy.c: ./src/EZ_language_compiler.$(LEX_EXT) ./obj/EZ_language_compiler.tab.hpp
 	@echo "\033[1;33mInterprétation du fichier Lex\033[0m"
-	$(LEX) -o ./obj/lex.yy.c $^ $(LEX_FLAGS) 
+	$(LEX) -o $@ $^ $(LEX_FLAGS) 
 	@echo ""
 	
 ./obj/EZ_language_compiler.tab.cpp ./obj/EZ_language_compiler.tab.hpp:  ./src/EZ_language_compiler.$(YACC_EXT)
@@ -63,6 +63,6 @@ launch: all
 #aide
 aide: help
 help:
-		@echo "Compiler le projet : make "
-		@echo "Nettoyer les fichier objets : clean"
-		@echo "Nettoyer les fichier objets + executable : mrproper"
+	@echo "\t\033[3mCompiler le projet : make\033[0m"	
+	@echo "\t\033[3mNettoyer les fichier objets : clean\033[0m"	
+	@echo "\t\033[3mNettoyer les fichier objets + executable : mrproper\033[0m"
