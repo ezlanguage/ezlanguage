@@ -1,12 +1,11 @@
 #ifndef REPEAT_H
 #define REPEAT_H
 
-#include <string>
-#include "Boucle.h"
+#include "Instruction_iterative.h"
 
 //repeat until
 class Repeat :
-        public Boucle {
+        public Instruction_iterative {
 protected:
 
 public:

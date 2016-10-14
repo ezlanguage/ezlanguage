@@ -4,6 +4,7 @@
 #include <string>
 #include "Node.h"
 
+//valeur booleenne (utilisee dans les boucles)
 class Condition :
         public Node {
 protected:

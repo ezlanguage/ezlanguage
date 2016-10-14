@@ -1,11 +1,10 @@
 #ifndef WHILE_H
 #define WHILE_H
 
-#include <string>
-#include "Boucle.h"
+#include "Instruction_iterative.h"
 
 class While :
-        public Boucle {
+        public Instruction_iterative {
 protected:
 
 public:

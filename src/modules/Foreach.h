@@ -1,12 +1,11 @@
 #ifndef FOREACH_H
 #define FOREACH_H
 
-#include <string>
-#include "Boucle.h"
+#include "Instruction_iterative.h"
 
 //exemple d'utilisation : foreach v in vector (traduit en c++ comme ceci : for(auto v : vector))
 class Foreach :
-        public Boucle {
+        public Instruction_iterative {
 protected:
 
 public:
