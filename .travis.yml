@@ -1,0 +1,27 @@
+language: cpp
+#sudo: required
+dist: trusty
+cache: apt
+
+os:
+  - linux
+  
+addons:
+  apt:
+    sources:
+      # gcc/g++ repository
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.9
+
+install:
+# g++ install
+  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
+
+after_success:
+# Launch tests
+#  - ./bin/EZ_language_compiler
+
+script:
+  - make --file makefile -j2
+
