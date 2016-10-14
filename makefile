@@ -2,7 +2,7 @@
 # compilateur utilisé
 CC = g++
 # flags de compilation
-CC_FLAGS = -ggdb -Wall -ll
+CC_FLAGS = -ggdb -Wall -ll -std=c++11
 EXT_SRC = 
 
 # extension des fichiers lex (.XXX)
@@ -41,7 +41,7 @@ EZ_language_compiler : ./obj/lex.yy.c ./obj/EZ_language_compiler.tab.cpp ./obj/E
 	@echo ""
 	
 modules:
-	 $(CC) -c src/$(MOD)/*
+	 $(CC) -c src/$(MOD)/* -std=c++11
 
 #clean  
 clean :

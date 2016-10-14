@@ -1,18 +1,20 @@
 #ifndef FORALL_H
 #define FORALL_H
 
+#include "Node.h"
 #include <string>
-#include "Boucle.h"
 
 //exemple d'utilisation : forall i in 1..10 step 2 (le pas "step" est optionnel)
 //utilisation des classes Declaration, Condition et Instruction
-class Forall :
-        public Boucle {
+class Forall
+        : public Node {
 protected:
-
+    int indice_debut;
+    int indice_fin;
+    int step;
+    int imbrication;
 public:
-    Forall();
-
+    Forall(int indice_debut, int indice_fin, int step, int imbrication);
     std::string traduire();
 };
 

@@ -10,6 +10,7 @@ bin/*
 obj/*
 !obj/.dummy.txt
 *.o
+*.gch
 
 # User-specific files
 *.user
