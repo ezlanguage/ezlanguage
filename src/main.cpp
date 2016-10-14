@@ -12,6 +12,7 @@ extern int yyparse();
 
 //FLAGS
 static int verbose_flag;
+int directinput = 0;
 
 //functions
 //arguments qui ne sont pas prévus, donc des fichiers si la bonne extension, erreur sinon
@@ -38,12 +39,13 @@ int main ( int argc , char ** argv ){
 		//options
 		static struct option long_options[] = {
 			// flags
-			{"verbose",	no_argument,	&verbose_flag, 1},
-			{"brief",	no_argument,	&verbose_flag, 0},
+			{"verbose",		no_argument,	&verbose_flag, 	1},
+			{"brief",		no_argument,	&verbose_flag, 	0},
+			{"noexec",		no_argument,	0, 				0},
+			{"directinput",	no_argument,	&directinput,	1},
 			
 			//autres
 			{"help",			no_argument,		0, 	'h'},
-			{"noexec",			no_argument,		0, 	0 },
 			{"optimisation",	required_argument,	0, 	'O'},
 			{"warning",			no_argument,		0, 	'w'},
 			{"output",			required_argument,	0, 	'o'},
@@ -68,7 +70,6 @@ int main ( int argc , char ** argv ){
 					break;
 				if (string(long_options[option_index].name) == "noexec")
 					cout << "Ne pas lancer l'exécutable" << endl;
-					break;
 				break;
 			//options
 			case 'h':
@@ -116,17 +117,24 @@ int main ( int argc , char ** argv ){
 
 
 	// Boucle qui execute tout les fichiers
-	for(unsigned int i=0; i<fic_ezl.size(); ++i){
-		cout << "\033[1;36mParsing du fichier : \033[1;37m" << fic_ezl[i] << endl;
-		cout << "\033[1;36m=====================================\033[0m" << endl;
-		yyin = fopen(fic_ezl[i], "r");
-		if(!yyin){
-			cerr << "Erreur lors de l'ouverture du fichier : " << fic_ezl[i] << endl;
-		}else{
-			yyparse();
+	if(!directinput){
+		for(unsigned int i=0; i<fic_ezl.size(); ++i){
+			cout << "\033[1;36mParsing du fichier : \033[1;37m" << fic_ezl[i] << endl;
+			cout << "\033[1;36m=====================================\033[0m" << endl;
+			yyin = fopen(fic_ezl[i], "r");
+			if(!yyin){
+				cerr << "Erreur lors de l'ouverture du fichier : " << fic_ezl[i] << endl;
+			}else{
+				yyparse();
+			}
+			cout << "\033[1;36m=====================================\033[0m" << endl;
+			cout << endl;
 		}
+	}else{
+		cout << "\033[1;36mDébut de votre parsing : \033[1;37m" << endl;
 		cout << "\033[1;36m=====================================\033[0m" << endl;
-		cout << endl;
+		yyparse();
+		cout << "\033[1;36m=====================================\033[0m" << endl;
 	}
 	cout << "\033[1;36mFin du parsing\033[0m" << endl;
 
