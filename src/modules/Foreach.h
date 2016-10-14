@@ -1,17 +1,17 @@
 #ifndef FOREACH_H
 #define FOREACH_H
 
-#include "Instruction_iterative.h"
+#include "Iterative_instruction.h"
 
-//exemple d'utilisation : foreach v in vector (traduit en c++ comme ceci : for(auto v : vector))
+//using example : foreach v in vector (it is translated in c++ like this : for(auto v : vector))
 class Foreach :
-        public Instruction_iterative {
+        public Iterative_instruction {
 protected:
 
 public:
     Foreach();
 
-    std::string traduire();
+    std::string translate();
 };
 
 #endif
