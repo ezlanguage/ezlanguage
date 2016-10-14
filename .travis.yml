@@ -23,9 +23,9 @@ before_install:
 install:
 # g++ install
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
-  - alias g++=g++-4.9
+  - alias g++="g++-4.9"
   - g++ --version
-  - echo "================="
+  - echo -e "================="
   - $CXX --version
 
 after_success:
