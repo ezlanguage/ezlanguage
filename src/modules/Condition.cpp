@@ -8,7 +8,7 @@ using namespace std;
 Condition::Condition() {
 }
 
-string Condition::traduire() {
+string Condition::translate() {
     string res = "";
 
     return res;

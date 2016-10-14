@@ -1,21 +1,21 @@
 #ifndef FORALL_H
 #define FORALL_H
 
-#include "Node.h"
+#include "Iterative_instruction.h"
 #include <string>
 
-//exemple d'utilisation : forall i in 1..10 step 2 (le pas "step" est optionnel)
-//utilisation des classes Declaration, Condition et Instruction
+//example : forall i in 1..10 step 2 (step is optionnal)
+//Use of Declaration, Condition and Instruction
 class Forall
-        : public Node {
+        : public Iterative_instruction {
 protected:
-    int indice_debut;
-    int indice_fin;
+    int ind_begin;
+    int ind_end;
     int step;
     int imbrication;
 public:
-    Forall(int indice_debut, int indice_fin, int step, int imbrication);
-    std::string traduire();
+    Forall(int ind_begin, int ind_end, int step, int imbrication);
+    std::string translate();
 };
 
 #endif

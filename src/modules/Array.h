@@ -8,12 +8,12 @@
 class Array :
         public Node {
 protected:
-    int start_iterateur;
+    int begin_iterateur;
     int end_iterateur;
 
 public:
     Array();
-    Array(int start_it, int end_it);
+    Array(int begin_it, int end_it);
 
     std::string translate();
 };
