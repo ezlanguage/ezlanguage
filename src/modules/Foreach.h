@@ -2,11 +2,11 @@
 #define FOREACH_H
 
 #include <string>
-#include "Node.h"
+#include "Boucle.h"
 
 //exemple d'utilisation : foreach v in vector (traduit en c++ comme ceci : for(auto v : vector))
 class Foreach :
-        public Node {
+        public Boucle {
 protected:
 
 public:

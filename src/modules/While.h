@@ -1,18 +1,18 @@
-#ifndef REPEAT_H
-#define REPEAT_H
+#ifndef WHILE_H
+#define WHILE_H
 
 #include <string>
 #include "Boucle.h"
 
-//repeat until
-class Repeat :
+class While :
         public Boucle {
 protected:
 
 public:
-    Repeat();
+    While();
 
     std::string traduire();
 
 };
+
 #endif
