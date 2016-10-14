@@ -1,6 +1,6 @@
 #compilation
 # compilateur utilisé
-CC = g++
+CC = g++-5
 # flags de compilation
 CC_FLAGS = -ggdb -Wall -std=c++11
 EXT_SRC = 
@@ -25,6 +25,9 @@ MOD= modules
 
 #compilateur
 all: help $(EXEC)
+
+version:
+	g++ --version
 
 EZ_language_compiler : ./obj/lex.yy.c ./obj/EZ_language_compiler.tab.cpp ./obj/EZ_language_compiler.tab.hpp
 	@echo  "\033[1;33mCréation du compilateur en compilant ses sources\033[0m"
