@@ -3,6 +3,9 @@ sudo: required
 dist: trusty
 cache: apt
 
+notifications:
+  slack: ezlanguage:Lx6iO5M1QzE01l4om91A36fo
+
 os:
   - linux
   
@@ -22,6 +25,8 @@ install:
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
   - alias g++=g++-4.9
   - g++ --version
+  - echo "================="
+  - $CXX --version
 
 after_success:
 # Launch tests

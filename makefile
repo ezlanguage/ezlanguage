@@ -26,6 +26,9 @@ MOD= modules
 #compilateur
 all: help $(EXEC)
 
+version:
+	g++ --version
+
 EZ_language_compiler : ./obj/lex.yy.c ./obj/EZ_language_compiler.tab.cpp ./obj/EZ_language_compiler.tab.hpp
 	@echo  "\033[1;33mCréation du compilateur en compilant ses sources\033[0m"
 	$(CC) -o ./bin/$@ ./obj/EZ_language_compiler.tab.cpp ./obj/lex.yy.c -ll $(CC_FLAGS)
