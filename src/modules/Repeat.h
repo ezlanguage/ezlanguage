@@ -1,17 +1,17 @@
 #ifndef REPEAT_H
 #define REPEAT_H
 
-#include "Instruction_iterative.h"
+#include "Iterative_instruction.h"
 
 //repeat until
 class Repeat :
-        public Instruction_iterative {
+        public Iterative_instruction {
 protected:
 
 public:
     Repeat();
 
-    std::string traduire();
+    std::string translate();
 
 };
 #endif

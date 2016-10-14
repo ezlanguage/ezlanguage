@@ -1,18 +1,18 @@
 #ifndef FORALL_H
 #define FORALL_H
 
-#include "Instruction_iterative.h"
+#include "Iterative_instruction.h"
 
-//exemple d'utilisation : forall i in 1..10 step 2 (le pas "step" est optionnel)
-//utilisation des classes Declaration, Condition et Instruction
+//using example : forall i in 1..10 step 2 ("step" is optionnal)
+//We use the classes "Declaration", "Condition" and "Instruction" here
 class Forall :
-        public Instruction_iterative {
+        public Iterative_instruction {
 protected:
 
 public:
     Forall();
 
-    std::string traduire();
+    std::string translate();
 };
 
 #endif
