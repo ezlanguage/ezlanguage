@@ -2,7 +2,7 @@
 # compilateur utilisé
 CC = g++
 # flags de compilation
-CC_FLAGS = -ggdb -Wall -ll
+CC_FLAGS = -ggdb -Wall -std=c++11
 EXT_SRC = 
 
 # extension des fichiers lex (.XXX)
@@ -28,7 +28,7 @@ all: help $(EXEC)
 
 EZ_language_compiler : ./obj/lex.yy.c ./obj/EZ_language_compiler.tab.cpp ./obj/EZ_language_compiler.tab.hpp
 	@echo  "\033[1;33mCréation du compilateur en compilant ses sources\033[0m"
-	$(CC) -o ./bin/$@ ./obj/EZ_language_compiler.tab.cpp ./obj/lex.yy.c $(CC_FLAGS)
+	$(CC) -o ./bin/$@ ./obj/EZ_language_compiler.tab.cpp ./obj/lex.yy.c -ll $(CC_FLAGS)
 
 ./obj/lex.yy.c: ./src/EZ_language_compiler.$(LEX_EXT) ./obj/EZ_language_compiler.tab.hpp
 	@echo "\033[1;33mInterprétation du fichier Lex\033[0m"
@@ -41,7 +41,7 @@ EZ_language_compiler : ./obj/lex.yy.c ./obj/EZ_language_compiler.tab.cpp ./obj/E
 	@echo ""
 	
 modules:
-	 $(CC) -c src/$(MOD)/*
+	 $(CC) -c src/$(MOD)/* $(CC_FLAGS)
 
 #clean  
 clean :
@@ -55,7 +55,7 @@ mrproper: clean
 
 launch: all
 	@echo "\033[1;33mLancement du compilateur"
-	@echo "=============================="
+	@echo "\033[1;33m=============================="
 	@echo ""
 	@exec ./bin/$(EXEC) ""
 	@echo "FIN\033[0m"
