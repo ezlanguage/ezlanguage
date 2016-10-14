@@ -3,7 +3,7 @@
 
 #include "Instruction.h"
 
-//boucles
+//boucles : forall, foreach, while, repeat
 class Iterative_instruction :
         public Instruction {
 protected:

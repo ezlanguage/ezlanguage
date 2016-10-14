@@ -1,3 +1,4 @@
+//@author Antoine GARNIER
 #ifndef RANGE_H
 #define RANGE_H
 
@@ -14,6 +15,10 @@ private:
 public:
     Range();
     Range(int start_it, int end_it);
+
+    //getters
+    int get_start_iterator(){return start_iterator;};
+    int get_end_iterator(){return end_iterator;};
 
     std::string translate();
 };
