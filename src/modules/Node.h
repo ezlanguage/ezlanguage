@@ -6,7 +6,7 @@
 
 using namespace std;
 
-//classe basique dont les autres classes vont heriter pour en avoir la structure
+//Basic class, used to structure the others classes as nodes of the main tree
 class Node{
 protected:
     string name;
@@ -15,7 +15,7 @@ protected:
 
 public:
     Node(){};
-    virtual string traduire() =0; //va permettre de traduire les elements du noeud en instructions c++
+    virtual string translate() =0; // this function will allow the translation of the nodes's tree into c++ instructions
     ~Node(){};
 };
 

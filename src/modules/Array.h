@@ -8,14 +8,14 @@
 class Array :
         public Node {
 protected:
-    int debut_iterateur;
-    int fin_iterateur;
+    int start_iterateur;
+    int end_iterateur;
 
 public:
     Array();
-    Array(int debut_it, int fin_it);
+    Array(int start_it, int end_it);
 
-    std::string traduire();
+    std::string translate();
 };
 
 #endif

@@ -1,0 +1,15 @@
+#ifndef ITERATIVE_INSTRUCTION_H
+#define ITERATIVE_INSTRUCTION_H
+
+#include "Instruction.h"
+
+//boucles
+class Iterative_instruction :
+        public Instruction {
+protected:
+
+public:
+
+    std::string translate();
+};
+#endif
