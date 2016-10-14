@@ -9,10 +9,15 @@ using namespace std;
 
 extern FILE* yyin;
 extern int yyparse();
+extern FILE* yyout;
 
 //FLAGS
 static int verbose_flag;
 int directinput = 0;
+int no_execution = 0;
+
+// Ligne de commande g++
+string commande_gpp = "g++ ";
 
 //functions
 //arguments qui ne sont pas prévus, donc des fichiers si la bonne extension, erreur sinon
@@ -39,10 +44,10 @@ int main ( int argc , char ** argv ){
 		//options
 		static struct option long_options[] = {
 			// flags
-			{"verbose",		no_argument,	&verbose_flag, 	1},
-			{"brief",		no_argument,	&verbose_flag, 	0},
-			{"noexec",		no_argument,	0, 				0},
-			{"directinput",	no_argument,	&directinput,	1},
+			{"verbose",			no_argument,	&verbose_flag, 	1},
+			{"brief",			no_argument,	&verbose_flag, 	0},
+			{"noexec",			no_argument,	&no_execution, 	1},
+			{"directinput",		no_argument,	&directinput,	1},
 			
 			//autres
 			{"help",			no_argument,		0, 	'h'},
@@ -68,26 +73,34 @@ int main ( int argc , char ** argv ){
 			case 0:
 				if (long_options[option_index].flag != 0)
 					break;
+				// flag indiquant que l' exécutable ne doit pas être lancé après la compilation
 				if (string(long_options[option_index].name) == "noexec")
-					cout << "Ne pas lancer l'exécutable" << endl;
+					cout << "Do not launch .exe file" << endl;
 				break;
-			//options
+			// Compiler options computing
+				
+			// Affiche l'aide
 			case 'h':
-				cout << "Faire une aide" << endl;
+				cout << "Displays help" << endl;
 				break;
-
+			// Ajoute le fichier de sortie au compilateur g++
 			case 'o':
-				cout << "Gerer un output" << endl;
+				cout << "Indicates the name of the output file" << endl;
+				commande_gpp += "-o "+string(optarg)+" ";
 				break;
 			case 'w':
-				cout << "Afficher les warning" << endl;
+				cout << "Displays warning messages" << endl;
 				break;
+			// Ajoute l'option -o(1..3) au compilateur g++
 			case 'O':
-				cout << "Option d'optimisation niveau: " << optarg << endl;
+				cout << "Optimization option level: " << optarg << endl;
+				if(atoi(optarg) >= 1 && atoi(optarg) <= 3){
+					commande_gpp += "-o"+string(optarg)+" "; 
+				}
 				break;
-			//option inconnue, s'il y a une option avec un tiret ou deux, c'est forcement autre chose qu'un fichier donc erreur
+			// Option inconnue, s'il y a une option avec un tiret ou deux, c'est forcement autre chose qu'un fichier donc erreur
 			case '?':
-				cout << "Option inconnue : " << option_index << endl;
+				cout << "Unknown option : " << option_index << endl;
 				exit(EXIT_FAILURE);
 			//defaut
 			default:
@@ -110,7 +123,7 @@ int main ( int argc , char ** argv ){
     //test des arguments restant
 	for(int i=optind; i<argc; ++i){
 		if(!(find(fic_ezl.begin(), fic_ezl.end(), argv[i]) != fic_ezl.end())){
-			cerr << "Fichier invalide ou option inconnue : " << argv[i] << endl;
+			cerr << "Invalid file or unknown option : " << argv[i] << endl;
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -119,23 +132,44 @@ int main ( int argc , char ** argv ){
 	// Boucle qui execute tout les fichiers
 	if(!directinput){
 		for(unsigned int i=0; i<fic_ezl.size(); ++i){
-			cout << "\033[1;36mParsing du fichier : \033[1;37m" << fic_ezl[i] << endl;
+			cout << "\033[1;36mFile parsing : \033[1;37m" << fic_ezl[i] << endl;
 			cout << "\033[1;36m=====================================\033[0m" << endl;
 			yyin = fopen(fic_ezl[i], "r");
+
 			if(!yyin){
-				cerr << "Erreur lors de l'ouverture du fichier : " << fic_ezl[i] << endl;
+				cerr <<  fic_ezl[i] << ": file opening failed." << endl;
 			}else{
+				// creation des fichiers cpp
+				string fichier_tmp = string(fic_ezl[i]);
+				fichier_tmp = fichier_tmp.substr(0,fichier_tmp.find("."));
+				cout << "File extension is: " << fichier_tmp << endl;
+				fichier_tmp +=".cpp";
+				FILE * cpp_file = fopen(fichier_tmp.c_str(), "w"); 
+				
+				if(cpp_file == NULL){
+					cerr << fichier_tmp << ": creation failed;" << endl;
+					break;
+				}		
+
+				// parsing du fichiers ez en fichier cpp
 				yyparse();
+
+				yyout = cpp_file;
+				
+				// fermerture du fichier cpp
+				fclose(cpp_file);
 			}
 			cout << "\033[1;36m=====================================\033[0m" << endl;
 			cout << endl;
 		}
 	}else{
-		cout << "\033[1;36mDébut de votre parsing : \033[1;37m" << endl;
+		cout << "\033[1;36mParsing begining : \033[1;37m" << endl;
 		cout << "\033[1;36m=====================================\033[0m" << endl;
 		yyparse();
 		cout << "\033[1;36m=====================================\033[0m" << endl;
 	}
+
+	cout << commande_gpp << endl;
 	cout << "\033[1;36mFin du parsing\033[0m" << endl;
 
     exit(EXIT_SUCCESS);
