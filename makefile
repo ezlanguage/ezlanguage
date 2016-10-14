@@ -55,7 +55,7 @@ mrproper: clean
 
 launch: all
 	@echo "\033[1;33mLancement du compilateur"
-	@echo "=============================="
+	@echo "\033[1;33m=============================="
 	@echo ""
 	@exec ./bin/$(EXEC) ""
 	@echo "FIN\033[0m"
