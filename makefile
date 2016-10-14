@@ -32,7 +32,7 @@ EZ_language_compiler : ./obj/lex.yy.c ./obj/EZ_language_compiler.tab.cpp ./obj/E
 
 ./obj/lex.yy.c: ./src/EZ_language_compiler.$(LEX_EXT) ./obj/EZ_language_compiler.tab.hpp
 	@echo "\033[1;33mInterprétation du fichier Lex\033[0m"
-	$(LEX) -o ./obj/lex.yy.c $^ $(LEX_FLAGS) 
+	$(LEX) -o $@ $^ $(LEX_FLAGS) 
 	@echo ""
 	
 ./obj/EZ_language_compiler.tab.cpp ./obj/EZ_language_compiler.tab.hpp:  ./src/EZ_language_compiler.$(YACC_EXT)
