@@ -19,11 +19,13 @@ addons:
 
 before_install:
   - sudo apt-get update -qy
+  - sudo apt-get install g++-5
+
 
 install:
 # g++ install
-  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
-  - alias g++="g++-4.9"
+  - if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-4.9"; fi
+  - alias g++="g++-5"
   - g++ --version
   - echo -e "================="
   - $CXX --version
