@@ -1,0 +1,38 @@
+Comportement par défaut du compilateur:
+
+- Par défaut g++ sera éxécuté en std=c++11
+- Le nomage de l’exécutable est obligatoire, il n’aura pas de nom par défaut contrairement au c++ qui le nomme a.out par défaut.
+- L’éxécution sera automatique
+- Contrairement au C, Il n’ y aura pas besoin d’inclure toutes les classes dans la ligne de commande. Le compilateur détectera les include
+dans la classe principale et les ajoutera automatiquement 
+
+Options du compilateur possibles
+
+Options traduites du C++
+- Nom du fichier binaire en sortie	→ -o
+- Options d’optimisation            → -o1 o2 o3
+
+Options du EZ
+- Option d’éxécution automatique  ou non après la compilation
+- Option de verbose pour afficher toutes les étapes de compilation du compilateur EZ
+- Option d’aide qui liste l’ensemble des options du compilateur et leur fonction
+- Option d’affichage des warnings
+
+
+Options finales
+
+Options de base
+--output: spécifie le nom du fichier binaire en sortie.
+Version courte :  -o
+--help: affiche la liste des options du compilateur EZ et  leur fonction. 
+Version courte :  -h
+Options d’ optimisation
+--optimisation=n: Indique au compilateur d’optimiser le code binaire généré, correspond aux options o 1..3 du compilateur g++
+version courte : -o n
+Options de debug
+--verbose: affiche toutes les étapes de compilation du compilateur EZ
+Version courte : -v
+--warning: affiche l’ensemble des messages  de type « warning » . 
+Version courte : -w
+Options autres
+--noexec: indique au compilateur qu’il ne faut pas lancer l’exécutable après la compilation
