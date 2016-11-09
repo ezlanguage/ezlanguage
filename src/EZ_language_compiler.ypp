@@ -18,7 +18,7 @@ using namespace std;
  int yyparse (void);
  extern "C" int yylex();
  extern "C" void yyerror(const std::string&);
-
+extern int yylineno;
 
 %}
 
@@ -27,16 +27,16 @@ using namespace std;
     double	valeur_reel;
     bool booleen; 
 					
-    char* texte;
+    string texte;
 }
 
-%token<valeur_numerique>	NOMBRE			// ENTIER
-%token<valeur_reel>	NUMBRE				// REEL
-%token<texte>	NAME					// NOM
+%token<valeur_numerique>	NUM_INTEGER			// ENTIER
+%token<valeur_reel>	NUM_REAL				// REEL
+%token<texte>	NAME RETOUR					// NOM
 %token	VIRGULE  DEGRE POURCENT DIESE POINT	// Caractères
 %token INTEGER REAL STRING BOOLEAN			// Type des variables
 %token  EGAL NE LT LE GT GE PLUS MINUS MULT DIVISE
-%token	PARENTHESE_GAUCHE PARENTHESE_DROITE ACCOLADE_GAUCHE ACCOLADE_DROITE CROCHET_GAUCHE CROCHET_DROIT FIN retourLigne	// Caractères spéciaux
+%token	PARENTHESE_GAUCHE PARENTHESE_DROITE ACCOLADE_GAUCHE ACCOLADE_DROITE CROCHET_GAUCHE CROCHET_DROIT FIN 	// Caractères spéciaux
 %token CONST  LOCAL  GLOBAL  IS  ARE 		      		      // declaration des variables
 %token IF DO ELSE  ENDIF 						 // if else 
 %token WHEN CASE ENDCASE DEFAULT ENDWHEN				 // switch case ...
@@ -47,49 +47,48 @@ using namespace std;
 %token PRINT							         // boucle for
 
 %type<valeur_reel> expression designator expr2 expr3 expr4  stmtseq statement
-
+%type<texte> next_line liste_declaration function procedure declaration_methodes declaration_variables
 
 %start ROOT
 %%
 
 
 ROOT:
-  liste_declaration stmtseq { } 
+    liste_declaration  next_line stmtseq {} 
 ;
 
-NL:  // un seul retour ou plusieurs retours en ligne
- retourLigne NL {} 
-| retourLigne {}
+next_line:  // un seul retour ou plusieurs retours en ligne
+/* rien */ {}
+| RETOUR next_line {} 
 ;
 
 liste_declaration:
 /* aucune declaration */
-| liste_declaration NL {} 
-| liste_declaration declaration_methodes   {}
-| liste_declaration declaration_variables NL  {}
+| declaration_variables  liste_declaration  {}
+| declaration_methodes liste_declaration   {}
 ;
 
 declaration_methodes: 
-   function NL { }  // NL <==> New Line <==> retour en Ligne 
-|  procedure NL { }
+   function next_line { $$="Fonction\n"+$1+$2; }  // next_line <==> New Line <==> retour en Ligne 
+|  procedure next_line { cout << "Procedure" <<endl;}
 ;
 
 declaration_variables:
-  portee NAME IS type {  printf ("declaration d'une seule variable :\n"); }
-| portee NAME  noms ARE type { printf("declaration d'un ensemble des variables \n") ;}
+  portee NAME IS type next_line { cout << "Declaration de la variable " << $2 << endl; }
+| portee NAME noms ARE type { cout << "Declaration des variables "<< $2 << endl; }
 ;
 
 function:
-FUNCTION NAME PARENTHESE_GAUCHE liste_argument PARENTHESE_DROITE RETURN type NL stmtseq RETURN expression NL ENDFUNCTION { printf( "declaration d'une fonction \n");}
+FUNCTION NAME PARENTHESE_GAUCHE liste_argument PARENTHESE_DROITE RETURN type next_line stmtseq RETURN expression next_line ENDFUNCTION {  cout << "Declaration de la fonction" << endl; }
 ;
 
 procedure:
-PROCEDURE NAME PARENTHESE_GAUCHE liste_argument PARENTHESE_DROITE NL stmtseq  ENDPROCEDURE { printf( "declaration d'une procedure  \n");}
+PROCEDURE NAME PARENTHESE_GAUCHE liste_argument PARENTHESE_DROITE next_line stmtseq  ENDPROCEDURE { cout << "declaration de la procedure" << endl;}
 ;
 
 stmtseq:
-  stmtseq statement NL { }
-| statement NL { /*printf("  statement \n");*/ }
+  
+| statement next_line stmtseq { /*printf("  statement \n");*/ }
 ;
 
 liste_argument:
@@ -107,11 +106,12 @@ statement:
 | WHEN NAME IS whenbody whendefault ENDWHEN {  printf("when .. case .. \n"); }
 | WHILE expression DO  stmtseq ENDWHILE { printf("WHILE .. DO .. \n"); }
 | REPEAT stmtseq UNTIL expression ENDREPEAT { printf("REPEAT .. UNTIL .. \n"); }
-| FOR NAME typeInFor IN NAME POINT POINT NAME STEP nbrOrName typeInFor DO stmtseq ENDFOR { printf("FOR .. IN ... \n");}
+| FOR NAME IN NUM_INTEGER POINT POINT NUM_INTEGER STEP nbrOrName next_line DO stmtseq ENDFOR { printf("FOR .. IN ... \n");}
 ;
 
 nbrOrName:
-  NOMBRE  {}
+  NUM_INTEGER  {}
+| NUM_REAL
 | NAME {}
 
 portee: /* rien ( local par default) */ 
@@ -127,7 +127,7 @@ type:
 ;
 
 noms:
-  noms VIRGULE NAME {}
+  VIRGULE NAME noms {}
 | VIRGULE NAME {}
 ;
 
@@ -172,8 +172,8 @@ expr4:
   PLUS expr4 {    }
 | MINUS expr4 { }
 | PARENTHESE_GAUCHE expression PARENTHESE_DROITE {  }
-| NUMBRE {  } //reel
-| NOMBRE { }  // entier
+| NUM_REAL {  } //reel
+| NUM_INTEGER { }  // entier
 | designator { }
 ;
 
@@ -184,5 +184,5 @@ designator:
 %%
 
 void yyerror(const std::string& mess){
-    std::cout << "Erreur trouvée : '( "<<mess << " )'" << std::endl;
+    std::cout << "Erreur trouvée a la ligne " << yylineno << " : '( "<<mess << " )'" << std::endl;
 }

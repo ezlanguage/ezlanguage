@@ -6,10 +6,12 @@
 #include <string.h> /* pour strdup */
 #include <iostream>
 #include "../src/global.h" // on part du dossier ../obj car il y est necessaire
-
+using namespace std;
 #include "EZ_language_compiler.tab.hpp"
 
 extern "C" int yylex(void);
+extern int yylineno;
+
 
 %}
 
@@ -25,15 +27,14 @@ ID ([a-z]|[A-Z])([a-z]|[A-Z]|[0-9])*
 
 commentaire		(\/\*(.*)\*\/)|(\/\/(.*))
 
-retourligne 	\n
 %%
 
 {separateurs}   { /* On ignore */ }
 {commentaire}   { /* On ignore */ }
-{entier}	{ yylval.valeur_numerique=atoi(yytext); return(NOMBRE);}
-{reel}      { yylval.valeur_reel=atof(yytext); return(NUMBRE);}
+{entier}	{ yylval.valeur_numerique=atoi(yytext); return(NUM_INTEGER);}
+{reel}      { yylval.valeur_reel=atof(yytext); return(NUM_REAL);}
 
-{retourligne}	return(retourLigne);
+"\n"	{yylval.texte="\n"; return(RETOUR);}
 
 
 
@@ -99,8 +100,8 @@ retourligne 	\n
 (step|STEP)      return(STEP);
 (endfor|ENDFOR)      return(ENDFOR);
 
-(function|FUNCTION)      return(FUNCTION);
-(procedure|PROCEDURE)      return(PROCEDURE);
+(function|FUNCTION)    return(FUNCTION);
+(procedure|PROCEDURE)     {return(PROCEDURE);}
 (return|RETURN)      return(RETURN);
 (endfunction|ENDFUNCTION) return(ENDFUNCTION);
 (endprocedure|ENDPROCEDURE) return(ENDPROCEDURE);
@@ -108,10 +109,10 @@ retourligne 	\n
 
 (print|PRINT)     { return(PRINT);        }
 
-{ID}	{	yylval.texte= strdup(yytext);
+
+{ID}	{	yylval.texte= yytext;
 	    		return (NAME);
 		}
-
 
 
 %%

@@ -97,6 +97,7 @@ int main ( int argc , char ** argv ){
 	
 	//vecteurs des fichiers a traiter
     vector<char*> fic_ezl;
+//	fic_ezl.push_back("/home/etudiant/Cl…/ezlanguage/tests/exemple.ez");
     //tableaux des extensions des fichiers a traiter
     int nb_ext = 2;
     const string ext_ez[nb_ext] = {".ez", ".ezl"};
@@ -108,7 +109,9 @@ int main ( int argc , char ** argv ){
 	}        
     
     //test des arguments restant
-	for(int i=optind; i<argc; ++i){
+	cout << "Il y a "<< argc<< " arguments"<<endl;
+	for(int i=optind+1; i<argc; ++i){
+		cout<< "Parsing du "<< i<< "eme fichier : "<< argv[i]<< endl;
 		if(!(find(fic_ezl.begin(), fic_ezl.end(), argv[i]) != fic_ezl.end())){
 			cerr << "Fichier invalide ou option inconnue : " << argv[i] << endl;
 			exit(EXIT_FAILURE);
