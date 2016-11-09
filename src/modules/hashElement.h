@@ -100,7 +100,9 @@ public:
  * @return boolean
  * @author Johan Defaye
  */
-bool operator==(hashElement const& e1, hashElement const & e2);
+bool operator==(hashElement const & e1, hashElement const & e2);
+
+bool operator!=(hashElement const & e1, hashElement const & e2);
 
 
 /** 

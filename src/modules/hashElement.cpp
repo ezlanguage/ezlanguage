@@ -29,3 +29,11 @@ bool operator==(const hashElement& e1, const hashElement& e2)
 {
   return (e1.is_equal(e2));
 }
+
+
+
+bool operator!=(const hashElement& e1, const hashElement& e2)
+{
+  return (!e1.is_equal(e2));
+}
+

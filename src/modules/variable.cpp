@@ -27,7 +27,14 @@ bool variable::is_equal(const variable& v) const
 
 bool operator==(const variable& v1, const variable& v2)
 {
-  return v1.is_equal(v2);
+  return (v1.is_equal(v2));
+}
+
+
+
+bool operator!=(const variable& v1, const variable& v2)
+{
+  return (!v1.is_equal(v2));
 }
 
 

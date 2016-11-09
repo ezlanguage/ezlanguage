@@ -111,6 +111,7 @@ public:
  */
 bool operator==(const variable & v1, const variable & v2);
 
+bool operator!=(const variable & v1, const variable & v2);
 
 /** 
  * Display a variable
