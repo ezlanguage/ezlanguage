@@ -1,16 +1,16 @@
 #ifndef WHILE_H
 #define WHILE_H
 
-#include "Instruction_iterative.h"
+#include "Iterative_instruction.h"
 
 class While :
-        public Instruction_iterative {
+        public Iterative_instruction {
 protected:
 
 public:
     While();
 
-    std::string traduire();
+    std::string translate();
 
 };
 

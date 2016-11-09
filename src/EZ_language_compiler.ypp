@@ -57,7 +57,7 @@ ROOT:
   liste_declaration stmtseq { } 
 ;
 
-NL:  // un seule retour ou plusieurs retour en ligne 
+NL:  // un seul retour ou plusieurs retours en ligne
  retourLigne NL {} 
 | retourLigne {}
 ;

@@ -99,11 +99,11 @@ int main ( int argc , char ** argv ){
     vector<char*> fic_ezl;
     //tableaux des extensions des fichiers a traiter
     int nb_ext = 2;
-    const char* ext_ez[nb_ext] = {".ez", ".ezl"};
+    const string ext_ez[nb_ext] = {".ez", ".ezl"};
     //ajout des fichiers a parser
 	for(int i=0; i<nb_ext; ++i){
 		for(int j=optind; j<argc; ++j){
-			parse_argv_ext(ext_ez[i], fic_ezl, argv[j]);
+			parse_argv_ext(ext_ez[i].c_str(), fic_ezl, argv[j]);
 		}
 	}        
     
