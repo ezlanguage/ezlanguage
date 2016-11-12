@@ -7,7 +7,7 @@
 #include <string>
 
 /**
- * An hash table which can contains any type of element which contain the operator operator==
+ * An hash table which can contains any type of element that contain the operator operator==
  * @author Johan Defaye
  */
 template <typename T>
@@ -15,9 +15,12 @@ class hashTable : public std::vector<std::list<T> > {
    
 public:
   
+  
+  
   /* * * * * * * * *
    * CONSTRUCTORS  *
    * * * * * * * * */
+  
   
   /**
    * Default constructor
@@ -75,11 +78,12 @@ public:
    * Throw an error if the size of the hash table is null
    * @param element : an hash element
    * @param id : an identifier of the hash element to add
+   * @exception : Return a string as exception if the hash table is empty
    * @author Johan Defaye
    */
   void addElement(const T & element, const std::string & id)
   {
-    if (this->empty()) throw std::string("Error, can not add an element because the size of the hash table is null");
+    if (this->empty()) throw std::string("Error, can not add an element because the hash table is empty");
     else {
       int index = hash(id);
       this->at(index).push_front(element);
@@ -90,22 +94,20 @@ public:
    * Remove an element from the hash table with the specified identifier
    * @param element : an hash element
    * @param id : an identifier of the hash element to remove
+   * @exception : Return a string as exception if the element to be removed is not in the hash table
    * @author Johan Defaye
    */
   void removeElement(const T & element, const std::string & id)
   {
     int index = hash(id);
-    typename std::list<T>::iterator it;
-    it = this->at(index).begin();
-    bool delete_done = false;
-    while((!delete_done)&&(it != this->at(index).end())) {
+    bool found = false;
+    for (auto it = this->at(index).begin(); (it != this->at(index).end())&&(!found); ++it) {
       if (*it == element) {
 	this->at(index).erase(it);
-	delete_done = true;
+	found = true;
       }
-      if (!delete_done) ++it;
     }
-    if (!delete_done) throw std::string("Error, the element to remove is not in the hash table");
+    if (!found) throw std::string("Error, the element to be removed is not in the hash table");
   }
   
   /**
@@ -118,6 +120,22 @@ public:
   {
     int index = hash(id);
     this->at(index).erase(it);
+  }
+  
+  /**
+   * Test if an element is in the hash table
+   * @param element : an element
+   * @param id : indetifier of the element
+   * @return boolean
+   * @author Johan Defaye
+   */
+  bool contains(const T & element, const std::string & id) const {
+    int index = hash(id);
+    bool found = false;
+    for (auto it = this->at(index).begin(); (it != this->at(index).end())&&(!found); ++it) {
+      if (*it == element) found = true;
+    }
+    return found;
   }
   
   /**

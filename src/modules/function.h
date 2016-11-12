@@ -57,6 +57,7 @@ class function : public hashElement {
    * ACCESSOR AND MUTATOR  *
    * * * * * * * * * * * * */
   
+  
   /**
    * Give the parameters of the function
    * @return vector<string>
@@ -106,6 +107,7 @@ class function : public hashElement {
   /* * * * * *
    * METHOD  *
    * * * * * */
+  
   
   /**
    * Test if the function belong to the class whose name is passed as parameter

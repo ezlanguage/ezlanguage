@@ -22,6 +22,7 @@ public:
    * CONSTRUCTORS  *
    * * * * * * * * */
   
+  
   /**
    * Default constructor
    * Set the identifier by the empty string
@@ -49,6 +50,7 @@ public:
   /* * * * * * * * * * * * *
    * ACCESSOR AND MUTATOR  *
    * * * * * * * * * * * * */
+  
   
   /**
    * Give the identifier

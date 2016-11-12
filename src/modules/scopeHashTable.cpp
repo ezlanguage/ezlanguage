@@ -30,6 +30,7 @@ void scopeHashTable::addElement(const variable& v)
     if (_scopeStack.empty()) _scopeStack.push(l);
     while (v.get_scope() > (_scopeStack.size() - 1)) _scopeStack.push(l);
     _scopeStack.top().push_front(it);
+    
   }
 }
 
@@ -45,10 +46,11 @@ void scopeHashTable::removeElement(const variable& v)
     for (it = _scopeStack.top().begin(); (it != _scopeStack.top().end())&&(!found); ++it) {
       if (**it == v) {
 	this->at(hash(v.get_id())).erase(*it);
+	_scopeStack.top().erase(it);
 	found = true;
       }
-      _scopeStack.top().erase(it);
     }
+    if (!found) throw string("Error, the variable is not in the hash table");
   }
 }
 
@@ -59,8 +61,9 @@ void scopeHashTable::removeHighestScope()
   if (this->empty()) throw string("Error, can not remove variables because the hash table is empty");
   else if (!_scopeStack.empty()) {
     list<list<variable>::iterator>::iterator it;
+    int index;
     for (it = _scopeStack.top().begin(); it != _scopeStack.top().end(); ++it) {
-      int index = hash( (*it)->get_id() );
+      index = hash( (*it)->get_id() );
       this->at(index).erase(*it);
     }
     _scopeStack.pop();
@@ -72,9 +75,15 @@ void scopeHashTable::removeHighestScope()
 string scopeHashTable::get_type(const string& id, unsigned int s) const
 {
   int index = hash(id);
-  for (auto it = this->at(index).begin(); it != this->at(index).end(); ++it) {
-    if ((it->get_id() == id)&&(it->get_scope() == s)) return it->get_type();
+  string type = "";
+  bool found = false;
+  for (auto it = this->at(index).begin(); (it != this->at(index).end())&&(!found); ++it) {
+    if ((it->get_id() == id)&&(it->get_scope() == s)) {
+      type = it->get_type();
+      found = true;
+    }
   }
-  return "";
+  if (!found) throw string(id + " not found for the specified scope");
+  return type;
 }
 
