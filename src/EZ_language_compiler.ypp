@@ -5,13 +5,13 @@
 #include <iostream>
 #include <list>
 
-#include "../src/global.h"	 // on part du dossier ../obj car il y est necessaire
-#include "../src/main.cpp"	 // on part du dossier ../obj car il y est necessaire
+#include "../src/global.h"	 // we start from ../obj because it's important
+#include "../src/main.cpp"	 // we start from ../obj because it's important
 //#include "global.h"
 
 #define YYERROR_VERBOSE
 #define USE(VALUE) /*empty*/
-//#include "EZ_language_compiler.tab.cpp"
+
 extern FILE* yyin;
 using namespace std;
 
@@ -22,31 +22,24 @@ using namespace std;
 
 %}
 
-%union{
-    int	valeur_numerique;
-    double	valeur_reel;
-    bool booleen; 
-					
-    char* texte;
-}
 
-%token<valeur_numerique>	NOMBRE			// ENTIER
-%token<valeur_reel>	NUMBRE				// REEL
+%token<numerical_value>	NOMBRE			// INTEGER
+%token<reel_value>	NUMBRE				// REEL
 %token<texte>	NAME					// NOM
-%token	VIRGULE  DEGRE POURCENT DIESE POINT	// Caractères
-%token INTEGER REAL STRING BOOLEAN			// Type des variables
+%token	COMMA  DEGRE POURCENT DIESE POINT	// Caractères
+%token INTEGER REAL STRING BOOLEAN			// Type of variables
 %token  EGAL NE LT LE GT GE PLUS MINUS MULT DIVISE
-%token	PARENTHESE_GAUCHE PARENTHESE_DROITE ACCOLADE_GAUCHE ACCOLADE_DROITE CROCHET_GAUCHE CROCHET_DROIT FIN retourLigne	// Caractères spéciaux
-%token CONST  LOCAL  GLOBAL  IS  ARE 		      		      // declaration des variables
+%token	LEFT_PARENTHESIS RIGHT_PARENTHESIS LEFT_ACCOLADE RIGHT_ACCOLADE LEFT_BRACKET RIGHT_BRACKET FIN backLine	// Special Characters
+%token CONST  LOCAL  GLOBAL  IS  ARE 		      		      // variables declaration
 %token IF DO ELSE  ENDIF 						 // if else 
 %token WHEN CASE ENDCASE DEFAULT ENDWHEN				 // switch case ...
 %token WHILE ENDWHILE							 // while .. do ..
 %token REPEAT UNTIL ENDREPEAT 						 // do .. while ...
 %token FOR IN STEP ENDFOR
-%token FUNCTION PROCEDURE RETURN ENDFUNCTION ENDPROCEDURE	 // fonctions
-%token PRINT							         // boucle for
+%token FUNCTION PROCEDURE RETURN ENDFUNCTION ENDPROCEDURE	 // functions
+%token PRINT							         // loop for
 
-%type<valeur_reel> expression designator expr2 expr3 expr4  stmtseq statement
+%type<reel_value> expression designator expr2 expr3 expr4  statement_sequence statement
 
 
 %start ROOT
@@ -54,23 +47,23 @@ using namespace std;
 
 
 ROOT:
-  liste_declaration stmtseq { } 
+  declarations_list statement_sequence { } 
 ;
 
-NL:  // un seule retour ou plusieurs retour en ligne 
- retourLigne NL {} 
-| retourLigne {}
+NL:  // one or several new line
+ backLine NL {} 
+| backLine {}
 ;
 
-liste_declaration:
+declarations_list:
 /* aucune declaration */
-| liste_declaration NL {} 
-| liste_declaration declaration_methodes   {}
-| liste_declaration declaration_variables NL  {}
+| declarations_list NL {} 
+| declarations_list declaration_methods   {}
+| declarations_list declaration_variables NL  {}
 ;
 
-declaration_methodes: 
-   function NL { }  // NL <==> New Line <==> retour en Ligne 
+declaration_methods: 
+   function NL { }  // NL <==> New Line
 |  procedure NL { }
 ;
 
@@ -80,41 +73,41 @@ declaration_variables:
 ;
 
 function:
-FUNCTION NAME PARENTHESE_GAUCHE liste_argument PARENTHESE_DROITE RETURN type NL stmtseq RETURN expression NL ENDFUNCTION { printf( "declaration d'une fonction \n");}
+FUNCTION NAME LEFT_PARENTHESIS liste_argument RIGHT_PARENTHESIS RETURN type NL statement_sequence RETURN expression NL ENDFUNCTION { printf( "declaration d'une fonction \n");}
 ;
 
 procedure:
-PROCEDURE NAME PARENTHESE_GAUCHE liste_argument PARENTHESE_DROITE NL stmtseq  ENDPROCEDURE { printf( "declaration d'une procedure  \n");}
+PROCEDURE NAME LEFT_PARENTHESIS liste_argument RIGHT_PARENTHESIS NL statement_sequence  ENDPROCEDURE { printf( "declaration d'une procedure  \n");}
 ;
 
-stmtseq:
-  stmtseq statement NL { }
+statement_sequence:
+  statement_sequence statement NL { }
 | statement NL { /*printf("  statement \n");*/ }
 ;
 
 liste_argument:
- // Aucun argument
+ // No argument
  | NAME IS type { }
- | NAME IS type VIRGULE liste_argument { } 
+ | NAME IS type COMMA liste_argument { } 
 ;
 
 statement:
-| declaration_variables {} // declration des variables
+| declaration_variables {} // variables declaration
 | NAME EGAL expression { printf("affectation \n");} 
 | PRINT expression { printf("affichage \n"); } 
-| IF expression DO stmtseq ELSE stmtseq ENDIF { printf("SI_SINON_ALORS \n"); }
-| IF expression DO stmtseq ENDIF { printf("SI   ALORS \n"); }
+| IF expression DO statement_sequence ELSE statement_sequence ENDIF { printf("SI_SINON_ALORS \n"); }
+| IF expression DO statement_sequence ENDIF { printf("SI   ALORS \n"); }
 | WHEN NAME IS whenbody whendefault ENDWHEN {  printf("when .. case .. \n"); }
-| WHILE expression DO  stmtseq ENDWHILE { printf("WHILE .. DO .. \n"); }
-| REPEAT stmtseq UNTIL expression ENDREPEAT { printf("REPEAT .. UNTIL .. \n"); }
-| FOR NAME typeInFor IN NAME POINT POINT NAME STEP nbrOrName typeInFor DO stmtseq ENDFOR { printf("FOR .. IN ... \n");}
+| WHILE expression DO  statement_sequence ENDWHILE { printf("WHILE .. DO .. \n"); }
+| REPEAT statement_sequence UNTIL expression ENDREPEAT { printf("REPEAT .. UNTIL .. \n"); }
+| FOR NAME typeInFor IN NAME POINT POINT NAME STEP nbrOrName typeInFor DO statement_sequence ENDFOR { printf("FOR .. IN ... \n");}
 ;
 
 nbrOrName:
   NOMBRE  {}
 | NAME {}
 
-portee: /* rien ( local par default) */ 
+portee: /* Nothing ( local by default) */ 
   LOCAL {}
 | GLOBAL {}
 ;
@@ -127,21 +120,21 @@ type:
 ;
 
 noms:
-  noms VIRGULE NAME {}
-| VIRGULE NAME {}
+  noms COMMA NAME {}
+| COMMA NAME {}
 ;
 
-whenbody: /* casebody ne peut pas etre vide */
-  whenbody CASE expression stmtseq ENDCASE {}  
-| CASE expression stmtseq ENDCASE {} 
+whenbody: /* whenbody can't be empty */
+  whenbody CASE expression statement_sequence ENDCASE {}  
+| CASE expression statement_sequence ENDCASE {} 
 ;
 
 whendefault:
-DEFAULT stmtseq ENDCASE {}
+DEFAULT statement_sequence ENDCASE {}
 ;
 
 typeInFor: 
-  /* peut etre vide */
+  /* can be empty*/
 | IS  type {}
 ;
 
@@ -171,9 +164,9 @@ expr3:
 expr4:
   PLUS expr4 {    }
 | MINUS expr4 { }
-| PARENTHESE_GAUCHE expression PARENTHESE_DROITE {  }
+| LEFT_PARENTHESIS expression RIGHT_PARENTHESIS {  }
 | NUMBRE {  } //reel
-| NOMBRE { }  // entier
+| NOMBRE { }  // integer
 | designator { }
 ;
 
@@ -184,5 +177,5 @@ designator:
 %%
 
 void yyerror(const std::string& mess){
-    std::cout << "Erreur trouvée : '( "<<mess << " )'" << std::endl;
+    std::cout << "Error : '( "<<mess << " )'" << std::endl;
 }

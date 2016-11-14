@@ -3,8 +3,8 @@
 
 
 typedef struct s_mon_type {
-    int valeur_numerique;
-    double valeur_reel;
+    int numerical_value;
+    double reel_value;
     bool booleen;
     char *texte;
 //    MaClasse	une_maclasse;
