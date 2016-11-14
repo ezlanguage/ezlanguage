@@ -2,6 +2,7 @@
 #define ITERATIVE_INSTRUCTION_H
 
 #include "Instruction.h"
+#include "Condition.h"
 
 //boucles : forall, foreach, while, repeat
 class Iterative_instruction :
