@@ -16,8 +16,8 @@ extern int yylineno;
 %}
 
 separateurs     [ \t]+
-chiffre         [0-9]
-entier          {chiffre}+
+number         [0-9]
+entier          {number}+
 
 reel			{entier}("."{entier})?
 
@@ -27,19 +27,20 @@ ID ([a-z]|[A-Z])([a-z]|[A-Z]|[0-9])*
 
 commentaire		(\/\*(.*)\*\/)|(\/\/(.*))
 
+backLine 	\n
 %%
 
 {separateurs}   { /* On ignore */ }
 {commentaire}   { /* On ignore */ }
-{entier}	{ yylval.valeur_numerique=atoi(yytext); return(NUM_INTEGER);}
-{reel}      { yylval.valeur_reel=atof(yytext); return(NUM_REAL);}
+{entier}	{ yylval.numerical_value=atoi(yytext); return(NUM_INTEGER);}  // integer
+{reel}      { yylval.reel_value=atof(yytext); return(NUM_REAL);}		 // reel
 
-"\n"	{yylval.texte="\n"; return(RETOUR);}
-
-
+{backLine}	return(backLine);
 
 
-","		return(VIRGULE);
+
+
+","		return(COMMA);
 
 "°"		return(DEGRE);
 "%"		return(POURCENT);
@@ -56,14 +57,14 @@ commentaire		(\/\*(.*)\*\/)|(\/\/(.*))
 "*"             return MULT; 
 "/"   	        return DIVISE; 
 
-"("		return (PARENTHESE_GAUCHE);
-")"		return (PARENTHESE_DROITE);
+"("		return (LEFT_PARENTHESIS);
+")"		return (RIGHT_PARENTHESIS);
 
-"{"		return (ACCOLADE_GAUCHE);
-"}"		return (ACCOLADE_DROITE);
+"{"		return (LEFT_ACCOLADE);
+"}"		return (RIGHT_ACCOLADE);
 
-"["		return (CROCHET_GAUCHE);
-"]"		return (CROCHET_DROIT);
+"["		return (LEFT_BRACKET);
+"]"		return (RIGHT_BRACKET);
 "."	        return (POINT);
 
 
@@ -79,31 +80,31 @@ commentaire		(\/\*(.*)\*\/)|(\/\/(.*))
 
 (if|IF)              return(IF);
 (else|ELSE)          return(ELSE);
-(endif|ENDIF)     return(ENDIF);
+(endif|ENDIF)        return(ENDIF);
 
 (when|WHEN)           return(WHEN);
 (case|CASE)           return(CASE);
 (endcase|ENDCASE)     return(ENDCASE);
 (default|DEFAULT)     return(DEFAULT);
-(endwhen|ENDWHEN)       return(ENDWHEN);
+(endwhen|ENDWHEN)     return(ENDWHEN);
 
-(while|WHILE)       return(WHILE);
-(do|DO)    return(DO);
-(endwhile|ENDWHILE)      return(ENDWHILE);
+(while|WHILE)         return(WHILE);
+(do|DO)               return(DO);
+(endwhile|ENDWHILE)   return(ENDWHILE);
 
-(repeat|REPEAT)           return(REPEAT);
+(repeat|REPEAT)         return(REPEAT);
 (until|UNTIL)           return(UNTIL);
-(endrepeat|ENDREPEAT)      return(ENDREPEAT);
+(endrepeat|ENDREPEAT)   return(ENDREPEAT);
 
-(for|FOR)           return(FOR);
-(in|IN)           return(IN);
+(for|FOR)        return(FOR);
+(in|IN)          return(IN);
 (step|STEP)      return(STEP);
-(endfor|ENDFOR)      return(ENDFOR);
+(endfor|ENDFOR)  return(ENDFOR);
 
-(function|FUNCTION)    return(FUNCTION);
-(procedure|PROCEDURE)     {return(PROCEDURE);}
-(return|RETURN)      return(RETURN);
-(endfunction|ENDFUNCTION) return(ENDFUNCTION);
+(function|FUNCTION)         return(FUNCTION);
+(procedure|PROCEDURE)       return(PROCEDURE);
+(return|RETURN)             return(RETURN);
+(endfunction|ENDFUNCTION)   return(ENDFUNCTION);
 (endprocedure|ENDPROCEDURE) return(ENDPROCEDURE);
 
 
