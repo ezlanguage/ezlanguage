@@ -6,12 +6,16 @@
 #include <string.h> /* pour strdup */
 #include <iostream>
 #include "../src/global.h" // on part du dossier ../obj car il y est necessaire
-
+using namespace std;
 #include "EZ_language_compiler.tab.hpp"
 
 extern "C" int yylex(void);
+extern int yylineno;
+
 
 %}
+
+phrase \"(\\.|[^"])*\"
 
 separateurs     [ \t]+
 number         [0-9]
@@ -26,34 +30,34 @@ ID ([a-z]|[A-Z])([a-z]|[A-Z]|[0-9])*
 commentaire		(\/\*(.*)\*\/)|(\/\/(.*))
 
 backLine 	\n
+
+
 %%
 
 {separateurs}   { /* On ignore */ }
-{commentaire}   { /* On ignore */ }
-{entier}	{ yylval.numerical_value=atoi(yytext); return(NOMBRE);}  // integer
-{reel}      { yylval.reel_value=atof(yytext); return(NUMBRE);}		 // reel
+{commentaire}   { /* On ignore */ cout << "Commentaire"<<endl; }
+{entier}	{ yylval.numerical_value=atoi(yytext); return(NUM_INTEGER);}  // integer
+{reel}      { yylval.reel_value=atof(yytext); return(NUM_REAL);}		 // reel
 
-{backLine}	return(backLine);
+{backLine}	return(BACK_LINE);
 
-
-
+{phrase}  {yylval.texte = yytext; return(STRING);}
 
 ","		return(COMMA);
 
 "°"		return(DEGRE);
 "%"		return(POURCENT);
 "#"		return(DIESE);
-
 "="		return(EGAL);
-"!="            return NE; 
-"<"             return LT; 
-"<="            return LE; 
-">"             return GT; 
-">="            return GE; 
-"+"             return PLUS; 
-"-"             return MINUS; 
-"*"             return MULT; 
-"/"   	        return DIVISE; 
+"!="    return NE; 
+"<"     return LT; 
+"<="    return LE; 
+">"     return GT; 
+">="    return GE; 
+"+"     return PLUS; 
+"-"     return MINUS; 
+"*"     return MULT; 
+"/"   	return DIVISE; 
 
 "("		return (LEFT_PARENTHESIS);
 ")"		return (RIGHT_PARENTHESIS);
@@ -63,7 +67,7 @@ backLine 	\n
 
 "["		return (LEFT_BRACKET);
 "]"		return (RIGHT_BRACKET);
-"."	        return (POINT);
+"."	    return (POINT);
 
 
 (const|CONST)        return(CONST);
@@ -71,10 +75,10 @@ backLine 	\n
 (global|GLOBAL)      return(GLOBAL);
 (is|IS)              return(IS) ;
 (are|ARE)            return(ARE) ;
-(integer|INTEGER)    return(INTEGER);
-(real|REAL)          return(REAL);
-(string|STRING)      return(STRING);
-(boolean|BOOLEAN)    return(BOOLEAN);
+(integer|INTEGER)    return(TYPE_INTEGER);
+(real|REAL)          return(TYPE_REAL);
+(string|STRING)      return(TYPE_STRING);
+(boolean|BOOLEAN)    return(TYPE_BOOLEAN);
 
 (if|IF)              return(IF);
 (else|ELSE)          return(ELSE);
@@ -108,10 +112,11 @@ backLine 	\n
 
 (print|PRINT)     { return(PRINT);        }
 
-{ID}	{	yylval.texte= strdup(yytext);
+
+{ID}	{	yylval.texte= yytext;
 	    		return (NAME);
 		}
 
 
-
+<<EOF>>     return END_OF_FILE;
 %%
