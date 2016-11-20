@@ -15,7 +15,7 @@ LEX_FlAGS =
 YACC_EXT = ypp
 # interpréteur des fichiers Yacc : analyse syntaxique et sémantique
 YACC = bison
-YACC_FLAGS = 
+YACC_FLAGS =
 
 # nom de l'exe, doit avoir le meme nom que le fichier lex
 EXEC = EZ_language_compiler
