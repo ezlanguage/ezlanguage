@@ -1,14 +1,19 @@
 # Temp files
 ~$*
 *~
+.directory
 
 # Build results
 *.cmake
-bin/EZ_language_compiler
+bin/*
+!bin/.dummy.txt
+obj/*
+!obj/.dummy.txt
+*.o
+*.gch
 
 # User-specific files
 *.user
 
-# Kdev files
-.kdev4/
-
+#CLion files
+.idea/workspace.xml
