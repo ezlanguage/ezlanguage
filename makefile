@@ -60,7 +60,7 @@ launch: all
 	@echo "\033[1;33mLancement du compilateur"
 	@echo "\033[1;33m=============================="
 	@echo ""
-	@exec ./bin/$(EXEC) ""
+	@exec ./bin/$(EXEC) "${ARGS}"
 	@echo "FIN\033[0m"
 
 #aide

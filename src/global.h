@@ -6,7 +6,7 @@ typedef struct s_mon_type {
     int numerical_value;
     double reel_value;
     bool booleen;
-    char *texte;
+    std::string texte;
 //    MaClasse	une_maclasse;
 } mon_type;
 
