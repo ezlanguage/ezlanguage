@@ -1,3 +1,4 @@
+//@author Antoine GARNIER
 #include "Repeat.h"
 
 Repeat::Repeat(Condition repeat_cond, std::vector<std::string> instructions)
@@ -23,7 +24,7 @@ std::string Repeat::translate() {
         res+= instruction_raw;
     }
     std::string condition_raw;
-    condition_raw= "}while(" + repeat_condition + ")\n";
+    condition_raw= "}while(" + repeat_condition.translate() + ")\n";
     res+= condition_raw;
     return res;
 }

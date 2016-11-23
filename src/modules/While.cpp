@@ -1,3 +1,4 @@
+//@author Antoine GARNIER
 #include "While.h"
 
 While::While(Condition while_cond, std::vector<std::string> instructions)
@@ -14,7 +15,7 @@ std::string While::translate() {
     Condition while_condition= get_condition();
     std::vector<std::string> instructions= get_instructions();
 
-    res= "while(" + while_condition + "){\n";
+    res= "while(" + while_condition.translate() + "){\n";
 
     for(int i= 0; i < instructions.size(); ++i){
         std::string instruction_raw;
