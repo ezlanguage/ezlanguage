@@ -2,6 +2,7 @@
 #include "Forall.h"
 #include <iostream>
 #include <string>
+#include "String_addon.h"
 
 using namespace std;
 

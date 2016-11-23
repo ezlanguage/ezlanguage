@@ -1,3 +1,6 @@
+#ifndef STRING_ADDON_H
+#define STRING_ADDON_H
+
 //@author : CHARLOT Rodolphe
 #include <iostream>
 #include <string>
@@ -16,3 +19,4 @@ string operator+ (string s, int i);
 string operator+ (string s, double i);
 string operator+ (string s, float i);
 
+#endif

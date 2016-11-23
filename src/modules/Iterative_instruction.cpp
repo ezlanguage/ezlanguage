@@ -40,3 +40,5 @@ void Iterative_instruction::setCondition(const Condition &c) {
 void Iterative_instruction::setInstructions(vector<Instruction> &i) {
 	instructions=i;
 }
+
+string Iterative_instruction::translate(){};
