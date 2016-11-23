@@ -4,14 +4,13 @@
 
 using namespace std;
 
-Foreach::Foreach() {
-}
-
-Foreach::Foreach() {
+Foreach::Foreach(string v, string e) {
     name= "Foreach";
+    vector = v;
+    element = e;
 }
 
-string Operator::translate() {
+string Foreach::translate() {
     string res = "for(auto "+element+" : "+vector+"){";
     res = res + this->left_son->translate();
     res = res + "}";
