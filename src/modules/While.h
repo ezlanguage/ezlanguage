@@ -1,3 +1,4 @@
+//author Antoine GARNIER
 #ifndef WHILE_H
 #define WHILE_H
 
