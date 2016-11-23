@@ -124,7 +124,7 @@ public:
   /**
    * Test if an element is in the hash table
    * @param element : an element
-   * @param id : indetifier of the element
+   * @param id : identifier of the element
    * @return boolean
    * @author Johan Defaye
    */

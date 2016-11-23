@@ -87,3 +87,15 @@ string scopeHashTable::get_type(const string& id, unsigned int s) const
   return type;
 }
 
+
+
+bool scopeHashTable::contains(const string& id) const
+{
+  int index = hash(id);
+  bool found = false;
+  for (auto it = this->at(index).begin(); (it != this->at(index).end())&&(!found); ++it) {
+    if (it->get_id() == id) found = true;
+  }
+  return found;
+}
+
