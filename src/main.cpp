@@ -83,6 +83,7 @@ int main ( int argc , char ** argv ){
 			// Affiche l'aide
 			case 'h':
 				cout << "Displays help" << endl;
+				system("cat ../src/help.txt");
 				break;
 			// Ajoute le fichier de sortie au compilateur g++
 			case 'o':
