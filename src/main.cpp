@@ -38,6 +38,7 @@ void parse_argv_ext(const char* ext_ez, vector<char*> &fic_ezl, char * fic_cmp){
 //main
 int main ( int argc , char ** argv ){
 	int opt;
+	string output_name = "";
 
 	//boucle pour les arguments en ligne de commande programmés
 	while(1){
@@ -87,6 +88,7 @@ int main ( int argc , char ** argv ){
 			case 'o':
 				cout << "Indicates the name of the output file" << endl;
 				commande_gpp += "-o "+string(optarg)+" ";
+				output_name = string(optarg);
 				break;
 			case 'w':
 				cout << "Displays warning messages" << endl;
@@ -169,7 +171,14 @@ int main ( int argc , char ** argv ){
 		cout << "\033[1;36m=====================================\033[0m" << endl;
 	}
 
-	cout << commande_gpp << endl;
+	system(commande_gpp.c_str());
+	if(output_name != ""){
+		string tmp_output= "./" + output_name;	
+		system(tmp_output.c_str());
+	}else{
+		string tmp_output= "./a.out";	
+		system(tmp_output.c_str());
+	}
 	cout << "\033[1;36mFin du parsing\033[0m" << endl;
 
     exit(EXIT_SUCCESS);
