@@ -16,4 +16,7 @@ obj/*
 *.user
 
 #CLion files
-.idea/workspace.xml
+.idea/*
+Supprimerait .idea/encodings.xml
+Supprimerait cmake-build-debug/
+Supprimerait tests/fichier_de_test.ez
