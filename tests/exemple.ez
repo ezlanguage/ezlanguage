@@ -5,21 +5,20 @@
 procedure person()
 local i, max are integer
 
-begin
 
-  for i in 1..10
+  for i in 1..10 step 2
   do
-   
+   print "ok"
   endfor
 
   // compute maximum of ages (detailed version)
   max = 0
-  for i in 1..v.size()
+  for i in 1..v step 2
   do
-    
+    print "size"
   endfor
 
   // or use built-in function
 
   print "maximum of ages = ", max
-end
+endprocedure

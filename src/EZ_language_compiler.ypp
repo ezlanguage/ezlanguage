@@ -51,30 +51,35 @@ extern int yylineno;
 
 
 ROOT:
-  declarations_list next_line statement_sequence END_OF_FILE{ cout << "Fichier parsé." << endl; return 0;}
+  next_line_null declarations_list  statement_sequence END_OF_FILE{ cout << "Fichier parsé." << endl; return 0;}
 ;
 
+next_line_null: /* can be empty */
+| next_line {}
+
 next_line:  // one or several new line
-   {}
+  BACK_LINE {}
 | next_line BACK_LINE {}
 ;
 
 declarations_list:
-  declaration_variables declaration_methods  {}
+  /* no declaration */
+|  declaration_variables  declarations_list  {}
+|  declaration_methods declarations_list  {}
 ;
 
 declaration_methods:
-  function next_line  
-| procedure next_line
-| declaration_methods function   
-| declaration_methods procedure
+  function next_line  {}
+| procedure next_line {}
+| declaration_methods function next_line {}  
+| declaration_methods procedure next_line {}
 ;
 
 declaration_variables:
   portee NAME IS type next_line { cout << "Declaration de la variable " << $2 << endl; }
-| portee NAME noms ARE type next_line { cout << "Declaration des variables "<< $2 << endl; }
-| declaration_variables portee NAME IS type next_line { cout << "Declaration de la variable " << $3 << endl; }
-| declaration_variables portee NAME noms ARE type next_line { cout << "Declaration des variables "<< $3 << endl; }
+| portee NAME noms ARE type next_line { cout << "Declaration des variables "<< $2 <<  "..."<< endl; }
+| declaration_variables  portee NAME IS type next_line { cout << "Declaration de la variable " << $3 << endl; }
+| declaration_variables  portee NAME noms ARE type next_line { cout << "Declaration des variables "<< $3 << endl; }
 ;
 
 function:
@@ -110,25 +115,32 @@ statement:
 ;
 
 affectation:
-NAME EGAL expression { cout << "affectation "+$1 + " = " << $3 << endl;} 
+  NAME IS type next_line { cout << "Declaration de la variable " << $1 << endl; }
+| NAME noms ARE type next_line { cout << "Declaration des variables "<< $1 <<  "..."<< endl; }
+| NAME EGAL expression { cout << "Affectation " <<  endl; }
+;
 
 printing :
  PRINT string {cout <<"affichage : " << $2 << endl; } 
 |PRINT string noms { printf("affichage \n"); } 
+;
 
 for :
-  FOR NAME IN NUM_INTEGER POINT POINT NUM_INTEGER STEP nbrOrName next_line DO  statement_sequence ENDFOR { printf("FOR .. IN ... \n");}
+  FOR NAME IN NUM_INTEGER POINT POINT nbrOrName STEP nbrOrName next_line DO  statement_sequence ENDFOR { printf("FOR .. IN ... \n");}
 | FOR NAME IN NUM_INTEGER POINT POINT function_call STEP nbrOrName next_line DO  statement_sequence ENDFOR { printf("FOR .. IN ... \n");}
+;
 
 function_call : 
 NAME POINT NAME LEFT_PARENTHESIS RIGHT_PARENTHESIS {}
+;
 
 nbrOrName:
   NUM_INTEGER  {}
 | NUM_REAL
-| NAME {}
+| designator {}
+;
 
-portee: /* Nothing ( local by default) */
+portee: 
   LOCAL {}
 | GLOBAL {}
 ;
@@ -180,12 +192,13 @@ expr3:
 ;
 
 expr4:
-  PLUS expr4 {    }
-| MINUS expr4 { }
-| LEFT_PARENTHESIS expression RIGHT_PARENTHESIS {  }
-| NUM_REAL {  } //real
-| NUM_INTEGER { }  // integer
-| designator { }
+  PLUS expr4 { $$ = $2  ;  }
+| MINUS expr4 { $$ = -$2 ;}
+| LEFT_PARENTHESIS expression RIGHT_PARENTHESIS { $$ = $2 ;}
+| NUM_REAL { } //real
+| NUM_INTEGER {}  // integer
+| designator {}
+| function_call { }
 ;
 
 designator:
