@@ -6,7 +6,6 @@
 
 using namespace std;
 
-// ie -> iterateur en français to iterator in english 
 Array::Array(int begin_it, int end_it): begin_iterator(begin_it), end_iterator(end_it) {
     name= "Array";
 }

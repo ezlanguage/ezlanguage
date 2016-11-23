@@ -1,3 +1,4 @@
+//@author Antoine GARNIER
 #ifndef REPEAT_H
 #define REPEAT_H
 

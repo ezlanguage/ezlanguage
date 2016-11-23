@@ -11,8 +11,7 @@
  * @author Johan Defaye
  */
 template <typename T>
-class hashTable : public std::vector<std::list<T> > {
-   
+class hashTable : public std::vector<std::list<T>>{
 public:
   
   
