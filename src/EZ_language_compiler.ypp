@@ -64,22 +64,28 @@ next_line:  // one or several new line
 
 declarations_list:
   /* no declaration */
-|  declaration_variables  declarations_list  {}
-|  declaration_methods declarations_list  {}
+  declaration_variables  declaration_methods  {}
+
 ;
 
 declaration_methods:
-  function next_line  {}
-| procedure next_line {}
 | declaration_methods function next_line {}  
 | declaration_methods procedure next_line {}
 ;
 
 declaration_variables:
-  portee NAME IS type next_line { cout << "Declaration de la variable " << $2 << endl; }
-| portee NAME noms ARE type next_line { cout << "Declaration des variables "<< $2 <<  "..."<< endl; }
-| declaration_variables  portee NAME IS type next_line { cout << "Declaration de la variable " << $3 << endl; }
-| declaration_variables  portee NAME noms ARE type next_line { cout << "Declaration des variables "<< $3 << endl; }
+| declaration_variables   variable_with_scope {}
+| declaration_variables   variable_without_scope {}
+;
+
+variable_with_scope:
+     NAME IS type next_line { cout << "Declaration de la variable1 " << $1 << endl; }
+|    NAME noms ARE type next_line { cout << "Declaration des variables1 "<< $1 << endl; }
+;
+
+variable_without_scope:
+    portee NAME IS type next_line { cout << "Declaration de la variable2 " << $2 << endl; }
+|   portee NAME noms ARE type next_line { cout << "Declaration des variables2 "<< $2 << endl; }
 ;
 
 function:
@@ -103,7 +109,8 @@ liste_argument:
 
 statement:
   next_line
-| declaration_variables {} // variables declaration
+| variable_with_scope {} // variables declaration
+| variable_without_scope {} // variables declaration
 | affectation {}
 | printing {}
 | IF expression DO statement_sequence ELSE statement_sequence ENDIF { printf("SI_SINON_ALORS \n"); }
@@ -115,8 +122,6 @@ statement:
 ;
 
 affectation:
-  NAME IS type next_line { cout << "Declaration de la variable " << $1 << endl; }
-| NAME noms ARE type next_line { cout << "Declaration des variables "<< $1 <<  "..."<< endl; }
 | NAME EGAL expression { cout << "Affectation " <<  endl; }
 ;
 
@@ -141,7 +146,7 @@ nbrOrName:
 ;
 
 portee: 
-  LOCAL {}
+ LOCAL {}
 | GLOBAL {}
 ;
 
