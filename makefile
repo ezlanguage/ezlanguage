@@ -16,7 +16,7 @@ LEX_FlAGS =
 YACC_EXT = ypp
 # interpréteur des fichiers Yacc : analyse syntaxique et sémantique
 YACC = bison
-YACC_FLAGS = 
+YACC_FLAGS =
 
 
 #sources cpp
