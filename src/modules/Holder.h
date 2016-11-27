@@ -1,0 +1,62 @@
+//
+// Created by ROUINEB Hamza
+//
+
+#ifndef EZLANGUAGE_VARIABLE_HOLDER_H
+#define EZLANGUAGE_VARIABLE_HOLDER_H
+
+#include "hashElement.h"
+
+/**
+ * Mainly this class should be used only as a holder for other types
+ * EX : for constants, an instance with 'constant' as its name (Node::name)
+ * will be used to hold all constants declarations
+ * */
+
+
+template<class T>
+class Holder : public Node, public hashElement {
+
+
+public:
+
+
+    /**
+     * I think, this enumeration should be generated based on a file
+     * This way we could ensure that the program will be reusable & extandable into a certain point
+     * ex:
+     *      say that a new type should be added to this class like TT
+     *      we will be forced to add it manually & recompile the source code
+     *      but if we do it using a separate file, it will be done the first time
+     *      we launch the make command.
+     *      Further inforamtion will be given afterwards.
+     * */
+    static enum TYPES {
+        PROG = 1,
+        CONST = 2,
+        TYPE = 3,
+        VAR = 4,
+        FUNC = 5,
+        INST = 6
+    };
+
+    // it will call the default constructor of hashElement's class
+    Holder();
+
+    Holder(const string &name, Types type);
+
+    Holder(const string &id, const string &name, Types type);
+
+    // it will call all inner base object's translate function
+    string translate();
+
+protected:
+    // please be aware : use the right_son to point other class holders
+    // and use the left to
+    TYPES _type;
+
+
+};
+
+
+#endif //EZLANGUAGE_VARIABLE_HOLDER_H
