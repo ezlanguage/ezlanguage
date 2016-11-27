@@ -23,11 +23,6 @@ addons:
     packages:
       - g++-5
 
-before_install:
-  - sudo apt-get update -qy
-  - sudo apt-get install g++-5
-
-
 install:
 # g++ install
   - if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-4.9"; fi
