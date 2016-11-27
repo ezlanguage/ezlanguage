@@ -6,9 +6,9 @@
 # Build results
 *.cmake
 bin/*
-!bin/.dummy.txt
+!bin/*.md
 obj/*
-!obj/.dummy.txt
+!obj/*.md
 *.o
 *.gch
 
