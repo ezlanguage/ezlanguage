@@ -9,9 +9,9 @@
  * An element to be used in a hash table
  * @author Johan defaye
  */
-class hashElement { 
-  
-private:
+class hashElement {
+
+protected:
   std::string _id;
   
 public:

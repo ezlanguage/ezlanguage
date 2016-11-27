@@ -6,6 +6,7 @@
 #define EZLANGUAGE_VARIABLE_HOLDER_H
 
 #include "hashElement.h"
+#include "Node.h"
 
 /**
  * Mainly this class should be used only as a holder for other types
@@ -13,8 +14,6 @@
  * will be used to hold all constants declarations
  * */
 
-
-template<class T>
 class Holder : public Node, public hashElement {
 
 
@@ -49,6 +48,15 @@ public:
 
     // it will call all inner base object's translate function
     string translate();
+
+    // getters & setters
+    int get_type() {
+        return _type;
+    }
+
+    void set_type(Type type) {
+        _type = type;
+    }
 
 protected:
     // please be aware : use the right_son to point other class holders
