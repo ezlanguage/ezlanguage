@@ -5,7 +5,6 @@
 #ifndef EZLANGUAGE_VARIABLE_HOLDER_H
 #define EZLANGUAGE_VARIABLE_HOLDER_H
 
-#include "hashElement.h"
 #include "Node.h"
 
 /**
@@ -14,8 +13,8 @@
  * will be used to hold all constants declarations
  * */
 
-class Holder : public Node, public hashElement {
-
+class Holder : public Node {
+    // This is an abstract class, tostring() function remained unimplemented
 
 public:
 
@@ -46,9 +45,6 @@ public:
 
     Holder(const string &id, const string &name, Types type);
 
-    // it will call all inner base object's translate function
-    string translate();
-
     // getters & setters
     int get_type() {
         return _type;
@@ -62,7 +58,6 @@ protected:
     // please be aware : use the right_son to point other class holders
     // and use the left to
     TYPES _type;
-
 
 };
 
