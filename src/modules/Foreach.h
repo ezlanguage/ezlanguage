@@ -3,7 +3,7 @@
 #define FOREACH_H
 
 #include "Iterative_instruction.h"
-#include "Include_c++/String_addon.h"
+#include "String_addon.h"
 
 using namespace std;
 

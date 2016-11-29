@@ -4,7 +4,7 @@
 
 #include "Iterative_instruction.h"
 #include <string>
-#include "Include_c++/String_addon.h"
+#include "String_addon.h"
 
 //example : forall i in 1..10 step 2 (step is optionnal)
 //Use of Declaration, Condition and Instruction
