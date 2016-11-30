@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Author: BARRY Mamadou Bhoye-->
+<!-- Email: barrybhoye05@gmail.com -->
+<!-- Date: 14 Octobre 2016 -->
+<!-- For ezlanguage compiler -->
+
+<language id="ezlanguage" _name="ezlanguage" version="2.0" _section="Sources">
+    
+    <metadata>
+	  <property name="mimetypes">text/x-ezl;text/x-ezlanguage</property>
+	  <property name="globs">*.ez;*.ezl</property>
+	</metadata>
+
+	<!-- DECLARATON DES STYLES-->
+	<styles>
+		<style id="comment" _name="Comment" map-to="def:comment"/>
+	      	<style id="chaine" _name="Chaine" map-to="def:string"/>
+	      	<style id="keyword" _name="Keyword" map-to="def:keyword"/>	      	
+	      	<style id="type" _name="Data Type" map-to="def:type"/>
+		<style id="program" _name="Program" map-to="def:"/>
+	</styles>
+	
+	<!--DEFINITIONS DES STYLES -->
+	<definitions>
+		<!--COMMETAIRE SUR UNE LIGNE -->
+		<context id="comment" style-ref="comment">
+		    <start>//</start>
+    		    <end>$</end>
+		</context>
+
+		<context id="comment" style-ref="comment">
+		    <start>/*</start>
+    		    <end>*/</end>
+		</context>
+
+		<context id="string" end-at-line-end="true" style-ref="string">
+			<start>"</start>
+			<end>"</end>
+        	</context>		
+			<context id="keywords" style-ref="keyword">
+			<keyword>if</keyword>
+			<keyword>else</keyword>
+			<keyword>for</keyword>
+			<keyword>while</keyword>
+			<keyword>return</keyword>
+			<keyword>when</keyword>
+			<keyword>case</keyword>
+			<keyword>default</keyword>
+			<keyword>do</keyword>
+			<keyword>repeat</keyword>
+			<keyword>until</keyword>
+			<keyword>end</keyword>
+			<keyword>procedure</keyword>
+			<keyword>function</keyword>
+			<keyword>print</keyword>
+			<keyword>program</keyword>        
+		</context>
+                		
+		<context id="types" style-ref="type">
+			<keyword>constant</keyword>
+			<keyword>string</keyword>
+			<keyword>integer</keyword>
+			<keyword>real</keyword>          
+			<keyword>class</keyword>
+		</context>
+		
+		<context id="ezlanguage" class="no-spell-check">
+		      	<include>
+				<context ref="keywords"/>					
+				<context ref="comment"/>
+				<context ref="types"/>		
+			</include>
+    	</context>
+    
+	</definitions>    
+</language>    
+        
+

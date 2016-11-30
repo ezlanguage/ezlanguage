@@ -2,24 +2,12 @@
 #include "Forall.h"
 #include <iostream>
 #include <string>
+#include "String_addon.h"
 
 using namespace std;
 
 Forall::Forall(int ind_begin, int ind_end, int step, int imbrication): ind_begin(ind_begin), ind_end(ind_end), step(step), imbrication(imbrication){
     name = "Forall";
-}
-
-string operator+ (string s, int i)
-{
-    return s+to_string(i);
-}
-string operator+ (string s, double i)
-{
-    return s+to_string(i);
-}
-string operator+ (string s, float i)
-{
-    return s+to_string(i);
 }
 
 //forall i in 1..10 (step X)

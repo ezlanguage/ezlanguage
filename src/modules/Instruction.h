@@ -11,6 +11,10 @@ protected:
 
 public:
 
+Instruction();
+string translate();
+~Instruction();
+
 };
 
 #endif
