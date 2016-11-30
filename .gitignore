@@ -16,4 +16,4 @@ obj/*
 *.user
 
 #CLion files
-.idea/workspace.xml
+.idea/*
