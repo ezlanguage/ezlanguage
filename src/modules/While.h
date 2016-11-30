@@ -1,4 +1,4 @@
-//author Antoine GARNIER
+//@author Antoine GARNIER
 #ifndef WHILE_H
 #define WHILE_H
 
@@ -29,8 +29,8 @@ public:
     While(Condition while_cond, std::vector<std::string> instructions);
 
     //getters
-    Condition get_condition();
-    std::vector<std::string> get_instructions();
+    Condition get_condition(){ return while_condition; }
+    std::vector<std::string> get_instructions(){ return instructions; }
 
     std::string translate();
 };

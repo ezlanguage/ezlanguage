@@ -11,7 +11,11 @@
 #define COMPARISON 4
 #define INCREMENT 5
 
+#include <string>
+
 #include "Node.h"
+
+using namespace std;
 
 class Operator
         : public Node{
@@ -22,9 +26,16 @@ protected:
     int ope_type; //operator's type (1 : logical, 2 : arithmetic, 3 : allocation, 4 : comparison...etc)
     string ope; //operator's value
 
+    string operande_1, operande_2;
+
 public:
+    //constructors
     Operator();
     Operator(int ope_type, string ope);
+    Operator(int ope_nb, int ope_type, string ope, string ope_1, string ope_2);
+
+    string getOperande_1(){ return operande_1; }
+    string getOperande_2(){ return operande_2; }
 
     // this function will allow the translation of the nodes's tree into c++ instructions
     string translate();

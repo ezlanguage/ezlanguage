@@ -1,9 +1,10 @@
+//@author Antoine GARNIER
 #include "While.h"
 
 While::While(Condition while_cond, std::vector<std::string> instructions)
     :while_condition(while_cond){
     std::vector<std::string> res;
-    for(int i= 0; i < instructions.size(); ++i){
+    for(unsigned int i= 0; i < instructions.size(); ++i){
         res[i]= instructions[i];
     }
     instructions= res;
@@ -14,10 +15,9 @@ std::string While::translate() {
     Condition while_condition= get_condition();
     std::vector<std::string> instructions= get_instructions();
 
-	//TODO + erreur impossible
-    //res= "while(" + while_condition + "){\n";
+	res= "while(" + while_condition.translate() + "){\n";
 
-    for(int i= 0; i < instructions.size(); ++i){
+    for(unsigned int i= 0; i < instructions.size(); ++i){
         std::string instruction_raw;
         //white spaces here or not ?
         instruction_raw= "   "+instructions[i]+";\n";
@@ -27,6 +27,3 @@ std::string While::translate() {
     return res;
 }
 
-
-Condition While::get_condition(){};
-std::vector<std::string> While::get_instructions(){};
