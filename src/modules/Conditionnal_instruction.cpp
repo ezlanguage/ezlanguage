@@ -17,7 +17,7 @@ Conditionnal_instruction::Conditionnal_instruction(const vector< vector<Instruct
 
 // copy constructor
 Conditionnal_instruction::Conditionnal_instruction(const Conditionnal_instruction &c) 
-	::instructions(c.instructions),conditions(c.conditions),condition_type(c.condition_type){
+	:instructions(c.instructions),conditions(c.conditions),condition_type(c.condition_type){
 	name= "Conditionnal instruction";	
 }
 
@@ -40,7 +40,7 @@ std::string Conditionnal_instruction::translate() {
 		case CIf || CIfElse :  
 			res+="if("+conditions[0].translate()+")"; // in this case vector of conditions has only one condition 
 			res+="{";
-			for(int i=0;i<instructions[0].size();i++) { // in this case vector of instructions has only the instructions of (if) 
+			for(unsigned int i=0;i<instructions[0].size();i++) { // in this case vector of instructions has only the instructions of (if) 
 				// here \t and \n for the view of the code c++
 				res+="\t"+instructions[0][i].translate(); 
 				res+="\n";
@@ -52,7 +52,7 @@ std::string Conditionnal_instruction::translate() {
 		case CIfElse :
 			res+="else"; // in this case vector of conditions has only one condition 
 			res+="{";
-			for(int i=0;i<instructions[1].size();i++) { // instructions[0] for the bloc (if) and instructions[1] for the bloc (else) 
+			for(unsigned int i=0;i<instructions[1].size();i++) { // instructions[0] for the bloc (if) and instructions[1] for the bloc (else) 
 				// here \t and \n for the view of the code c++
 				res+="\t"+instructions[1][i].translate(); 
 				res+="\n";
@@ -63,11 +63,12 @@ std::string Conditionnal_instruction::translate() {
 			
 		case CWhen :
 			// here the left_son normally has the variable that we were willing to compare
-			res+="switch("+this->left_son+")"; 
+			//TODO ERREUR ICI
+			//res+="switch("+this->left_son+")"; 
 			res+="{";
-				for(int i=0;i<conditions.size();i++){
+				for(unsigned int i=0;i<conditions.size();i++){
 					res+="\tcase "+conditions[i].translate()+" :\n";
-					for(int j=0;j<instructions[i].size();j++) {
+					for(unsigned int j=0;j<instructions[i].size();j++) {
 						res+="\t\t"+instructions[i][j].translate()+"\n";
 					}
 					res+="\t\tbreak;\n";
@@ -75,7 +76,7 @@ std::string Conditionnal_instruction::translate() {
 			// if the size instructions > size of conditions then we have a default case
 			if(instructions.size()>conditions.size()) {
 				res+="\tdefault :\n";
-					for(int i=0;i<instructions[instructions.size()-1].size();i++) {
+					for(unsigned int i=0;i<instructions[instructions.size()-1].size();i++) {
 						res+="\t\t"+instructions[instructions.size()-1][i].translate()+"\n";
 					}
 				res+="\t\tbreak;\n";
