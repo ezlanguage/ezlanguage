@@ -4,6 +4,7 @@
 #include <string>
 #include "Node.h"
 
+//boolean value (used in the loop)
 class Condition :
         public Node {
 protected:
@@ -11,7 +12,7 @@ protected:
 public:
     Condition();
 
-    std::string traduire();
+    std::string translate();
 
 };
 

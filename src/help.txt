@@ -6,20 +6,19 @@ SYNOPSIS
 DESCRIPTION
     This is the EZ language compiler, a C based language for beginners.
 EXAMPLES
-    Some xamples of common usage.
+    Some xamples of common usage :
+	EZL example1.ez example2.ez -o example.exe
 OPTIONS
 	-h			: Displays this information
 	-o <file>	: Place the output into <file>
-	-O1			: reduces the execution time, first lvl of optimization
-	-02			: same as 01 lvl2 
-	-03			: same as 02 lvl3
-	-v			: Displays all the compilation steps in the terminal
-	-w			: Displays all the warning messages
+	-O1			: reduces the execution time, first level of optimization
+	-02			: same as 01 lvl2.
+	-03			: same as 02 lvl3.
+	-v			: Displays all the compilation steps in the command prompt.
+	-w			: Displays all the warning messages.
 
 SEE ALSO
    	full documentation http://ezlanguage.com.
-BUGS
-    List known bugs.
 AUTHOR
    	M2 SILI 2016 - 2017 
 COPYRIGHT

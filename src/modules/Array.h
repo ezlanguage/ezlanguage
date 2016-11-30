@@ -1,3 +1,5 @@
+//@author : GINISTY Valentin
+// ie -> add by Ismail ELFAQIR
 #ifndef ARRAY_H
 #define ARRAY_H
 
@@ -7,14 +9,18 @@
 class Array :
         public Node {
 protected:
-    int debut_iterateur;
-    int fin_iterateur;
+	int begin_iterator;
+    int end_iterator;
 
 public:
-    Array();
-    Array(int debut_it, int fin_it);
+	Array(int end_it); // ie -> array can have just an end_it like c++
+    Array(int begin_it, int end_it);
 
-    std::string traduire();
+	int get_index(int index); // ie -> get index of table 
+	int get_begin_iterator() const;
+	int get_end_iterator() const;
+
+    std::string translate();
 };
 
 #endif
