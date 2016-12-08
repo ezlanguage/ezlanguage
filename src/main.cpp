@@ -21,6 +21,41 @@ int help = 0;
 // Ligne de commande g++
 string commande_gpp = "g++ ";
 
+//aide
+string AIDE_PROG = "\
+EZL \n\
+	 \n\
+SYNOPSIS \n\
+	EZL [options] files.. \n\
+	for the options list, see the options section below. \n\
+	 \n\
+DESCRIPTION \n\
+	This is the EZ language compiler, a C based language for beginners. \n\
+	 \n\
+EXAMPLES \n\
+	Some xamples of common usage : \n\
+	EZL example1.ez example2.ez -o example.exe \n\
+	 \n\
+OPTIONS \n\
+	--directinput			: Enable direct input for EZ language \n\
+	-h, --help			: Displays this information \n\
+	--noexec			: Do not launch the executable \n\
+	-o <file>, --output=<file>	: Name the executable <file> \n\
+	-O1, --optimisation=1		: Reduces the execution time, first level of optimization \n\
+	-O2, --optimisation=2		: Same as O1 lvl2 \n\
+	-O3, --optimisation=3		: Same as O2 lvl3 \n\
+	-v, --verbose			: Displays all the compilation steps in the command prompt \n\
+	-w, --warning			: Displays all the warning messages \n\
+ \n\
+SEE ALSO \n\
+   	Full documentation at ezlanguage.com \n\
+   	 \n\
+AUTHOR \n\
+   	M2 SILI 2016 - 2017  \n\
+   	 \n\
+COPYRIGHT \n\
+	Specify your copyright information.\n";
+
 //functions
 //arguments qui ne sont pas prévus, donc des fichiers si la bonne extension, erreur sinon
 void parse_argv_ext(const char* ext_ez, vector<char*> &fic_ezl, char * fic_cmp){
@@ -88,11 +123,7 @@ int main ( int argc , char ** argv ){
 				help = 1;
 				
 				// teste l'existence du fichier d'aide
-				if(fopen("./src/help.txt","r") != NULL){
-					system("cat ./src/help.txt");	
-				}else{
-					cerr << "Help file not found." << endl; 
-				}
+				cout << AIDE_PROG << endl;
 				break;
 
 			// Ajoute le fichier de sortie au compilateur g++
