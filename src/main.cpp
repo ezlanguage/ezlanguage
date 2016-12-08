@@ -16,8 +16,46 @@ extern FILE* yyout;
 static int verbose_flag;
 int directinput = 0;
 int no_execution = 0;
+int help = 0;
 
 
+//aide
+string AIDE_PROG = "\
+EZL \n\
+	 \n\
+SYNOPSIS \n\
+	EZL [options] files.. \n\
+	for the options list, see the options section below. \n\
+	 \n\
+DESCRIPTION \n\
+	This is the EZ language compiler, a C based language for beginners. \n\
+	 \n\
+EXAMPLES \n\
+	Some xamples of common usage : \n\
+	EZL example1.ez example2.ez -o example.exe \n\
+	 \n\
+OPTIONS \n\
+	--directinput			: Enable direct input for EZ language \n\
+	-h, --help			: Displays this information \n\
+	--noexec			: Do not launch the executable \n\
+	-o <file>, --output=<file>	: Name the executable <file> \n\
+	-O1, --optimisation=1		: Reduces the execution time, first level of optimization \n\
+	-O2, --optimisation=2		: Same as O1 lvl2 \n\
+	-O3, --optimisation=3		: Same as O2 lvl3 \n\
+	-v, --verbose			: Displays all the compilation steps in the command prompt \n\
+	-w, --warning			: Displays all the warning messages \n\
+ \n\
+SEE ALSO \n\
+   	Full documentation at ezlanguage.com \n\
+   	 \n\
+AUTHOR \n\
+   	M2 SILI 2016 - 2017  \n\
+   	 \n\
+COPYRIGHT \n\
+	Specify your copyright information.\n";
+
+//functions
+//arguments qui ne sont pas prévus, donc des fichiers si la bonne extension, erreur sinon
 /**
  * Arguments qui ne sont pas prévus, donc des fichiers si la bonne extension, erreur sinon
  * @brief parse_argv_ext
@@ -164,39 +202,34 @@ int main(int argc , char ** argv){
 				if (long_options[option_index].flag != 0)
 					break;
 				// flag indiquant que l' exécutable ne doit pas être lancé après la compilation
-				if (string(long_options[option_index].name) == "noexec")
-					cout << "Do not launch .exe file" << endl;
+				if (string(long_options[option_index].name) == "noexec"){
+					//cout << "Not launching .exe file..." << endl;
+				}
 				break;
 			// Compiler options computing
 				
 			// Affiche l'aide
 			case 'h':
-				cout << "Displays help" << endl;
-
+				help = 1;
+				
 				// teste l'existence du fichier d'aide
-				if(fopen("../src/help.txt","r") != NULL){
-					system("cat ../src/help.txt");	
-				}
-
-				else{
-					cerr << "échec lors de la récupération de l'aide" << endl; 
-				}
+				cout << AIDE_PROG << endl;
 				break;
 
 			// Ajoute le fichier de sortie au compilateur g++
 			case 'o':
-				cout << "Indicates the name of the output file" << endl;
+				//cout << "Indicates the name of the output file" << endl;
 				commande_gpp += "-o "+string(optarg)+" ";
 				output_name = string(optarg);
 				break;
 			case 'w':
-				cout << "Displays warning messages" << endl;
+				//cout << "Displays warning messages" << endl;
 				break;
 			// Ajoute l'option -o(1..3) au compilateur g++
 			case 'O':
-				cout << "Optimization option level: " << optarg << endl;
+				//cout << "Optimization option level: " << optarg << endl;
 				if(atoi(optarg) >= 1 && atoi(optarg) <= 3){
-					commande_gpp += "-o"+string(optarg)+" "; 
+					commande_gpp += "-O"+string(optarg)+" "; 
 				}
 				break;
 			case 't':
@@ -232,10 +265,9 @@ int main(int argc , char ** argv){
 		}
 	}        
     
-    // test des arguments restant
-	cout << "Il y a "<< argc<< " arguments"<<endl;
+    //test des arguments restant
 	for(int i=optind+1; i<argc; ++i){
-		cout<< "Parsing du "<< i<< "eme fichier : "<< argv[i]<< endl;
+		cout<< "Parsing the "<< i<< " file : "<< argv[i]<< endl;
 		if(!(find(fic_ezl.begin(), fic_ezl.end(), argv[i]) != fic_ezl.end())){
 			cerr << "Invalid file or unknown option : " << argv[i] << endl;
 			exit(EXIT_FAILURE);
@@ -257,14 +289,20 @@ int main(int argc , char ** argv){
 		cout << "La compilation s'est déroulée sans problèmes !" << endl;
 	}
 
-	if(output_name != ""){
-		string tmp_output= "./" + output_name;	
-		system(tmp_output.c_str());
-	}else{
-		string tmp_output= "./a.out";	
-		system(tmp_output.c_str());
+	if(help != 1){
+		cout << commande_gpp << endl;
+		system(commande_gpp.c_str());
+		if(no_execution != 1){
+			if(output_name != ""){
+				string tmp_output= "./" + output_name;	
+				system(tmp_output.c_str());
+			}else{
+				string tmp_output= "./a.out";	
+				system(tmp_output.c_str());
+			}
+		}
+		cout << "\033[1;36mFin du parsing\033[0m" << endl;
 	}
-	cout << "\033[1;36mFin du parsing\033[0m" << endl;
 
     exit(EXIT_SUCCESS);
 }
