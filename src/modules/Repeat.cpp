@@ -1,3 +1,4 @@
+//@author Antoine GARNIER
 #include "Repeat.h"
 #include "String_addon.h"
 
@@ -24,12 +25,8 @@ std::string Repeat::translate() {
         res+= instruction_raw;
     }
     std::string condition_raw;
-    //TODO ERROR +
-    //condition_raw= "}while(" + repeat_condition + ")\n";
+    condition_raw= "}while(" + repeat_condition.translate() + ")\n";
     res+= condition_raw;
     return res;
 }
 
-
-Condition Repeat::get_condition(){};
-std::vector<std::string> Repeat::get_instructions(){};

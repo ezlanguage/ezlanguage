@@ -1,9 +1,9 @@
 #compilateur utilisé
 CC = g++-5
 # flags de compilation
-CC_FLAGS = -Wall -std=c++11 #-ggdb
+CC_FLAGS = -Wall -std=c++11 -lfl #-ggdb 
+EXT_SRC = 
 CC_MOD_FLAGS = -MM #-MP 
-
 
 # extension des fichiers lex (.XXX)
 LEX_EXT = lex
@@ -17,7 +17,6 @@ YACC_EXT = ypp
 # interpréteur des fichiers Yacc : analyse syntaxique et sémantique
 YACC = bison
 YACC_FLAGS =
-
 
 #sources cpp
 # --- RAJOUTER CHAQUE FICHIER CPP DE MODULES ICI ! ---
@@ -40,7 +39,7 @@ all: $(EXEC)
 
 EZ_language_compiler : obj/lex.yy.c obj/EZ_language_compiler.tab.cpp obj/EZ_language_compiler.tab.hpp $(MOD_OBJ) 
 	@echo  "\033[1;33mCréation du compilateur en compilant les sources\033[0m"
-	$(CC) -o bin/$@ obj/EZ_language_compiler.tab.cpp obj/lex.yy.c $(MOD_OBJ) $(CC_FLAGS) -ll 
+	$(CC) -o bin/$@ obj/EZ_language_compiler.tab.cpp obj/lex.yy.c $(MOD_OBJ) $(CC_FLAGS)
 
 obj/lex.yy.c: src/EZ_language_compiler.$(LEX_EXT) obj/EZ_language_compiler.tab.hpp
 	@echo "\033[1;33mInterprétation du fichier Lex\033[0m"
