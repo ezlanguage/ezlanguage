@@ -1,0 +1,7 @@
+program Print
+
+procedure PrintWhen
+    variable x is string
+    x = "Test affichage "
+    print x
+end procedure
