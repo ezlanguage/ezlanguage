@@ -1,14 +1,14 @@
 program TestFor
 
 procedure TestFor
-    variable a, b, i are integer
+    variable a, b are integer
     a = 0
     b = 10
     
     variable var is integer
     var = 0
     
-    for i in a..b step 1 do
+    for i is integer in a..b step 1 do
         var = var +1
     end for
 
