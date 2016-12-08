@@ -1,8 +1,7 @@
 //author: Valentin GINISTY
+program main_simple_vide
 //+ test commentaires
 
-program main_simple_vide
-
-procedure main_simple_vide()
-begin
-end
+procedure main_simple_vide
+//this is a test
+endprocedure
