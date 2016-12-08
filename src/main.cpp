@@ -16,6 +16,7 @@ extern FILE* yyout;
 static int verbose_flag;
 int directinput = 0;
 int no_execution = 0;
+int no_cpp = 0;
 int help = 0;
 
 
@@ -38,6 +39,7 @@ OPTIONS \n\
 	--directinput			: Enable direct input for EZ language \n\
 	-h, --help			: Displays this information \n\
 	--noexec			: Do not launch the executable \n\
+	--nocpp				: Do not convert to cpp \n\
 	-o <file>, --output=<file>	: Name the executable <file> \n\
 	-O1, --optimisation=1		: Reduces the execution time, first level of optimization \n\
 	-O2, --optimisation=2		: Same as O1 lvl2 \n\
@@ -64,16 +66,18 @@ COPYRIGHT \n\
  * @param fic_cmp
  */
 void parse_argv_ext(const char* ext_ez, vector<char*> &fic_ezl, char * fic_cmp){
-    bool bonne_extension;
+    bool bonne_extension = true;
     for(unsigned int j = 0; j < strlen(ext_ez) && bonne_extension; ++j){
     	//si l'extension est mauvaise
         if(ext_ez[j] != fic_cmp[strlen(fic_cmp)-strlen(ext_ez)+j]){
             bonne_extension = false;
+            //cout << "mauvaise ext" << endl;
         }
         //si l'extension est bonne
         if(j == strlen(ext_ez)-1){
 			//on garde le fichier sous le coude
 			fic_ezl.push_back(fic_cmp);
+			//cout << "bonne ext" << endl;
         }
 	}
 }
@@ -100,12 +104,12 @@ bool file_test_exists(string filename){
 
 void parse_to_cpp(vector<char*> fic_ezl, string &input_files){
     for(unsigned int i=0; i<fic_ezl.size(); ++i){
+        cout << "\033[1;36m=====================================\033[0m" << endl;
         cout << "\033[1;36mFile parsing : \033[1;37m" << fic_ezl[i] << endl;
         cout << "\033[1;36m=====================================\033[0m" << endl;
         yyin = fopen(fic_ezl[i], "r");
 
         if(!directinput){
-
             if(!yyin){
                 cerr <<  fic_ezl[i] << ": file opening failed." << endl;
             }
@@ -131,9 +135,13 @@ void parse_to_cpp(vector<char*> fic_ezl, string &input_files){
                 // fermerture du fichier cpp
                 fclose(cpp_file);
                 input_files+=fichier_tmp + " ";
+                
+	            cout << "\033[1;36m=====================================\033[0m" << endl;
+       			cout << endl; 
             }
         }
         else{
+            cout << "\033[1;36m=====================================\033[0m" << endl;
             cout << "\033[1;36mParsing begining : \033[1;37m" << endl;
             cout << "\033[1;36m=====================================\033[0m" << endl;
             yyparse();
@@ -174,6 +182,7 @@ int main(int argc , char ** argv){
 			{"verbose",			no_argument,	&verbose_flag, 	1},
 			{"brief",			no_argument,	&verbose_flag, 	0},
 			{"noexec",			no_argument,	&no_execution, 	1},
+			{"nocpp",			no_argument,	&no_cpp, 		1},
 			{"directinput",		no_argument,	&directinput,	1},
 			
 			//autres
@@ -205,6 +214,9 @@ int main(int argc , char ** argv){
 				if (string(long_options[option_index].name) == "noexec"){
 					//cout << "Not launching .exe file..." << endl;
 				}
+				if (string(long_options[option_index].name) == "nocpp"){
+					//cout << "Not creating cpp file..." << endl;
+				}
 				break;
 			// Compiler options computing
 				
@@ -233,7 +245,7 @@ int main(int argc , char ** argv){
 				}
 				break;
 			case 't':
-				cout << "option de test reconnue" << endl;
+				//cout << "option de test reconnue" << endl;
 				test_file_name = test_rep_path+optarg;
 				if(file_test_exists(test_file_name)){
 					fic_ezl.push_back((char*)test_file_name.c_str());
@@ -262,12 +274,13 @@ int main(int argc , char ** argv){
 	for(int i=0; i<nb_ext; ++i){
 		for(int j=optind; j<argc; ++j){
 			parse_argv_ext(ext_ez[i].c_str(), fic_ezl, argv[j]);
+			//cout << "ajout" << fic_ezl.size() << endl;
 		}
 	}        
     
     //test des arguments restant
 	for(int i=optind+1; i<argc; ++i){
-		cout<< "Parsing the "<< i<< " file : "<< argv[i]<< endl;
+		//cout<< "Parsing the file : "<< argv[i]<< endl;
 		if(!(find(fic_ezl.begin(), fic_ezl.end(), argv[i]) != fic_ezl.end())){
 			cerr << "Invalid file or unknown option : " << argv[i] << endl;
 			exit(EXIT_FAILURE);
@@ -277,28 +290,25 @@ int main(int argc , char ** argv){
 	string input_files ="";
 
 	// Parse tous les fichiers ez contenus dans fic_ez en fichier cpp et les ajoute dans input_files 
-    parse_to_cpp(fic_ezl, input_files);
+	parse_to_cpp(fic_ezl, input_files);
 
-	commande_gpp += " " + input_files;
-
-	cout << "commande cpp: " << commande_gpp << endl;
-	int ret_value = system((commande_gpp + ">/dev/null 2>&1").c_str());
-	if(ret_value != 0 ){
-		cerr << "Problème lors de la complilation du c++. Relancez en mode debug pour plus de détails" << endl;
-	}else{
-		cout << "La compilation s'est déroulée sans problèmes !" << endl;
-	}
+	commande_gpp += input_files;
 
 	if(help != 1){
-		cout << commande_gpp << endl;
-		system(commande_gpp.c_str());
-		if(no_execution != 1){
-			if(output_name != ""){
-				string tmp_output= "./" + output_name;	
-				system(tmp_output.c_str());
-			}else{
-				string tmp_output= "./a.out";	
-				system(tmp_output.c_str());
+		if(no_cpp != 1){
+			cout << commande_gpp << endl;
+			int ret_value = system((commande_gpp).c_str());
+			if(ret_value != 0 ){
+				cerr << "Error during c++ compilation" << endl;
+			}
+			if(no_execution != 1){
+				if(output_name != ""){
+					string tmp_output= "./" + output_name;	
+					system(tmp_output.c_str());
+				}else{
+					string tmp_output= "./a.out";	
+					system(tmp_output.c_str());
+				}
 			}
 		}
 		cout << "\033[1;36mFin du parsing\033[0m" << endl;
