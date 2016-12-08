@@ -1,0 +1,8 @@
+//author: Valentin GINISTY
+//+ test commentaires
+
+program main_simple_vide
+
+procedure main_simple_vide()
+begin
+end
