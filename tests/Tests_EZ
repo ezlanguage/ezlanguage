@@ -1,0 +1,42 @@
+main simple vide
+
+main simple conditions
+
+main simple extension_ezl
+
+main simple opérateurs booleen
+main simple opérateurs integer
+main simple opérateurs comparaison
+main simple opérateurs complexe
+
+main simple fonctions
+main simple procédures
+
+main simple conteneur vector
+main simple conteneur list
+main simple conteneur array
+main simple conteneur set
+main simple conteneur map
+
+main simple affectation type_de_base
+main simple affectation conteneurs
+main simple affectation range
+
+main simple gestion_chaines_caractères
+main simple affichage
+
+main simple test if
+main simple test when
+main simple test while
+main simple test repeat
+main simple test for
+main simple test forall
+main simple test foreach
+
+$1 = conditions + affectation
+
+main complexe tests + $1
+main complexe opérateurs + $1
+main complexe conteneurs + $1
+
+main complexe tout
