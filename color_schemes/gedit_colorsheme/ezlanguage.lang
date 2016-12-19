@@ -6,38 +6,32 @@
 
 <language id="ezlanguage" _name="ezlanguage" version="2.0" _section="Sources">
     
-    <metadata>
+    	<metadata>
 	  <property name="mimetypes">text/x-ezl;text/x-ezlanguage</property>
-	  <property name="globs">*.ez;*.ezl</property>
+	  <property name="globs">*.ezl;*.ez</property>
 	</metadata>
 
-	<!-- DECLARATON DES STYLES-->
 	<styles>
 		<style id="comment" _name="Comment" map-to="def:comment"/>
-	      	<style id="chaine" _name="Chaine" map-to="def:string"/>
-	      	<style id="keyword" _name="Keyword" map-to="def:keyword"/>	      	
-	      	<style id="type" _name="Data Type" map-to="def:type"/>
-		<style id="program" _name="Program" map-to="def:"/>
+	      	<style id="string" _name="String" map-to="def:string"/>
+	      	<style id="keyword" _name="Keyword" map-to="def:keyword"/>
+	      	<style id="type" _name="Data Type" map-to="def:type"/>	      	
 	</styles>
 	
-	<!--DEFINITIONS DES STYLES -->
-	<definitions>
-		<!--COMMETAIRE SUR UNE LIGNE -->
-		<context id="comment" style-ref="comment">
-		    <start>//</start>
-    		    <end>$</end>
-		</context>
+	<definitions>			
 
 		<context id="comment" style-ref="comment">
-		    <start>/*</start>
-    		    <end>*/</end>
+			<start>//</start>
+    			<end>$</end>
 		</context>
 
 		<context id="string" end-at-line-end="true" style-ref="string">
 			<start>"</start>
 			<end>"</end>
         	</context>		
-			<context id="keywords" style-ref="keyword">
+		
+
+		<context id="keywords" style-ref="keyword">
 			<keyword>if</keyword>
 			<keyword>else</keyword>
 			<keyword>for</keyword>
@@ -53,10 +47,11 @@
 			<keyword>procedure</keyword>
 			<keyword>function</keyword>
 			<keyword>print</keyword>
-			<keyword>program</keyword>        
+			<keyword>program</keyword>  			
 		</context>
+
                 		
-		<context id="types" style-ref="type">
+		<context id="types" style-ref="type">			
 			<keyword>constant</keyword>
 			<keyword>string</keyword>
 			<keyword>integer</keyword>
@@ -68,11 +63,10 @@
 		      	<include>
 				<context ref="keywords"/>					
 				<context ref="comment"/>
-				<context ref="types"/>		
+				<context ref="types"/>				
+				<context ref="string"/>		
 			</include>
-    	</context>
-    
+	    	</context>    
 	</definitions>    
 </language>    
         
-
