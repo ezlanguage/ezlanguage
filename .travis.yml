@@ -37,5 +37,6 @@ script:
 
 after_success:
 # Launch tests
-  - ./tests/all_tests.sh
+  - cd tests
+  - ./all_tests.sh
 
