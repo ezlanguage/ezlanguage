@@ -1,0 +1,10 @@
+// beug : on peut pas commencé notre programme par une affectation 
+print "ok"
+
+x = 5 && 2
+y = 4 || 2
+a = d
+a = p mod a
+s = abs 8
+s = a pow 5
+x =  a+ 5

@@ -22,3 +22,5 @@ local i, max are integer
 
   print "maximum of ages = ", max
 endprocedure
+
+x = 7 + k.size()

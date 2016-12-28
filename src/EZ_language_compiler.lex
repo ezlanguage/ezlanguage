@@ -57,7 +57,12 @@ backLine 	\n
 "+"     return PLUS; 
 "-"     return MINUS; 
 "*"     return MULT; 
-"/"   	return DIVISE; 
+"/"   	return DIVISE;
+
+"&"		return (AND);
+"|"		return (OR);
+"^"	        return (XOR);
+"!"	        return (NOT); 
 
 "("		return (LEFT_PARENTHESIS);
 ")"		return (RIGHT_PARENTHESIS);
@@ -67,8 +72,11 @@ backLine 	\n
 
 "["		return (LEFT_BRACKET);
 "]"		return (RIGHT_BRACKET);
-"."	    return (POINT);
+"."	        return (POINT);
 
+(mod|MOD)            return(MOD);
+(pow|POW)            return(POW);
+(abs|ABS)            return(ABS);
 
 (const|CONST)        return(CONST);
 (local|LOCAL)        return(LOCAL);
