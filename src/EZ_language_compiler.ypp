@@ -27,18 +27,18 @@ extern int yylineno;
 %token<numerical_value>	NUM_INTEGER			// ENTIER
 %token<reel_value>	NUM_REAL			// REEL
 %token<texte>	NAME RETOUR	STRING			// NOM
-%token	COMMA  DEGRE POURCENT DIESE POINT QUOTE	// Caractères
-%token TYPE_INTEGER TYPE_REAL TYPE_STRING TYPE_BOOLEAN			// Type des variables
+%token	COMMA  DEGRE POURCENT DIESE POINT QUOTE		// Caractères
+%token TYPE_INTEGER TYPE_REAL TYPE_STRING TYPE_BOOLEAN			// variables type
 %token  EGAL NE LT LE GT GE PLUS MINUS MULT DIVISE
 %token	LEFT_PARENTHESIS RIGHT_PARENTHESIS LEFT_ACCOLADE RIGHT_ACCOLADE LEFT_BRACKET RIGHT_BRACKET FIN BACK_LINE	// Special Characters
-%token CONST  LOCAL  GLOBAL  IS  ARE 		      		      // variables declaration
+%token CONST  LOCAL  GLOBAL  IS  ARE 		      		         // variables declaration
 %token IF DO ELSE  ENDIF 						 // if else 
 %token WHEN CASE ENDCASE DEFAULT ENDWHEN				 // switch case ...
 %token WHILE ENDWHILE							 // while .. do ..
 %token REPEAT UNTIL ENDREPEAT 						 // do .. while ...
 %token FOR IN STEP ENDFOR
-%token FUNCTION PROCEDURE RETURN ENDFUNCTION ENDPROCEDURE	 // functions
-%token PRINT							         // loop for
+%token FUNCTION PROCEDURE RETURN ENDFUNCTION ENDPROCEDURE	 	 // functions
+%token PRINT							        
 %token END_OF_FILE
 
 %left PLUS MINUS EGAL
@@ -133,7 +133,7 @@ affectation:
 printing :
  PRINT string {cout <<"affichage : " << $2 << endl; } 
 |PRINT string noms { printf("affichage \n"); } 
-|PRINT expression {cout <<"affichage : " << $2 << endl; } // print 5 + 7 => "12"
+|PRINT expression {cout <<"affichage : " << $2 << endl; }
 ;
 
 for :
