@@ -54,3 +54,7 @@ ostream& operator<<(ostream& flux, const variable& v)
   v.print(flux);
   return flux;
 }
+
+string variable::translate() {
+	return "traduction noeud";
+}

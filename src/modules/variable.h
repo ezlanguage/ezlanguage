@@ -2,9 +2,9 @@
 #define VARIABLE_H
 
 #include "hashElement.h"
+#include "Node.h"
 
-
-class variable : public hashElement {
+class variable : public hashElement, public Node {
 private:
   
   std::string _type;
@@ -114,6 +114,7 @@ public:
    */
   void print(std::ostream & flux) const;
   
+  string translate();
 };
 
 
@@ -136,7 +137,6 @@ bool operator!=(const variable & v1, const variable & v2);
  * @author Johan Defaye
  */
 std::ostream& operator<<(std::ostream &flux, const variable & v);
-
 
 
 
