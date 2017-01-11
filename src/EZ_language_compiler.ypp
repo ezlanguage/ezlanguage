@@ -82,7 +82,7 @@ declaration_variables:
 variable_without_scope:
      NAME IS type next_line { cout << "Declaration de la variable1 " << $1 << endl; }
 |    NAME noms ARE type next_line { cout << "Declaration des variables1 "<< $1 << endl; }
-|    affectation { } 
+|    affectation  next_line { } 
 ;
 
 variable_with_scope:
@@ -116,14 +116,14 @@ statement:
 | printing {}
 | IF expression DO statement_sequence ELSE statement_sequence ENDIF { printf("SI_SINON_ALORS \n"); }
 | IF expression DO statement_sequence ENDIF { printf("SI   ALORS \n"); }
-| WHEN NAME IS whenbody whendefault ENDWHEN {  printf("when .. case .. \n"); }
+| WHEN expression IS next_line whenbody whendefault ENDWHEN {  printf("when .. case .. \n"); }
 | WHILE expression DO  statement_sequence ENDWHILE { printf("WHILE .. DO .. \n"); }
 | REPEAT statement_sequence UNTIL expression ENDREPEAT { printf("REPEAT .. UNTIL .. \n"); }
 | for {}
 ;
 
 affectation:
-  NAME EGAL expression { cout << "Affectation " <<  endl; }
+  NAME EGAL expression { cout << "Affectation expression " <<  endl; }
 | NAME PLUS PLUS { cout << "Affectation ++" <<  endl; }
 | NAME MINUS MINUS {  cout << "Affectation --" <<  endl; }
 | PLUS PLUS NAME  { cout << "++ Affectation " <<  endl; }
@@ -169,12 +169,12 @@ noms:
 ;
 
 whenbody: /* whenbody can't be empty */
-  whenbody CASE expression statement_sequence ENDCASE {}
-| CASE expression statement_sequence ENDCASE {}
+  whenbody CASE expression statement_sequence ENDCASE next_line{}
+| CASE  expression next_line statement_sequence next_line ENDCASE next_line {}
 ;
 
-whendefault:
-DEFAULT statement_sequence ENDCASE {}
+whendefault: /* May not be specified */
+| DEFAULT statement_sequence ENDCASE next_line{}
 ;
 
 string :
