@@ -22,6 +22,7 @@ protected:
 	std::vector<Condition> conditions; // <- ie all Condition in case we have (when)
 	int condition_type; // <- ie 
 public:
+	Conditionnal_instruction();
 	Conditionnal_instruction(const std::vector< std::vector<Instruction> >& inst, 
 							 const std::vector<Condition> &c,
 							 int ct
@@ -30,6 +31,7 @@ public:
 	const std::vector<Condition> & get_conditions() const; // <- ie get all coditions
 	const std::vector< std::vector<Instruction> > & get_instructions() const; // <- ie get all instructions
 	std::string translate(); // <- ie translate to c++
+	~Conditionnal_instruction();
 };
 
 #endif
