@@ -1,8 +1,8 @@
-program PrintWhen
+program TestWhen
 
-procedure PrintWhen
+procedure TestWhen
     variable x is integer
-    read x
+    x = 10
 
     when  x is
         case 0

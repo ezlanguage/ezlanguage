@@ -1,6 +1,6 @@
-program Print
+program TestPrint
 
-procedure PrintWhen
+procedure TestPrint
     variable x is string
     x = "Test affichage "
     print x

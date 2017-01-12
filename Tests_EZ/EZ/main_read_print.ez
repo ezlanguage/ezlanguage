@@ -1,6 +1,6 @@
-program PrintRead
+program TestPrintRead
 
-procedure PrintRead
+procedure TestPrintRead
    variable m is string
    print "Message :"
    read m

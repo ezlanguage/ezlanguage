@@ -1,8 +1,8 @@
-program PrintWhen
+program TestWhenRead
 
-procedure P
+procedure TestWhenRead
     variable x is integer
-    x = 10
+    read x
 
     when  x is
         case 0
