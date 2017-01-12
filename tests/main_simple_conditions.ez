@@ -1,8 +1,0 @@
-program main_simple_conditions
-
-procedure main_simple_conditions()
-    begin
-    if 5 < 8 then
-
-    end if
-end
