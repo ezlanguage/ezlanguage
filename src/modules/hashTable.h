@@ -11,7 +11,8 @@
  * @author Johan Defaye
  */
 template <typename T>
-class hashTable : public std::vector<std::list<T>>{
+class hashTable : public std::vector<std::list<T> > {
+   
 public:
   
   
@@ -124,7 +125,7 @@ public:
   /**
    * Test if an element is in the hash table
    * @param element : an element
-   * @param id : identifier of the element
+   * @param id : indetifier of the element
    * @return boolean
    * @author Johan Defaye
    */
