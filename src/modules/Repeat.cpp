@@ -2,31 +2,29 @@
 #include "Repeat.h"
 #include "String_addon.h"
 
-Repeat::Repeat(Condition repeat_cond, std::vector<std::string> instructions)
+Repeat::Repeat(Condition repeat_cond, Node* repeat_left_son, Node* repeat_right_son)
         :repeat_condition(repeat_cond){
-    std::vector<std::string> res;
-    for(unsigned int i= 0; i < instructions.size(); ++i){
-        res[i]= instructions[i];
-    }
-    instructions= res;
+    left_son= repeat_left_son;
+    right_son= repeat_right_son;
 }
 
 std::string Repeat::translate() {
     std::string res;
     Condition repeat_condition= get_condition();
-    std::vector<std::string> instructions= get_instructions();
 
     res= "do{\n";
 
-    for(unsigned int i= 0; i < instructions.size(); ++i){
-        std::string instruction_raw;
-        //white spaces here or not ?
-        instruction_raw= "   "+instructions[i]+";\n";
-        res+= instruction_raw;
-    }
-    std::string condition_raw;
-    condition_raw= "}while(" + repeat_condition.translate() + ")\n";
-    res+= condition_raw;
+//    The first instruction of the loop is the left son
+//    The second instruction is the right son of this left son...etc
+//    So here, we just translate the first one
+    res+= "   " + this->left_son->translate();
+
+//    The repeat condition is stored in the class
+    res+= "}while(" + repeat_condition.translate() + ")\n";
+
+//    don't forget to launch the translation of the instructions that follow this while
+    if(this->right_son) res+= this->right_son->translate();
+
     return res;
 }
 
