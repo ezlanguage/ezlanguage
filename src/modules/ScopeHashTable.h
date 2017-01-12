@@ -130,7 +130,15 @@ class ScopeHashTable : public HashTable<Variable> {
       * @author Johan Defaye
       */
       bool contains(const std::string & id) const;
-    
+      
+      
+      /**
+       * Test if an element is already in the hash table in the specified scope
+       * @param id : identifier
+       * @param s : scope
+       * @author Johan Defaye
+       */
+	   bool contains(const std::string & id, unsigned int s) const;
   
 };
 
