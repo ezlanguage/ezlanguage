@@ -8,7 +8,7 @@ Variable::Variable(): HashElement(), _type(""), _scope(0)
 
 
 
-Variable::Variable(string i, string t, unsigned int s, bool c): HashElement(i), _type(t), _scope(s), _const(c)
+Variable::Variable(const string & i, const string & t, bool c): HashElement(i), _type(t), _scope(0), _const(c)
 {}
 
 
