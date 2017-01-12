@@ -1,15 +1,18 @@
 //@author : Ismail ELFAQIR
-#include "ArrayAccess.h";
+#include "ArrayAccess.h"
 
 using namespace std;
 
 ArrayAccess::ArrayAccess():array(NULL), index(0) {
+	name= "Array Access";
 }
 
 ArrayAccess::ArrayAccess(ArrayDeclaration *a, int i ): array(a), index(i){
+	name= "Array Access";
 }
 
 ArrayAccess::ArrayAccess(const ArrayAccess & cpy):array(cpy.array), index(cpy.index){
+	name= "Array Access";
 }
 ArrayAccess::~ArrayAccess(){
 }

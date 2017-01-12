@@ -22,7 +22,7 @@ class If
 	
 		/**
 		* Default constructor
-		* Set block_type to 1
+		* Set block_type to block_else
 		* @author Ismail ELFAQIR
 		*/
 		If();
@@ -34,11 +34,20 @@ class If
 		* @author Ismail ELFAQIR
 		*/		
 		If(int bt);
+
+		/**
+		* Constructor with parameters
+		* Set the condition to the parameter passed to the constructor and the block_type to block_else
+		* @param c : pointer to the condition
+		* @author Ismail ELFAQIR
+		*/		
+		If(Condition *c);
 		
 		/**
 		* Constructor with parameters
 		* Set the block_type and the condition to the parameter passed to the constructor
 		* @param bt : the block_type
+		* @param c : pointer to the condition
 		* @author Ismail ELFAQIR
 		*/		
 		If(int bt, Condition *c);

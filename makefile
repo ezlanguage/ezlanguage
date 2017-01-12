@@ -21,7 +21,7 @@ YACC_FLAGS =
 #sources cpp
 # --- RAJOUTER CHAQUE FICHIER CPP DE MODULES ICI ! ---
 # --- FAIRE UN FICHIER CPP POUR CHAQUE FICHIER H S'IL Y A UNE CLASSE DEDANS ---
-MOD_CPP =  src/modules/Array.cpp src/modules/Condition.cpp src/modules/Conditionnal_instruction.cpp src/modules/Declaration.cpp src/modules/Foreach.cpp src/modules/Forall.cpp src/modules/function.cpp src/modules/hashElement.cpp src/modules/hashTable.cpp src/modules/Instruction.cpp src/modules/Iterative_instruction.cpp src/modules/Node.cpp src/modules/Operator.cpp src/modules/Range.cpp src/modules/Repeat.cpp src/modules/scopeHashTable.cpp src/modules/variable.cpp src/modules/While.cpp
+MOD_CPP =  src/modules/ArrayDeclaration.cpp src/modules/ArrayAccess.cpp src/modules/Condition.cpp src/modules/Conditionnal_instruction.cpp src/modules/If.cpp src/modules/Declaration.cpp src/modules/Foreach.cpp src/modules/Forall.cpp src/modules/function.cpp src/modules/hashElement.cpp src/modules/hashTable.cpp src/modules/Instruction.cpp src/modules/Iterative_instruction.cpp src/modules/Node.cpp src/modules/Operator.cpp src/modules/Range.cpp src/modules/Repeat.cpp src/modules/scopeHashTable.cpp src/modules/variable.cpp src/modules/While.cpp
 
 #fichiers objets
 MOD_OBJ = $(MOD_CPP:src/modules/%.cpp=obj/%.o)

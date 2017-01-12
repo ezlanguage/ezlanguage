@@ -1,11 +1,15 @@
 //@author : Ismail ELFAQIR
 #include <string>
+#include "If.h"
 using namespace std;
 
-If::If():block_type(1),Conditionnal_instruction(){
+If::If():block_type(3),Conditionnal_instruction(){
 }
 
 If::If(int bt):block_type(bt),Conditionnal_instruction() {
+}
+
+If::If(Condition *c):block_type(3),Conditionnal_instruction(c) {
 }
 
 If::If(int bt, Condition *c):block_type(bt),Conditionnal_instruction(c) {
@@ -35,7 +39,7 @@ string If::translate(){
 		case block_else_if :
 			block= "else if("+condition->translate()+")";
 			break;
-		case block_else_if :
+		case block_else :
 			block= "else";
 			break;	
 	}

@@ -1,20 +1,24 @@
 //@author : Ismail ELFAQIR
-#include "ArrayDeclaration.h";
+#include "ArrayDeclaration.h"
 //#include "String_addon.cpp"
 
 using namespace std;
 
 
 ArrayDeclaration::ArrayDeclaration():var(NULL), size(0){
+	name= "Array Declaration";
 }
 
 ArrayDeclaration::ArrayDeclaration(variable *v, int s):var(v), size(s){
+	name= "Array Declaration";
 }
 
 ArrayDeclaration::ArrayDeclaration(variable *v):var(v), size(0){
+	name= "Array Declaration";
 }
 
 ArrayDeclaration::ArrayDeclaration(const ArrayDeclaration & cpy):var(cpy.var), size(cpy.size){
+	name= "Array Declaration";
 }
 
 ArrayDeclaration::~ArrayDeclaration(){
