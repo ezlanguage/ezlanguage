@@ -5,4 +5,4 @@ procedure PrintRead
    print "Message :"
    read m
    print "Saisie : ", m
-end procedures
+end procedure
