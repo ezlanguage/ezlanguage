@@ -6,18 +6,18 @@
 #include <list>
 #include <string>
 
-#include "hashTable.h"
-#include "variable.h"
+#include "HashTable.h"
+#include "Variable.h"
 
 /**
- * Hash table which can only contains variable
+ * Hash table which can only contains Variable
  * @author Johan Defaye
  */
-class scopeHashTable : public hashTable<variable> {
+class ScopeHashTable : public HashTable<Variable> {
   
   
   private:
-    std::stack<std::list< std::list<variable>::iterator > > _scopeStack; // Used to improve the suppression of all the element of the same scoop
+    std::stack<std::list< std::list<Variable>::iterator > > _scopeStack; // Used to improve the suppression of all the element of the same scoop
     unsigned int _currentScope; 
   
   
@@ -36,21 +36,21 @@ class scopeHashTable : public hashTable<variable> {
      * Initialize the current scope to 0
      * @author Johan Defaye
      */
-    scopeHashTable();
+    ScopeHashTable();
     
     /**
      * Constructor with parameter
      * @param size : size of the hash table
      * @author Johan Defaye
      */
-    scopeHashTable(unsigned int size);
+    ScopeHashTable(unsigned int size);
     
     /**
      * Copy constructor
      * @param table : another scope hash table
      * @author Johan Defaye
      */
-    scopeHashTable(const scopeHashTable & table);
+    ScopeHashTable(const ScopeHashTable & table);
     
     
     
@@ -61,10 +61,10 @@ class scopeHashTable : public hashTable<variable> {
     
     /**
      * Give the scope stack of the hash table
-     * @return stack<list< variable::iterator > >
+     * @return stack<list< Variable::iterator > >
      * @author Johan Defaye
      */
-    std::stack<std::list< std::list<variable>::iterator > > get_scopeStack() const {return _scopeStack;}
+    std::stack<std::list< std::list<Variable>::iterator > > get_scopeStack() const {return _scopeStack;}
     
     
     /**
@@ -87,7 +87,7 @@ class scopeHashTable : public hashTable<variable> {
     void incScope();
     
     /**
-     * Remove all the variable from the highest scope in the hash table
+     * Remove all the Variable from the highest scope in the hash table
      * Decremente the current scope by one unit
      * @exception : Return a string as exception if the current scope is equal to 0 before decremente
      * @author Johan Defaye
@@ -95,27 +95,27 @@ class scopeHashTable : public hashTable<variable> {
     void decScope();
     
     /**
-     * Add a variable in the hash table 
-     * @param v : variable to add
+     * Add a Variable in the hash table 
+     * @param v : Variable to add
      * @exception : Return a string as exception if the hash table is empty
      * @author Johan Defaye
      */
-     void addElement(variable & v);
+     void addElement(Variable & v);
      
     /**
-     * Remove a variable from the hash table
-     * @param v : variable to remove
-     * @exception : Return a string as exception if the variable to be removed has too small scope
-     * @exception : Return a string as exception if the variable to be removed is not in the hash table
+     * Remove a Variable from the hash table
+     * @param v : Variable to remove
+     * @exception : Return a string as exception if the Variable to be removed has too small scope
+     * @exception : Return a string as exception if the Variable to be removed is not in the hash table
      * @author Johan Defaye
      */
-     //void removeElement(const variable & v);
+     //void removeElement(const Variable & v);
       
       
     /**
-     * Return the type of the variable with the specified identifier
+     * Return the type of the Variable with the specified identifier
      * Return the empty string if the type is not known
-     * @param id : identifier of the variable
+     * @param id : identifier of the Variable
      * @exception : Return an exception if not found
      * @return string
      * @author Johan Defaye
