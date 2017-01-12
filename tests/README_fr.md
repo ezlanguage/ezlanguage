@@ -9,3 +9,4 @@ Ces fichiers sont temporaires, ils peuvent donc être modifiés à tout moment.
 # Tests
 
 main_simple_procedure: (procedure) : test sur une procédure vide
+main_simple_affichage: (affichage) : test sur l'affichage

@@ -1,7 +1,7 @@
 main simple vide
 
 main simple extension_ezl
-main simple affichage
+main simple affichage       v
 
 main simple affectation type_de_base
 main simple affectation conteneurs
@@ -23,7 +23,7 @@ main simple opérateurs comparaison
 main simple opérateurs complexe
 
 main simple fonctions
-main simple procédures
+main simple procédures      v
 
 main simple conteneur vector
 main simple conteneur list
