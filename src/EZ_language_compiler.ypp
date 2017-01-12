@@ -82,7 +82,7 @@ declaration_variables:
 variable_without_scope:
      NAME IS type next_line { cout << "Declaration de la variable1 " << $1 << endl; }
 |    NAME noms ARE type next_line { cout << "Declaration des variables1 "<< $1 << endl; }
-|    affectation { } 
+|    affectation next_line{ } 
 ;
 
 variable_with_scope:
