@@ -1,10 +1,10 @@
 #ifndef VARIABLE_H
 #define VARIABLE_H
 
-#include "hashElement.h"
+#include "HashElement.h"
 
 
-class variable : public hashElement {
+class Variable : public HashElement {
 private:
   
   std::string _type;
@@ -25,7 +25,7 @@ public:
    * Set the identifier and the type of the variable by the empty string
    * @author Johan Defaye
    */
-  variable();
+  Variable();
   
   /**
    * Constructor with parameters
@@ -36,14 +36,14 @@ public:
    * @param c : if the variable is const
    * @author Johan Defaye
    */
-  variable(std::string i, std::string t, unsigned int s, bool c = false);
+  Variable(std::string i, std::string t, unsigned int s, bool c = false);
   
   /**
    * Copy constructor
    * @param v : another variable
    * @author Johan Defaye
    */
-  variable(const variable & v);
+  Variable(const Variable & v);
   
   
   
@@ -105,7 +105,7 @@ public:
    * @return boolean
    * @author Johan Defaye
    */
-  bool is_equal(const variable & v) const;
+  bool is_equal(const Variable & v) const;
   
   /**
    * Print the variable 
@@ -124,9 +124,9 @@ public:
  * @return boolean
  * @author Johan Defaye
  */
-bool operator==(const variable & v1, const variable & v2);
+bool operator==(const Variable & v1, const Variable & v2);
 
-bool operator!=(const variable & v1, const variable & v2);
+bool operator!=(const Variable & v1, const Variable & v2);
 
 /** 
  * Display a variable
@@ -135,7 +135,7 @@ bool operator!=(const variable & v1, const variable & v2);
  * @return std::ostream&
  * @author Johan Defaye
  */
-std::ostream& operator<<(std::ostream &flux, const variable & v);
+std::ostream& operator<<(std::ostream &flux, const Variable & v);
 
 
 

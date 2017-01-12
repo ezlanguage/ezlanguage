@@ -9,11 +9,11 @@ ArrayDeclaration::ArrayDeclaration():var(NULL), size(0){
 	name= "Array Declaration";
 }
 
-ArrayDeclaration::ArrayDeclaration(variable *v, int s):var(v), size(s){
+ArrayDeclaration::ArrayDeclaration(Variable *v, int s):var(v), size(s){
 	name= "Array Declaration";
 }
 
-ArrayDeclaration::ArrayDeclaration(variable *v):var(v), size(0){
+ArrayDeclaration::ArrayDeclaration(Variable *v):var(v), size(0){
 	name= "Array Declaration";
 }
 
@@ -24,14 +24,14 @@ ArrayDeclaration::ArrayDeclaration(const ArrayDeclaration & cpy):var(cpy.var), s
 ArrayDeclaration::~ArrayDeclaration(){
 }
 
-variable* ArrayDeclaration::get_variable() const {
+Variable* ArrayDeclaration::get_variable() const {
 	return var;
 }
 
 int ArrayDeclaration::get_size() const {
 	return size;
 }
-void ArrayDeclaration::set_variable(variable *v){
+void ArrayDeclaration::set_variable(Variable *v){
 	var=v;
 }
 

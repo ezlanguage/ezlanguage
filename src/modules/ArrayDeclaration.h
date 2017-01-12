@@ -4,12 +4,12 @@
 
 #include <string>
 #include "Node.h"
-#include "variable.h"
+#include "Variable.h"
 
 class ArrayDeclaration :
         public Node {
 	protected:
-		variable *var;
+		Variable *var;
 		int size;
 	public:
 	 
@@ -27,20 +27,20 @@ class ArrayDeclaration :
 	
 		/**
 		* Constructor with parameters
-		* Set the variable and the size of array by the parameters passed to the constructor
-		* @param v : pointer to the variable
+		* Set the Variable and the size of array by the parameters passed to the constructor
+		* @param v : pointer to the Variable
 		* @param s : size of array
 		* @author Ismail ELFAQIR
 		*/
-		ArrayDeclaration(variable *v, int s ); 
+		ArrayDeclaration(Variable *v, int s ); 
 	
 		/**
 		* Constructor with parameters
-		* Set only the variable without specify the size of array 
-		* @param v : pointer to the variable
+		* Set only the Variable without specify the size of array 
+		* @param v : pointer to the Variable
 		* @author Ismail ELFAQIR
 		*/
-		ArrayDeclaration(variable *v);
+		ArrayDeclaration(Variable *v);
 	
 		/**
 		* Copy constructor
@@ -60,10 +60,10 @@ class ArrayDeclaration :
 		* * * * * * * * * * * * * */
 	
 		/**
-		* getter of variable
+		* getter of Variable
 		* @author Ismail ELFAQIR
 		*/
-		variable * get_variable() const;
+		Variable * get_variable() const;
 	
 		/**
 		* getter of size
@@ -73,10 +73,10 @@ class ArrayDeclaration :
 	
 		/**
 		* setter of size
-		* @param v : the variable of this array
+		* @param v : the Variable of this array
 		* @author Ismail ELFAQIR
 		*/
-		void set_variable(variable *v);
+		void set_variable(Variable *v);
 	
 		/**
 		* setter of size
