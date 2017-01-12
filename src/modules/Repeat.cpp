@@ -1,9 +1,11 @@
+//@author Antoine GARNIER
 #include "Repeat.h"
+#include "String_addon.h"
 
 Repeat::Repeat(Condition repeat_cond, std::vector<std::string> instructions)
         :repeat_condition(repeat_cond){
     std::vector<std::string> res;
-    for(int i= 0; i < instructions.size(); ++i){
+    for(unsigned int i= 0; i < instructions.size(); ++i){
         res[i]= instructions[i];
     }
     instructions= res;
@@ -16,14 +18,15 @@ std::string Repeat::translate() {
 
     res= "do{\n";
 
-    for(int i= 0; i < instructions.size(); ++i){
+    for(unsigned int i= 0; i < instructions.size(); ++i){
         std::string instruction_raw;
         //white spaces here or not ?
         instruction_raw= "   "+instructions[i]+";\n";
         res+= instruction_raw;
     }
     std::string condition_raw;
-    condition_raw= "}while(" + repeat_condition + ")\n";
+    condition_raw= "}while(" + repeat_condition.translate() + ")\n";
     res+= condition_raw;
     return res;
 }
+

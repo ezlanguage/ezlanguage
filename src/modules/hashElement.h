@@ -11,7 +11,7 @@
  */
 class hashElement {
 
-protected:
+private:
   std::string _id;
   
 public:

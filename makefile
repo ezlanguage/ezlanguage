@@ -1,7 +1,7 @@
 #compilateur utilisé
 CC = g++-5
 # flags de compilation
-CC_FLAGS = -fmax-errors=1 -Wall -std=c++11 -ll #-ggdb
+CC_FLAGS = -Wall -std=c++11 -ll #-ggdb
 EXT_SRC = 
 CC_MOD_FLAGS = -MM #-MP 
 
@@ -21,7 +21,7 @@ YACC_FLAGS =
 #sources cpp
 # --- RAJOUTER CHAQUE FICHIER CPP DE MODULES ICI ! ---
 # --- FAIRE UN FICHIER CPP POUR CHAQUE FICHIER H S'IL Y A UNE CLASSE DEDANS ---
-MOD_CPP =  src/modules/Array.cpp src/modules/Condition.cpp src/modules/Conditionnal_instruction.cpp src/modules/Declaration.cpp src/modules/Foreach.cpp src/modules/Forall.cpp src/modules/function.cpp src/modules/hashElement.cpp src/modules/hashTable.cpp src/modules/Instruction.cpp src/modules/Iterative_instruction.cpp src/modules/Node.cpp src/modules/Operator.cpp src/modules/Range.cpp src/modules/Repeat.cpp src/modules/scopeHashTable.cpp src/modules/variable.cpp src/modules/While.cpp
+MOD_CPP =  src/modules/Array.cpp src/modules/Condition.cpp src/modules/Conditionnal_instruction.cpp src/modules/Declaration.cpp src/modules/Foreach.cpp src/modules/Forall.cpp src/modules/function.cpp src/modules/hashElement.cpp src/modules/hashTable.cpp src/modules/Instruction.cpp src/modules/Iterative_instruction.cpp src/modules/Node.cpp src/modules/Operator.cpp src/modules/Range.cpp src/modules/Repeat.cpp src/modules/scopeHashTable.cpp src/modules/variable.cpp src/modules/While.cpp src/modules/Holder.cpp src/modules/DTypes.cpp src/modules/DConstants.cpp
 
 #fichiers objets
 MOD_OBJ = $(MOD_CPP:src/modules/%.cpp=obj/%.o)

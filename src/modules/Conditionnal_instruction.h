@@ -7,8 +7,8 @@
 #include "Instruction.h"
 
 // <- ie condition if, condition if else or condition when
-#define CIf 1  
-#define CIfElse 2 
+#define CIf 1
+#define CIfElse 2
 #define CWhen 3
 
 //Class for the instructions :
@@ -16,13 +16,14 @@
 // ez language : when / c++ : switch
 class Conditionnal_instruction :
        public Node/*public Instruction*/ { // <- ie : Conditionnal_instruction can't herite from Instruction because the bloc if can have multiple instructions
-       									 // <- ie : for more see the language validated document by ANDRES Hervé "les_fonctions_procédures_conditions"
+       									 // <- ie : for more see the language validated document by ANDRES Hervï¿½ "les_fonctions_procï¿½dures_conditions"
 protected:
 	std::vector< std::vector<Instruction> > instructions; // <- ie all instructions in case we have (if and else) or (when) with multiple cases
 	std::vector<Condition> conditions; // <- ie all Condition in case we have (when)
-	int condition_type; // <- ie 
+	int condition_type; // <- ie
 public:
-	Conditionnal_instruction(const std::vector< std::vector<Instruction> >& inst, 
+	Conditionnal_instruction();
+	Conditionnal_instruction(const std::vector< std::vector<Instruction> >& inst,
 							 const std::vector<Condition> &c,
 							 int ct
 							); // <- ie
@@ -30,6 +31,7 @@ public:
 	const std::vector<Condition> & get_conditions() const; // <- ie get all coditions
 	const std::vector< std::vector<Instruction> > & get_instructions() const; // <- ie get all instructions
 	std::string translate(); // <- ie translate to c++
+	~Conditionnal_instruction();
 };
 
 #endif

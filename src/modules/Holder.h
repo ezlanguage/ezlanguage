@@ -29,7 +29,7 @@ public:
      *      we launch the make command.
      *      Further inforamtion will be given afterwards.
      * */
-    static enum TYPES {
+    enum TYPES {
         PROG = 1,
         CONST = 2,
         TYPE = 3,
@@ -38,21 +38,23 @@ public:
         INST = 6
     };
 
-    // it will call the default constructor of hashElement's class
+    // default constructor
     Holder();
 
-    Holder(const string &name, Types type);
+    Holder(TYPES types);
 
-    Holder(const string &id, const string &name, Types type);
+    Holder(const string &name, TYPES type);
+
+    Holder(const string &id, const string &name, TYPES type);
 
     // getters & setters
-    int get_type() {
-        return _type;
-    }
+    int get_type();
 
-    void set_type(Type type) {
-        _type = type;
-    }
+    void set_type(TYPES type);
+
+    virtual string translate() = 0;
+
+    ~Holder();
 
 protected:
     // please be aware : use the right_son to point other class holders

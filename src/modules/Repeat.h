@@ -1,3 +1,4 @@
+//@author Antoine GARNIER
 #ifndef REPEAT_H
 #define REPEAT_H
 
@@ -28,8 +29,8 @@ public:
     Repeat(Condition repeat_cond, std::vector<std::string> instructions);
 
     //getters
-    Condition get_condition();
-    std::vector<std::string> get_instructions();
+    Condition get_condition(){ return repeat_condition; }
+    std::vector<std::string> get_instructions(){ return instructions; }
 
     std::string translate();
 

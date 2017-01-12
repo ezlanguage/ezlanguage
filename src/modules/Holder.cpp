@@ -4,11 +4,18 @@
 
 #include "Holder.h"
 
-Holder::Holder() : hashElement() {}
+Holder::Holder() {}
 
-Holder::Holder(const string &name, Types type) : hashElement(), name(name), _type(type) {}
+Holder::~Holder() {}
 
-Holder::Holder(const string &id, const string &name, Types type) : hashElement(id), name(name), _type(type) {}
+Holder::Holder(const string &name, TYPES type) : Node(name), _type(type) {}
 
-string Holder::translate() {}
+Holder::Holder(const string &id, const string &name, TYPES type) : Node(name), _type(type) {}
 
+int Holder::get_type() {
+    return _type;
+}
+
+void Holder::set_type(TYPES type) {
+    _type = type;
+}
