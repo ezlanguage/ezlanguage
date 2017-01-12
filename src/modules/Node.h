@@ -14,9 +14,9 @@ protected:
     Node* right_son;
 
 public:
-    Node(){};
+    Node();
     virtual string translate() =0; // this function will allow the translation of the nodes's tree into c++ instructions
-    ~Node(){};
+    ~Node();
 };
 
 #endif //NODE_H

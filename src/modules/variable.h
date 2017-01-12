@@ -9,6 +9,7 @@ private:
   
   std::string _type;
   unsigned int _scope;
+  bool _const;
   
 public:
   
@@ -32,9 +33,10 @@ public:
    * @param i : id of the variable
    * @param t : type of the variable
    * @param s : scope of the variable
+   * @param c : if the variable is const
    * @author Johan Defaye
    */
-  variable(std::string i, std::string t, unsigned int s);
+  variable(std::string i, std::string t, unsigned int s, bool c = false);
   
   /**
    * Copy constructor
@@ -78,6 +80,19 @@ public:
    */
   void set_scope(unsigned int s) {_scope = s;}
   
+  /**
+   * Return true if the variable is const
+   * @return bool
+   * @author Johan Defaye
+   */
+   bool is_const() const { return _const;}
+   
+  /**
+   * Set the _const attribute of the variable
+   * @param c : const or not
+   * @author Johan Defaye
+   */
+   void set_const(bool c) { _const = c;}
   
   
   /* * * * * * * * * * * * *
