@@ -2,20 +2,18 @@
 #include "While.h"
 #include "String_addon.h"
 
-While::While(Condition while_cond, Node* while_left_son, Node* while_right_son)
-    :while_condition(while_cond){
+While::While(Condition* while_cond, Node* while_left_son, Node* while_right_son)
+    :Iterative_instruction(while_cond){
     left_son= while_left_son;
     right_son= while_right_son;
 }
 
-
-
 std::string While::translate() {
     std::string res;
-    Condition while_condition= get_condition();
+    Condition* while_condition= getCondition();
 
 //    The while condition is stored in the class
-	res= "while(" + while_condition.translate() + "){\n";
+	res= "while(" + while_condition->translate() + "){\n";
 
 //    The first instruction of the loop is the left son
 //    The second instruction is the right son of this left son...etc

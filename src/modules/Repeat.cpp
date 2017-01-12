@@ -2,15 +2,15 @@
 #include "Repeat.h"
 #include "String_addon.h"
 
-Repeat::Repeat(Condition repeat_cond, Node* repeat_left_son, Node* repeat_right_son)
-        :repeat_condition(repeat_cond){
+Repeat::Repeat(Condition* repeat_cond, Node* repeat_left_son, Node* repeat_right_son)
+        :Iterative_instruction(repeat_cond){
     left_son= repeat_left_son;
     right_son= repeat_right_son;
 }
 
 std::string Repeat::translate() {
     std::string res;
-    Condition repeat_condition= get_condition();
+    Condition* repeat_condition= getCondition();
 
     res= "do{\n";
 
@@ -20,7 +20,7 @@ std::string Repeat::translate() {
     res+= "   " + this->left_son->translate();
 
 //    The repeat condition is stored in the class
-    res+= "}while(" + repeat_condition.translate() + ")\n";
+    res+= "}while(" + repeat_condition->translate() + ")\n";
 
 //    don't forget to launch the translation of the instructions that follow this while
     if(this->right_son) res+= this->right_son->translate();
