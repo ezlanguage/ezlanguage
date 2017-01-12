@@ -1,6 +1,6 @@
 program TestWhen
 
-procedure TestWhen
+procedure TestWhen ()
     variable x is integer
     x = 10
 

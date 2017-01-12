@@ -1,6 +1,6 @@
 program TestWhenRead
 
-procedure TestWhenRead
+procedure TestWhenRead ()
     variable x is integer
     read x
 

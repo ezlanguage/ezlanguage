@@ -1,6 +1,6 @@
 program main_operateurs_soustraction
 
-procedure main_operateurs_soustraction
+procedure main_operateurs_soustraction ()
 	a, b, sum are integer
 	a = 3
 	b = 2

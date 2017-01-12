@@ -1,6 +1,6 @@
 program TestWhile
 
-procedure TestWhile
+procedure TestWhile ()
     variable x is integer
     x = 0
     

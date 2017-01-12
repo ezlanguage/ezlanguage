@@ -1,6 +1,6 @@
 program main_operateurs_addition
 
-procedure main_operateurs_addition
+procedure main_operateurs_addition ()
 	a, b, sum are integer
 	a = 3
 	b = 2

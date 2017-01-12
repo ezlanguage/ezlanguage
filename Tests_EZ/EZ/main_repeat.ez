@@ -1,6 +1,6 @@
 program TestRepeat
 
-procedure TestRepeat
+procedure TestRepeat ()
     variable x is integer
     x = 0
     

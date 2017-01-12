@@ -1,6 +1,6 @@
 program TestFor
 
-procedure TestFor
+procedure TestFor ()
     variable a, b, i are integer
     a = 0
     b = 10

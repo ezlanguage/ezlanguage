@@ -1,6 +1,6 @@
 program TestIfElse
 
-procedure TestIfElse
+procedure TestIfElse ()
    variable var is integer
     var = 2
     if var > 3 then

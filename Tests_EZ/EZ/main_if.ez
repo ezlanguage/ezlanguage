@@ -1,6 +1,6 @@
 program TestIf
 
-procedure TestIf
+procedure TestIf ()
    variable Var is integer
    Var = 5
    if Var > 3 then
