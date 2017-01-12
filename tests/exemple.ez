@@ -1,25 +1,17 @@
 //program person;
 // petit programme de test
 
-procedure person()
 local i, max are integer
 
 
-  for i in 1..10 step 2
-  do
-   print "ok"
-  endfor
-
-  // compute maximum of ages (detailed version)
-  max = 0
-  for i in 1..v step 2
-  do
-    print "size"
-  endfor
-
-  // or use built-in function
-
-  print "maximum of ages = ", max
-endprocedure
-
-x = 7 + k.size()
+when 5 +6 is
+	case b==8
+		 print "ok" 
+	endcase
+	case k < 8
+		 print 5
+	endcase
+	default
+		x = 8 * 9
+	endcase
+endwhen
