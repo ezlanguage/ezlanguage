@@ -9,7 +9,7 @@
  * An element to be used in a hash table
  * @author Johan defaye
  */
-class hashElement { 
+class HashElement { 
   
 private:
   std::string _id;
@@ -28,7 +28,7 @@ public:
    * Set the identifier by the empty string
    * @author Johan Defaye
    */
-  hashElement();
+  HashElement();
   
   /**
    * Constructor with parameters
@@ -36,14 +36,14 @@ public:
    * @param s : identifier of the hash element
    * @author Johan Defaye
    */
-  hashElement(const std::string & s);
+  HashElement(const std::string & s);
   
   /**
    * Copy constructor
    * @param e : another hash element
    * @author Johan Defaye
    */
-  hashElement(const hashElement & e);
+  HashElement(const HashElement & e);
   
   
   
@@ -79,7 +79,7 @@ public:
    * @return boolean
    * @author Johan Defaye
    */
-  bool is_equal(const hashElement & e) const;
+  bool is_equal(const HashElement & e) const;
   
   /**
    * Print the hash element 
@@ -102,9 +102,9 @@ public:
  * @return boolean
  * @author Johan Defaye
  */
-bool operator==(hashElement const & e1, hashElement const & e2);
+bool operator==(HashElement const & e1, HashElement const & e2);
 
-bool operator!=(hashElement const & e1, hashElement const & e2);
+bool operator!=(HashElement const & e1, HashElement const & e2);
 
 
 /** 
@@ -115,7 +115,7 @@ bool operator!=(hashElement const & e1, hashElement const & e2);
  * @author Johan Defaye
  */
 template <typename T>
-std::ostream& operator<<(std::ostream &flux, const hashElement & element) {
+std::ostream& operator<<(std::ostream &flux, const HashElement & element) {
   element.print(flux);
   return flux;
 }
