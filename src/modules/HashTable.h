@@ -11,7 +11,8 @@
  * @author Johan Defaye
  */
 template <typename T>
-class hashTable : public std::vector<std::list<T>>{
+class HashTable : public std::vector<std::list<T> > {
+   
 public:
   
   
@@ -25,15 +26,15 @@ public:
    * Default constructor
    * @author Johan Defaye
    */
-  hashTable() {}
+  HashTable() {}
   
   /**
    * Constructor with parameters
    * Initialize the hash table with a given size
-   * @param size : size of the hashTable
+   * @param size : size of the HashTable
    * @author Johan Defaye
    */
-  hashTable(unsigned int size) {this->resize(size);}
+  HashTable(unsigned int size) {this->resize(size);}
   
   /**
    * Copy constructor
@@ -41,7 +42,7 @@ public:
    * @param h : another hash table
    * @author Johan Defaye
    */
-  hashTable(const hashTable &h) {*this = h;}
+  HashTable(const HashTable &h) {*this = h;}
   
   
   
@@ -124,7 +125,7 @@ public:
   /**
    * Test if an element is in the hash table
    * @param element : an element
-   * @param id : identifier of the element
+   * @param id : indetifier of the element
    * @return boolean
    * @author Johan Defaye
    */

@@ -1,0 +1,21 @@
+// possibilite de declaration des variables sans précision de leurs portée
+// - retour en ligne(new_line) ne peut pas etre vide
+// - l'affichage => à ameliorer, mais il faut attendre que kamal finit son travail
+// - les commentaires : à ameliorer
+
+
+y is real
+global rr,e are integer
+
+ procedure test()
+   x = 5 
+endprocedure
+
+local i,y are integer
+x = 5
+--x
+ x,y are integer
+local r is real
+
+
+
