@@ -46,11 +46,11 @@ class If
 		/**
 		* Constructor with parameters
 		* Set the block_type and the condition to the parameter passed to the constructor
-		* @param bt : the block_type
 		* @param c : pointer to the condition
+		* @param bt : the block_type
 		* @author Ismail ELFAQIR
 		*/		
-		If(int bt, Condition *c);
+		If(Condition *c, int bt);
 		
 		/**
 		* Copy constructor

@@ -3,19 +3,19 @@
 #include "If.h"
 using namespace std;
 
-If::If():block_type(3),Conditionnal_instruction(){
+If::If():Conditionnal_instruction(), block_type(3){
 }
 
-If::If(int bt):block_type(bt),Conditionnal_instruction() {
+If::If(int bt):Conditionnal_instruction(), block_type(bt) {
 }
 
-If::If(Condition *c):block_type(3),Conditionnal_instruction(c) {
+If::If(Condition *c):Conditionnal_instruction(c), block_type(3) {
 }
 
-If::If(int bt, Condition *c):block_type(bt),Conditionnal_instruction(c) {
+If::If(Condition *c, int bt):Conditionnal_instruction(c),block_type(bt) {
 }
 
-If::If(const If &obj):block_type(obj.block_type),Conditionnal_instruction(obj){	
+If::If(const If &obj):Conditionnal_instruction(obj),block_type(obj.block_type){	
 }
 
 If::~If(){
