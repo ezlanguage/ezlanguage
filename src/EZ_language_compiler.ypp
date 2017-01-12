@@ -4,7 +4,8 @@
 #include <stdlib.h>
 #include <iostream>
 #include <list>
-# include <math.h> /* fmod , pow ... */
+#include <math.h> /* fmod , pow ... */
+#include <cmath> /* fabs */
 
 #include "../src/global.h"	 // we start from ../obj because it's important
 #include "../src/main.cpp"	 // we start from ../obj because it's important
@@ -204,7 +205,7 @@ single_expression:
 | NOT single_expression { $$ = !$2 ; }
 | single_expression MOD single_expression { $$ =  fmod($1,$3); }
 | single_expression POW single_expression { $$ = pow($1, $3); }
-| ABS single_expression { $$ = abs($2);}
+| ABS single_expression { $$ = fabs($2);}
 | LEFT_PARENTHESIS expression RIGHT_PARENTHESIS { $$ = $2 ;}
 | NUM_REAL { $$ = $1;} //real
 | NUM_INTEGER { $$ = $1;  }  // integer
