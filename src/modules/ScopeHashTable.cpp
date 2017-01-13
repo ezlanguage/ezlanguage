@@ -52,7 +52,7 @@ void ScopeHashTable::decScope()
 void ScopeHashTable::addElement(Variable& v)
 {
   if (this->empty()) throw string("Error, can not add a variable because the size of the hash table is null");
-  else if (this->contains(v.get_id(), _currentScope)) throw string("Error, can not add a variable because it is already in the hash table at the current scope");
+  else if (this->contains(v.get_id(), _currentScope)) throw string("Variable "+v.get_id()+" already defined");
   else {
     
     v.set_scope(_currentScope);
