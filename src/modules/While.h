@@ -21,7 +21,8 @@
 class While :
         public Iterative_instruction {
 protected:
-    Condition while_condition; // iteration condition of the loop
+//    The condition is located in the superclass Iterative_instruction
+//    Condition while_condition; // iteration condition of the loop
 
 //    The instructions aren't stored in this class
 //    They are chained and the first element of this chain is left_son of this class
@@ -30,10 +31,10 @@ protected:
 public:
     //TODO : constructeur par recopie dans la classe Condition
 
-    While(Condition while_cond, Node* while_left_son, Node* while_right_son);
+    While(Condition* while_cond, Node* while_left_son, Node* while_right_son);
 
     //getters
-    Condition get_condition(){ return while_condition; }
+//    Condition get_condition(){ return while_condition; }
 
     std::string translate();
 };
