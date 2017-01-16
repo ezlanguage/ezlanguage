@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <iostream>
 #include <list>
+#include <math.h> /* fmod , pow ... */
+#include <cmath> /* fabs */
 
 #include "../src/global.h"	 // we start from ../obj because it's important
 #include "../src/main.cpp"	 // we start from ../obj because it's important
@@ -26,32 +28,31 @@ extern int yylineno;
 
 
 %token<numerical_value>	NUM_INTEGER			// ENTIER
-%token<real_value>	NUM_REAL				// REEL
-%token<texte>	NAME RETOUR		STRING			// NOM
-%token	COMMA  DEGRE POURCENT DIESE POINT QUOTE	// Caractères
-%token TYPE_INTEGER TYPE_REAL TYPE_STRING TYPE_BOOLEAN			// Type des variables
+%token<reel_value>	NUM_REAL			// REEL
+%token<texte>	NAME RETOUR	STRING			// NOM
+%token	COMMA  DEGRE POURCENT DIESE POINT QUOTE		// Caractères
+%token TYPE_INTEGER TYPE_REAL TYPE_STRING TYPE_BOOLEAN			// variables type
 %token  EGAL NE LT LE GT GE PLUS MINUS MULT DIVISE
 %token	LEFT_PARENTHESIS RIGHT_PARENTHESIS LEFT_ACCOLADE RIGHT_ACCOLADE LEFT_BRACKET RIGHT_BRACKET FIN BACK_LINE	// Special Characters
-%token CONST  LOCAL  GLOBAL  IS  ARE 		      		      // variables declaration
+%token CONST  LOCAL  GLOBAL  IS  ARE 		      		         // variables declaration
 %token IF DO ELSE  ENDIF 						 // if else 
 %token WHEN CASE ENDCASE DEFAULT ENDWHEN				 // switch case ...
 %token WHILE ENDWHILE							 // while .. do ..
 %token REPEAT UNTIL ENDREPEAT 						 // do .. while ...
 %token FOR IN STEP ENDFOR
-%token FUNCTION PROCEDURE RETURN ENDFUNCTION ENDPROCEDURE	 // functions
-%token PRINT							         // loop for
+%token FUNCTION PROCEDURE RETURN ENDFUNCTION ENDPROCEDURE	 	 // functions
+%token PRINT
 %token END_OF_FILE
 
 %left PLUS MINUS EGAL
-%left NE LT LE GT GE MULT DIVISE
+%left NE LT LE GT GE MULT DIVISE AND OR XOR NOT MOD POW ABS		// Operators
 
-%type<arbre> expression designator expr2 expr3 expr4  statement_sequence 
+%type<arbre> expression designator expr2 expr3 expr4  statement_sequence
 %type<arbre> next_line  function procedure  string
 %type<arbre> ROOT declarations_list declaration_variables declaration_methods variable_with_scope variable_without_scope
 
 %start ROOT
 %%
-
 
 ROOT:
   next_line_null declarations_list  statement_sequence END_OF_FILE
@@ -81,7 +82,7 @@ declarations_list:
 ;
 
 declaration_methods:
-| declaration_methods function next_line { $$ = new Node($1,$2);}  
+| declaration_methods function next_line { $$ = new Node($1,$2);}
 | declaration_methods procedure next_line { $$ = new Node($1,$2);}
 ;
 
@@ -90,12 +91,12 @@ declaration_variables:
 | declaration_variables   variable_without_scope {$$ = new Node($1,$2);}
 ;
 
-variable_with_scope:
+variable_without_scope:
      NAME IS type next_line { $$ = new variable();}
 |    NAME noms ARE type next_line { $$ = new variable(); }
 ;
 
-variable_without_scope:
+variable_with_scope:
     portee NAME IS type next_line { $$ = new variable();  }
 |   portee NAME noms ARE type next_line { $$ = new variable();  }
 ;
@@ -123,28 +124,32 @@ statement:
   next_line
 | variable_with_scope {} // variables declaration
 | variable_without_scope {} // variables declaration
-| affectation {}
 | printing {}
 | IF expression DO statement_sequence ELSE statement_sequence ENDIF { printf("SI_SINON_ALORS \n"); }
 | IF expression DO statement_sequence ENDIF { printf("SI   ALORS \n"); }
-| WHEN NAME IS whenbody whendefault ENDWHEN {  printf("when .. case .. \n"); }
+| WHEN expression IS next_line whenbody whendefault ENDWHEN {  printf("when .. case .. \n"); }
 | WHILE expression DO  statement_sequence ENDWHILE { printf("WHILE .. DO .. \n"); }
 | REPEAT statement_sequence UNTIL expression ENDREPEAT { printf("REPEAT .. UNTIL .. \n"); }
 | for {}
 ;
 
 affectation:
-| NAME EGAL expression { cout << "Affectation " <<  endl; }
+  NAME EGAL expression { cout << "Affectation expression " <<  endl; }
+| NAME PLUS PLUS { cout << "Affectation ++" <<  endl; }
+| NAME MINUS MINUS {  cout << "Affectation --" <<  endl; }
+| PLUS PLUS NAME  { cout << "++ Affectation " <<  endl; }
+| MINUS MINUS NAME  { cout << "-- Affectation " <<  endl;  }
 ;
 
 printing :
- PRINT string {cout <<"affichage : " << endl; } 
+ PRINT string {cout <<"affichage : " << endl; }
 |PRINT string noms { printf("affichage \n"); } 
+|PRINT expression {cout <<"affichage : " << $2 << endl; }
 ;
 
 for :
   FOR NAME IN NUM_INTEGER POINT POINT nbrOrName STEP nbrOrName next_line DO  statement_sequence ENDFOR { printf("FOR .. IN ... \n");}
-| FOR NAME IN NUM_INTEGER POINT POINT function_call STEP nbrOrName next_line DO  statement_sequence ENDFOR { printf("FOR .. IN ... \n");}
+| FOR NAME IN NUM_INTEGER POINT POINT function_call STEP expression next_line DO  statement_sequence ENDFOR { printf("FOR .. IN ... \n");}
 ;
 
 function_call : 
@@ -175,55 +180,56 @@ noms:
 ;
 
 whenbody: /* whenbody can't be empty */
-  whenbody CASE expression statement_sequence ENDCASE {}
-| CASE expression statement_sequence ENDCASE {}
+  whenbody CASE expression statement_sequence ENDCASE next_line{}
+| CASE  expression next_line statement_sequence next_line ENDCASE next_line {}
 ;
 
-whendefault:
-DEFAULT statement_sequence ENDCASE {}
+whendefault: /* May not be specified */
+| DEFAULT statement_sequence ENDCASE next_line{}
 ;
 
 string :
- STRING  {}
+ STRING  { $$= $1;}
+;
 
+//For  those  rules in comment , the corresponding definition must be written by the C++ team because they (rules) have not effect.
 expression:
-  expr2 {} 
-| expr2 EGAL EGAL expr2 {  }
-| expr2 NE expr2 { }
-| expr2 LT expr2 {  }
-| expr2 LE expr2 { }
-| expr2 GT expr2 { }
-| expr2 GE expr2 { }
+  single_expression { $1 = $1 ;}
+| expression EGAL EGAL expression { /*$1 == $4;*/ }
+| expression NE expression {/* $1 != $3; */}
+| expression LT expression { /*$1 < $3;*/ }
+| expression LE expression {/* $1 <= $3;*/ }
+| expression GT expression {/* $1 > $3 ;*/}
+| expression GE expression { /*$1 >= $3 ;*/}
+| expression PLUS expression {$$ = $1 + $3; }
+| expression MINUS expression { $$ = $1 - $3; }
+| expression MULT expression {$$ = $1 * $3 ;}
+| expression DIVISE expression { $$ =  $1 / $3 ;}
+| expression AND AND expression {/* $1 && $4;  */ }
+| expression OR OR expression {/* $1 || $4 ; */ }
 ;
 
-expr2:
-  expr3 {}
-| expr2 PLUS expr3 {}
-| expr2 MINUS expr3 { }
-;
-
-expr3:
-  expr4 {}
-| expr3 MULT expr4 { }
-| expr3 DIVISE expr4 {  }
-;
-
-expr4:
-  PLUS expr4 {}
-| MINUS expr4 {}
-| LEFT_PARENTHESIS expression RIGHT_PARENTHESIS {}
-| NUM_REAL { } //real
-| NUM_INTEGER {}  // integer
+single_expression:
+  PLUS single_expression { $$ = $2;  }
+| single_expression XOR single_expression { /* $1^$3 ; */}
+| NOT single_expression { $$ = !$2 ; }
+| single_expression MOD single_expression { $$ =  fmod($1,$3); }
+| single_expression POW single_expression { $$ = pow($1, $3); }
+| ABS single_expression { $$ = fabs($2);}
+| LEFT_PARENTHESIS expression RIGHT_PARENTHESIS { $$ = $2 ;}
+| NUM_REAL { $$ = $1;} //real
+| NUM_INTEGER { $$ = $1;  }  // integer
 | designator {}
-| function_call { }
+| function_call {  $$ = $1;}
 ;
 
 designator:
-  NAME { }
+  NAME {  }
+
 ;
 
 %%
 
 void yyerror(const std::string& mess){
-    std::cout << "Erreur trouvée a la ligne " << yylineno << " :  "<<mess  << std::endl;
+    std::cout << "Erreur trouvée à la ligne " << yylineno << " :  "<<mess  << std::endl;
 }

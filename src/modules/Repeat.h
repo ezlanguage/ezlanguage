@@ -21,16 +21,16 @@
 class Repeat :
         public Iterative_instruction {
 protected:
-    Condition repeat_condition; // iteration condition of the loop
-    std::vector<std::string> instructions; //vector containing all the instructions of the loop
+//    The condition is located in the superclass Iterative_instruction
+//    Condition repeat_condition;
 
 public:
     //TODO : constructeur par recopie dans la classe Condition
-    Repeat(Condition repeat_cond, std::vector<std::string> instructions);
+    Repeat(Condition* repeat_cond, Node* repeat_left_son, Node* repeat_right_son);
 
     //getters
-    Condition get_condition(){ return repeat_condition; }
-    std::vector<std::string> get_instructions(){ return instructions; }
+//    The getter is located in the superclass
+//    Condition get_condition(){ return repeat_condition; }
 
     std::string translate();
 
