@@ -61,6 +61,7 @@ ROOT:
         Node *n = new Node(NULL,p_decl);
 
 
+        cout << n->translate() << endl;
         return 0;
       }
 ;

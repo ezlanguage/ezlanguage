@@ -5,6 +5,8 @@
 #include "Node.h" // <- ie
 #include "Condition.h" // <- ie
 #include "Instruction.h"
+#include <vector> // <- ie
+using namespace std;
 
 // <- ie condition if, condition if else or condition when
 #define CIf 1  
@@ -23,11 +25,12 @@ protected:
 	int condition_type; // <- ie 
 public:
 	Conditionnal_instruction();
-	Conditionnal_instruction(const std::vector< std::vector<Instruction> >& inst, 
+	Conditionnal_instruction(const std::vector< std::vector<Instruction> >& inst,
 							 const std::vector<Condition> &c,
 							 int ct
 							); // <- ie
 	Conditionnal_instruction(const Conditionnal_instruction &c);  // <- ie
+
 	const std::vector<Condition> & get_conditions() const; // <- ie get all coditions
 	const std::vector< std::vector<Instruction> > & get_instructions() const; // <- ie get all instructions
 	std::string translate(); // <- ie translate to c++

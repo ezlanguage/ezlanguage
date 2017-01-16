@@ -10,7 +10,7 @@ Conditionnal_instruction::Conditionnal_instruction():instructions() {
 Conditionnal_instruction::Conditionnal_instruction(const vector< vector<Instruction> >& inst,
 										           const vector<Condition> &c,
 												   int ct
-												   ):instructions(inst),conditions(c),condition_type(ct) 
+												   ):instructions(inst),conditions(c),condition_type(ct)
 {
 	name= "Conditionnal instruction";
 }

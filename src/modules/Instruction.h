@@ -3,6 +3,7 @@
 
 #include <string>
 #include "Node.h"
+using namespace std;
 
 //TODO do we have to turn it into an abstract class ?
 class Instruction :

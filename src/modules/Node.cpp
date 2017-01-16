@@ -17,5 +17,11 @@ void Node::setRightSon(Node* son) {
 }
 
 string Node::translate() {
-	return "traduction noeud";
+	string left_translate = "";
+	string right_translate = "";
+	if (left_son != NULL)
+		left_translate = left_son->translate();
+	if (right_son != NULL)
+		right_translate = right_son->translate();
+	return "traduction noeud" + left_translate + "\n" + right_translate;
 }
