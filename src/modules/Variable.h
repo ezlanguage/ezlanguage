@@ -36,7 +36,7 @@ public:
    * @param c : if the variable is const
    * @author Johan Defaye
    */
-  Variable(std::string i, std::string t, unsigned int s, bool c = false);
+  Variable(const std::string & i, const std::string & t, bool c = false);
   
   /**
    * Copy constructor

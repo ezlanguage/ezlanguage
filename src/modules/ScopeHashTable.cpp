@@ -52,14 +52,13 @@ void ScopeHashTable::decScope()
 void ScopeHashTable::addElement(Variable& v)
 {
   if (this->empty()) throw string("Error, can not add a variable because the size of the hash table is null");
+  else if (this->contains(v.get_id(), _currentScope)) throw string("Variable "+v.get_id()+" already defined");
   else {
     
     v.set_scope(_currentScope);
     int index = hash(v.get_id());
     this->at(index).push_front(v);
-    list<Variable>::iterator it = this->at(index).begin();
-    list<list<Variable>::iterator> l;
-    _scopeStack.top().push_front(it);
+    _scopeStack.top().push_front(this->at(index).begin());
     
   }
 }
@@ -109,6 +108,18 @@ bool ScopeHashTable::contains(const string& id) const
   bool found = false;
   for (auto it = this->at(index).begin(); (it != this->at(index).end())&&(!found); ++it) {
     if (it->get_id() == id) found = true;
+  }
+  return found;
+}
+
+
+
+bool ScopeHashTable::contains(const string& id, unsigned int s) const
+{
+  int index = hash(id);
+  bool found = false;
+  for (auto it = this->at(index).begin(); (it != this->at(index).end())&&(!found); ++it) {
+    if ((it->get_id() == id) && (it->get_scope() == s)) found = true;
   }
   return found;
 }
