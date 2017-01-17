@@ -1,7 +1,10 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
-
+/**
+ * @struct s_mon_type used to exchange value between flex and bison during parsing
+ * @authors Valérian De Leeuw, Florentin Noël
+ */
 typedef struct s_mon_type {
     int numerical_value;
     double reel_value;

@@ -1,12 +1,15 @@
-//@author : Ismail ELFAQIR
-
 #ifndef ITERATIVE_INSTRUCTION_H
 #define ITERATIVE_INSTRUCTION_H
 
 #include "Node.h" 
 #include "Condition.h"
 
-//boucles : forall, foreach, while, repeat
+/**
+ * @brief 
+ * @author : Ismail ELFAQIR
+ * 
+ * loops : forall, foreach, while, repeat
+ */
 class Iterative_instruction :
         public Node /*public Instruction*/  { // <-  Iterative_instruction can't herite from Instruction because the bloc for or while can have multiple instructions
 protected:
@@ -65,6 +68,15 @@ public:
 	/* * * * * * * *
 	* Translation  *
 	* * * * * * * **/
+	
+	/**
+	 * @brief Translation of the instruction into it's C++ counterpart
+	 * @return a string containing the C++ code of the instruction
+	 * 
+	 * The instance will be translated with it's C++ equivalent using its informations
+	 * All subclasses, must reimplement this method so that the translation corresponds
+	 * to their specifications, specificities and own values
+	 */
     	virtual std::string translate()=0;
 };
 #endif

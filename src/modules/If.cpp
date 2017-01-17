@@ -1,25 +1,26 @@
 //@author : Ismail ELFAQIR
 #include <string>
 #include "If.h"
+
 using namespace std;
 
-If::If():Conditionnal_instruction(), block_type(3){
-}
+If::If():Conditionnal_instruction(), block_type(3)
+{}
 
-If::If(int bt):Conditionnal_instruction(), block_type(bt) {
-}
+If::If(int bt):Conditionnal_instruction(), block_type(bt)
+{}
 
-If::If(Condition *c):Conditionnal_instruction(c), block_type(3) {
-}
+If::If(Condition *c):Conditionnal_instruction(c), block_type(3)
+{}
 
-If::If(Condition *c, int bt):Conditionnal_instruction(c),block_type(bt) {
-}
+If::If(Condition *c, int bt):Conditionnal_instruction(c),block_type(bt)
+{}
 
-If::If(const If &obj):Conditionnal_instruction(obj),block_type(obj.block_type){	
-}
+If::If(const If &obj):Conditionnal_instruction(obj),block_type(obj.block_type)
+{}
 
-If::~If(){
-}
+If::~If()
+{}
 
 int If::get_block_type() const{
 	return block_type;
@@ -48,10 +49,10 @@ string If::translate(){
 		/*
 			here the first instruction is in the left_son the other are in his right_son ( of the left_son)
 		*/
-		if(this->left_son!= NULL ) {
-			res += this->left_son->translate()+"\n";
-			Node *my_instruction = this->left_son->get_right_son();
-			while(my_instruction != NULL ) {
+		if(this->get_left_son() != nullptr) {
+			res += this->get_left_son()->translate()+"\n";
+			Node *my_instruction = this->get_left_son()->get_right_son();
+			while(my_instruction != nullptr) {
 				res += my_instruction->translate()+"\n";
 				my_instruction = my_instruction->get_right_son();
 			}			

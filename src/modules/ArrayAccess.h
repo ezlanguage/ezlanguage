@@ -1,9 +1,3 @@
-/**
-* Class AccessArray 
-* this class is to translate an access to array by index 
-* example of translation my_array[5] -> here index=5  
-* @author Ismail ELFAQIR
-*/
 #ifndef ARRAYACCESS_H
 #define ARRAYACCESS_H
 
@@ -11,6 +5,13 @@
 #include "Node.h"
 #include "ArrayDeclaration.h"
 
+/**
+ * @class AccessArray
+ * @brief meant to translate an access to array by index 
+ * 
+ * example of translation my_array[5] -> here index=5  
+ * @author Ismail ELFAQIR
+ */
 class ArrayAccess :
         public Node {
 	protected:
@@ -85,6 +86,15 @@ class ArrayAccess :
 		/* * * * * * * *
 		* Translation  *
 		* * * * * * * **/
+		
+		/**
+		 * @brief Translation of the instruction into it's C++ counterpart
+		 * @return a string containing the C++ code of the array index
+		 * 
+		 * The instance will be translated with it's C++ equivalent using its informations
+		 * All subclasses, must reimplement this method so that the translation corresponds
+		 * to their specifications, specificities and own values
+		 */
 		std::string translate();
 };
 

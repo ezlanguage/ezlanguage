@@ -1,4 +1,3 @@
-//@author Antoine GARNIER
 #ifndef REPEAT_H
 #define REPEAT_H
 
@@ -9,14 +8,18 @@
 //special files no to forget to import
 #include "Iterative_instruction.h"
 
-/*
- * Using :
+/**
+ * @brief
+ * 
+ * @details Using :
  * repeat
  *    instruction_1
  *    instruction_2
  *    ...
  *    instruction_n
  * until condition
+ * 
+ * @author Antoine GARNIER
  */
 class Repeat :
         public Iterative_instruction {
@@ -32,6 +35,14 @@ public:
 //    The getter is located in the superclass
 //    Condition get_condition(){ return repeat_condition; }
 
+    /**
+     * @brief Translation of the instruction into it's C++ counterpart
+     * @return a string containing the C++ code of the repeat (for) instruction
+     * 
+     * The instance will be translated with it's C++ equivalent using its informations
+     * All subclasses, must reimplement this method so that the translation corresponds
+     * to their specifications, specificities and own values
+     */
     std::string translate();
 
 };

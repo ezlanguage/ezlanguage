@@ -1,8 +1,10 @@
 #include "Node.h"
 
-Node::Node(){};
+Node::Node(): left_son(nullptr), right_son(nullptr)
+{};
 
-Node::~Node(){};
+Node::~Node()
+{};
 
 Node * Node::get_left_son() const {
 	return left_son;

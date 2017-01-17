@@ -88,6 +88,11 @@ launch: all
 	@exec bin/$(EXEC) ""
 	@echo -e "FIN\033[0m"
 
+#documentation
+doc:
+	doxygen Doxyfile
+	@echo -e "\033[1;33mOuverture de la documentation ...\033[0m"
+	@xdg-open  docs/html/index.html
 
 #aide
 aide: help
@@ -95,6 +100,7 @@ help:
 	@echo -e "\033[3mCompiler le projet : make\033[0m"	
 	@echo -e "\033[3mNettoyer les fichier objets : clean\033[0m"	
 	@echo -e "\033[3mNettoyer les fichier objets + executable : mrproper\033[0m"
+	@echo -e "\033[3mGénérer la doc puis l'ouvrir : doc\033[0m"	
 	@echo ""
 	@echo -e "\033[3mVersions requises : g++ (5.4.0), lex (2.6.0), yacc (3.0.4)\033[0m"
 	@echo "" 

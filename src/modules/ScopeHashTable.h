@@ -10,7 +10,7 @@
 #include "Variable.h"
 
 /**
- * Hash table which can only contains Variable
+ * @brief Hash table which can only contains Variable
  * @author Johan Defaye
  */
 class ScopeHashTable : public HashTable<Variable> {

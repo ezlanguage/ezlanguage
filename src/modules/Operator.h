@@ -1,4 +1,3 @@
-//@author : GARNIER Antoine
 #ifndef OPERATOR_H
 #define OPERATOR_H
 
@@ -17,6 +16,11 @@
 
 using namespace std;
 
+/**
+ * @brief 
+ * @author : GARNIER Antoine
+ * 
+ */
 class Operator
         : public Node{
 
@@ -37,7 +41,14 @@ public:
     string getOperande_1(){ return operande_1; }
     string getOperande_2(){ return operande_2; }
 
-    // this function will allow the translation of the nodes's tree into c++ instructions
+    /**
+     * @brief Translation of the instruction into it's C++ counterpart
+     * @return a string containing the C++ code of the operator
+     * 
+     * The instance will be translated with it's C++ equivalent using its informations
+     * All subclasses, must reimplement this method so that the translation corresponds
+     * to their specifications, specificities and own values
+     */
     string translate();
 };
 
