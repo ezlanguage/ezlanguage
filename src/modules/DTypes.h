@@ -12,7 +12,7 @@ class DTypes : public Holder {
 public:
     DTypes();
 
-    DTypes(const string &name/* still the other type that should be added afterwards*/);
+    DTypes(const string &name);
 
     string translate();
 
