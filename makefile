@@ -1,7 +1,7 @@
 #compilateur utilisé
 CC = g++-5
 # flags de compilation
-CC_FLAGS = -Wall -std=c++11 -lfl #-ggdb 
+CC_FLAGS = -Wall -std=c++11 #-ggdb 
 EXT_SRC = 
 CC_MOD_FLAGS = -MM #-MP 
 
@@ -21,7 +21,6 @@ YACC_FLAGS =
 #sources cpp
 # --- RAJOUTER CHAQUE FICHIER CPP DE MODULES ICI ! ---
 # --- FAIRE UN FICHIER CPP POUR CHAQUE FICHIER H S'IL Y A UNE CLASSE DEDANS ---
-
 MOD_CPP =  src/modules/ArrayDeclaration.cpp src/modules/ArrayAccess.cpp src/modules/Condition.cpp src/modules/Conditionnal_instruction.cpp src/modules/If.cpp src/modules/Declaration.cpp src/modules/Foreach.cpp src/modules/Forall.cpp src/modules/Function.cpp src/modules/HashElement.cpp src/modules/HashTable.cpp src/modules/Instruction.cpp src/modules/Iterative_instruction.cpp src/modules/Node.cpp src/modules/Operator.cpp src/modules/Range.cpp src/modules/Repeat.cpp src/modules/ScopeHashTable.cpp src/modules/Variable.cpp src/modules/While.cpp
 
 #fichiers objets
@@ -40,7 +39,7 @@ all: $(EXEC)
 
 EZ_language_compiler : obj/lex.yy.c obj/EZ_language_compiler.tab.cpp obj/EZ_language_compiler.tab.hpp $(MOD_OBJ) 
 	@echo -e "\033[1;33mCréation du compilateur en compilant les sources\033[0m"
-	$(CC) -o bin/$@ obj/EZ_language_compiler.tab.cpp obj/lex.yy.c $(MOD_OBJ) $(CC_FLAGS)
+	$(CC) -o bin/$@ obj/EZ_language_compiler.tab.cpp obj/lex.yy.c $(MOD_OBJ) -lfl $(CC_FLAGS)
 
 obj/lex.yy.c: src/EZ_language_compiler.$(LEX_EXT) obj/EZ_language_compiler.tab.hpp
 	@echo -e "\033[1;33mInterprétation du fichier Lex\033[0m"
