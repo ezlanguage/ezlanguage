@@ -3,6 +3,9 @@
 *~
 .directory
 
+# Generated documentation
+docs/
+
 # Build results
 *.cmake
 bin/*
