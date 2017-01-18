@@ -33,13 +33,14 @@ extern int yylineno;
 %token  EGAL NE LT LE GT GE PLUS MINUS MULT DIVISE
 %token	LEFT_PARENTHESIS RIGHT_PARENTHESIS LEFT_ACCOLADE RIGHT_ACCOLADE LEFT_BRACKET RIGHT_BRACKET FIN BACK_LINE	// Special Characters
 %token CONST  LOCAL  GLOBAL  IS  ARE 		      		         // variables declaration
-%token IF DO ELSE  ENDIF 						 // if else 
-%token WHEN CASE ENDCASE DEFAULT ENDWHEN				 // switch case ...
+%token IF DO ELSE   						 // if else 
+%token WHEN CASE  DEFAULT ENDWHEN				 // switch case ...
 %token WHILE ENDWHILE							 // while .. do ..
 %token REPEAT UNTIL ENDREPEAT 						 // do .. while ...
 %token FOR IN STEP ENDFOR
-%token FUNCTION PROCEDURE RETURN ENDFUNCTION ENDPROCEDURE	 	 // functions
-%token PRINT							        
+%token FUNCTION PROCEDURE RETURN	 	 // functions
+%token PRINT	
+%token END						        
 %token END_OF_FILE
 
 %left PLUS MINUS EGAL
@@ -92,15 +93,50 @@ variable_with_scope:
 ;
 
 function:
-FUNCTION NAME LEFT_PARENTHESIS liste_argument RIGHT_PARENTHESIS RETURN type next_line statement_sequence RETURN expression next_line ENDFUNCTION { printf( "declaration d'une fonction \n");}
+FUNCTION NAME LEFT_PARENTHESIS liste_argument RIGHT_PARENTHESIS RETURN type next_line statement_sequence RETURN expression next_line END next_endfunction{ printf( "declaration d'une fonction \n");}
 ;
 
 procedure:
-PROCEDURE NAME LEFT_PARENTHESIS liste_argument RIGHT_PARENTHESIS next_line statement_sequence  ENDPROCEDURE {cout << "Declaration de la procedure " << $2 << endl;}
+PROCEDURE NAME LEFT_PARENTHESIS liste_argument RIGHT_PARENTHESIS next_line statement_sequence END next_endprocedure {cout << "Declaration de la procedure " << $2 << endl;}
+;
+
+next_endprocedure:
+/* emplty */
+| PROCEDURE {}
+;
+
+next_endfunction:
+/* empty */
+| FUNCTION {}
+;
+
+next_endif:
+/* empty */
+| IF {}
+;
+
+next_endwhen:
+/*empty */
+| WHEN  {}
+;
+
+next_endcase:
+/* empty*/
+| CASE {}
+;
+
+next_endwhile:
+/* empty */
+|  WHILE {}
+;
+
+next_endrepeat:
+/* empty */
+| REPEAT {}
 ;
 
 statement_sequence:
-  { /*printf("  statement \n");*/ }
+ /*empty */
 | statement_sequence statement{ }
 ;
 
@@ -115,11 +151,11 @@ statement:
 | variable_with_scope {} // variables declaration
 | variable_without_scope {} // variables declaration
 | printing {}
-| IF expression DO statement_sequence ELSE statement_sequence ENDIF { printf("SI_SINON_ALORS \n"); }
-| IF expression DO statement_sequence ENDIF { printf("SI   ALORS \n"); }
-| WHEN expression IS next_line whenbody whendefault ENDWHEN {  printf("when .. case .. \n"); }
-| WHILE expression DO  statement_sequence ENDWHILE { printf("WHILE .. DO .. \n"); }
-| REPEAT statement_sequence UNTIL expression ENDREPEAT { printf("REPEAT .. UNTIL .. \n"); }
+| IF expression DO statement_sequence ELSE statement_sequence END next_endif { printf("SI_SINON_ALORS \n"); }
+| IF expression DO statement_sequence END next_endif { printf("SI   ALORS \n"); }
+| WHEN expression IS next_line whenbody whendefault END next_endwhen {  printf("when .. case .. \n"); }
+| WHILE expression DO  statement_sequence END next_endwhile { printf("WHILE .. DO .. \n"); }
+| REPEAT statement_sequence UNTIL next_line expression next_line END next_endrepeat{ printf("REPEAT .. UNTIL .. \n"); }
 | for {}
 ;
 
@@ -170,12 +206,12 @@ noms:
 ;
 
 whenbody: /* whenbody can't be empty */
-  whenbody CASE expression statement_sequence ENDCASE next_line{}
-| CASE  expression next_line statement_sequence next_line ENDCASE next_line {}
+  whenbody CASE expression statement_sequence END next_endcase next_line{}
+| CASE  expression next_line statement_sequence next_line END next_endcase next_line {}
 ;
 
 whendefault: /* May not be specified */
-| DEFAULT statement_sequence ENDCASE next_line{}
+| DEFAULT statement_sequence END next_endcase next_line{}
 ;
 
 string :

@@ -8,11 +8,11 @@ local i, max are integer
 when 5 +6 is
 	case b==8
 		 print "ok" 
-	endcase
+	end case
 	case k < 8
 		 print 5
-	endcase
+	end case
 	default
 		x = 8 * 9
-	endcase
-endwhen
+	end case
+end when
