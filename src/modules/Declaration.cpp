@@ -29,6 +29,8 @@ string Declaration::translate() {
         res = res + "double ";
     }else if (type == "string"){
         res = res + "string ";
+    }else if (type == "boolean"){
+        res = res + "bool ";
     }else{
         //cas de l'objet
         //exemple : kinder is chocolate

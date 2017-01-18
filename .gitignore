@@ -4,7 +4,8 @@
 .directory
 
 # Generated documentation
-docs/
+docs/*
+!docs/*.md
 
 # Build results
 *.cmake
@@ -20,3 +21,4 @@ obj/*
 
 #CLion files
 .idea/*
+
