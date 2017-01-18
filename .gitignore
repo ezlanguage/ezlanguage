@@ -4,8 +4,7 @@
 .directory
 
 # Generated documentation
-docs/*
-!docs/*.md
+docs/html/
 
 # Build results
 *.cmake
