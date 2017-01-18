@@ -6,7 +6,7 @@ procedure showData (x is integer, c is string)
 	print x, " fois ", c
 end procedure
 
-procedure hello_prog
+procedure hello_prog ()
 	i is integer =0
 
 	for i in 0.. max_i
