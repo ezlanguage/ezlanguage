@@ -16,4 +16,5 @@ typedef struct s_mon_type {
 #define YYSTYPE mon_type
 extern YYSTYPE yylval;
 
+
 #endif
