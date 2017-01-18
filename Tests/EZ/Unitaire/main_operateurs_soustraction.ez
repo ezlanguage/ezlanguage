@@ -6,6 +6,6 @@ procedure main_operateurs_soustraction ()
 	b = 2
 
 	sum = a - b
-	print a , " - " , b , " = " , sum // Sum should be equal to 1
+	print a + " - " + b + " = " + sum // Sum should be equal to 1
 
 end procedure
