@@ -1,11 +1,16 @@
-//@author Antoine GARNIER
 #ifndef RANGE_H
 #define RANGE_H
 
 #include <string>
 #include "Node.h"
 
-//this class is used in : forall i in Range(1,10)
+/**
+ * @brief 
+ * 
+ * @details used in : forall i in Range(1,10)
+ * 
+ * @author Antoine GARNIER
+ */
 class Range :
         public Node {
 private:

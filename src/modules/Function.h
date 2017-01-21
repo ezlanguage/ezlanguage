@@ -5,13 +5,14 @@
 #include <vector>
 #include <string>
 
-#include "hashElement.h"
+#include "HashElement.h"
 
 /**
- * Means a function, a procedure, or a method inside a class
+ * @brief Means a function, a procedure, or a method inside a class
  * @author Johan Defaye
+ * 
  */
-class function : public hashElement {
+class Function : public HashElement {
   
   private:
     std::vector<std::string> _parameters; 	// argument types that need the function
@@ -32,7 +33,7 @@ class function : public hashElement {
    * Default constructor
    * @author Johan Defaye
    */
-  function();
+  Function();
   
   /**
    * Constructor with parameters
@@ -42,14 +43,14 @@ class function : public hashElement {
    * @param className : name of the class wich contains this function
    * @author Johan Defaye
    */
-  function(const std::string & id, const std::vector<std::string> & param, const std::string & rtype, const std::string & className);
+  Function(const std::string & id, const std::vector<std::string> & param, const std::string & rtype, const std::string & className);
   
   /**
    * Copy constructor
    * @param f : another function
    * @author Johan Defaye
    */
-  function(const function & f);
+  Function(const Function & f);
   
   
   
@@ -130,7 +131,7 @@ class function : public hashElement {
    * @return boolean
    * @author Johan Defaye
    */
-  bool is_equal(const function & f) const;
+  bool is_equal(const Function & f) const;
   
   /**
    * Print the function 
@@ -149,9 +150,9 @@ class function : public hashElement {
  * @return boolean
  * @author Johan Defaye
  */
-bool operator==(const function & f1, const function & f2);
+bool operator==(const Function & f1, const Function & f2);
 
-bool operator!=(const function & f1, const function & f2);
+bool operator!=(const Function & f1, const Function & f2);
 
 
 /** 
@@ -161,7 +162,7 @@ bool operator!=(const function & f1, const function & f2);
  * @return ostream&
  * @author Johan Defaye
  */
-std::ostream& operator<<(std::ostream &flux, function const& f);
+std::ostream& operator<<(std::ostream &flux, Function const& f);
 
 
 #endif

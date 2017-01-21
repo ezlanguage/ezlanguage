@@ -5,6 +5,9 @@
 #ifndef PROJECT_DTYPES_H
 #define PROJECT_DTYPES_H
 
+#include <string>
+#include <iostream>
+
 #include "Holder.h"
 
 class DTypes : public Holder {
@@ -12,9 +15,9 @@ class DTypes : public Holder {
 public:
     DTypes();
 
-    DTypes(const string &name);
+    DTypes(const std::string &name);
 
-    string translate();
+    std::string translate() const;
 
 };
 

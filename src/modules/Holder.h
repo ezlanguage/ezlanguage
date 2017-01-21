@@ -5,6 +5,8 @@
 #ifndef EZLANGUAGE_VARIABLE_HOLDER_H
 #define EZLANGUAGE_VARIABLE_HOLDER_H
 
+#include <string>
+
 #include "Node.h"
 
 /**
@@ -43,16 +45,16 @@ public:
 
     Holder(TYPES types);
 
-    Holder(const string &name, TYPES type);
+    Holder(const std::string &name, TYPES type);
 
-    Holder(const string &id, const string &name, TYPES type);
+    Holder(const std::string &id, const std::string &name, TYPES type);
 
     // getters & setters
-    int get_type();
+    int get_type() const;
 
     void set_type(TYPES type);
 
-    virtual string translate() = 0;
+    virtual std::string translate() const = 0;
 
     ~Holder();
 

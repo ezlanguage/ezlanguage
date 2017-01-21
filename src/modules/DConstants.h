@@ -5,19 +5,20 @@
 #ifndef PROJECT_CONSTANTS_H
 #define PROJECT_CONSTANTS_H
 
-#include "DTypes.h"
+#include <string>
 
+#include "DTypes.h"
 
 class DConstants : public Holder {
 
 public:
     DConstants();
 
-    DConstants(const string &name, DTypes *son);
+    DConstants(const std::string &name, DTypes *son);
 
-    DConstants(const string &name);
+    DConstants(const std::string &name);
 
-    string translate();
+    std::string translate() const;
 
 };
 
