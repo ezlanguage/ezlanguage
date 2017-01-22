@@ -25,7 +25,7 @@
 	<SEQ TYPE="OPERATOR">)</SEQ>
 
 	<KEYWORDS>
-			<!--{{{ modifiers -->
+			<!--{{{ MOTS CLES-->
 			<KEYWORD1>if</KEYWORD1>
 			<KEYWORD1>else</KEYWORD1>
 			<KEYWORD1>for</KEYWORD1>
@@ -43,18 +43,32 @@
 			<KEYWORD1>print</KEYWORD1>
 			<KEYWORD1>program</KEYWORD1> 
 			<KEYWORD1>endif</KEYWORD1> 
+			<KEYWORD1>on</KEYWORD1> 
+			<KEYWORD1>are</KEYWORD1> 			
   
 
-			<!--{{{ structure keywords -->
+			<!--{{{ structuretypes -->
 			<KEYWORD2>constant</KEYWORD2>
 			<KEYWORD2>string</KEYWORD2>
 			<KEYWORD2>integer</KEYWORD2>
 			<KEYWORD2>real</KEYWORD2>
 			<KEYWORD2>class</KEYWORD2>
+			<KEYWORD2>variable</KEYWORD2>
+			<KEYWORD2>regex</KEYWORD2>
+			<KEYWORD2>boolean</KEYWORD2>
 
-			<!--{{{ structure keywords -->
-			
-			
+			<!--{{{ structure Containeurs -->
+			<KEYWORD3>vector</KEYWORD3>
+			<KEYWORD3>list</KEYWORD3>
+			<KEYWORD3>array</KEYWORD3>
+			<KEYWORD3>map</KEYWORD3>
+			<KEYWORD3>set</KEYWORD3>	
+
+			<!--{{{ structure opérateurs -->
+			<KEYWORD3>and</KEYWORD3>
+			<KEYWORD3>or</KEYWORD3>	
+			<KEYWORD3>xor</KEYWORD3>	
+			<KEYWORD3>not</KEYWORD3>			
 			
 	</KEYWORDS>
 
@@ -69,10 +83,9 @@
 		       <MARKUP>line</MARKUP>
 		       <MARKUP>undef</MARKUP>
 		       <MARKUP>warning</MARKUP>
+		       <MARKUP>global</MARKUP>
+		      
         </KEYWORDS>
-
-    </RULES>
-
-        
+    </RULES>       
 
 </MODE>
