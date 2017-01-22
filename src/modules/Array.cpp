@@ -29,7 +29,7 @@ int Array::get_end_iterator() const {
 	return end_iterator;
 }
 
-string Array::translate() {
+string Array::translate() const {
 	// ie -> here i suppose that the left_son contains the type and identifier of the table 
 	// ie-> like left_son->translate() = int tabel 
 	// ie-> the result will be if begin_iterator!=0 : int tabel[end_iterator-begin_iterator+1] in c++
@@ -37,3 +37,4 @@ string Array::translate() {
 	// ie-> the result will be if begin_iterator==0 : int tabel[end_iterator] in c++	
 	else return this->left_son->translate() +"["+end_iterator+"]";
 }
+

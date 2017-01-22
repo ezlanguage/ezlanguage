@@ -21,26 +21,8 @@
  * ez language : when / c++ : switch
  */
 class Conditionnal_instruction :
-// <<<<<<< HEAD
-// private:
-//     /// all Condition in case we have (when)
-//     std::vector<Condition> conditions;
-//     /// all instructions in case we have (if and else) or (when) with multiple cases
-//     std::vector< std::vector<Instruction> > instructions;
-//
-// public:
-//     Conditionnal_instruction(const std::vector< std::vector<Instruction> >& inst,
-//     						 const std::vector<Condition> &c,
-//     						 int ct
-//     						);
-//
-//     /**
-//      * @brief getter of all conditions
-//      */
-//     const std::vector<Condition> & get_conditions() const;
-// =======
     public Node/*public Instruction*/ { // Conditionnal_instruction can't herite from Instruction because the bloc if can have multiple instructions
-    									 //  for more see the language validated document by ANDRES Herv� "les_fonctions_proc�dures_conditions"
+    									 //  for more see the language validated document by ANDRES Hervé "les_fonctions_procédures_conditions"
 private:
     Condition *condition;
     int condition_type;

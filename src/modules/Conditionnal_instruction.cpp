@@ -4,27 +4,6 @@
 
 using namespace std;
 
-// <<<<<<< HEAD
-// Conditionnal_instruction::Conditionnal_instruction(const vector <vector<Instruction>> &inst,
-//                                                    const vector <Condition> &c,
-//                                                    int ct
-// ) : instructions(inst), conditions(c), condition_type(ct) {
-//     name = "Conditionnal instruction";
-// }
-//
-// Conditionnal_instruction::Conditionnal_instruction(const Conditionnal_instruction &c)
-//         : instructions(c.instructions), conditions(c.conditions), condition_type(c.condition_type) {
-//     name = "Conditionnal instruction";
-// }
-//
-// const vector <Condition> &Conditionnal_instruction::get_conditions() const {
-//     return conditions;
-// }
-//
-// const vector <vector<Instruction>> &Conditionnal_instruction::get_instructions() const {
-//     return instructions;
-// }
-// =======
 Conditionnal_instruction::Conditionnal_instruction(){
 	name= "Conditionnal instruction";
 }
