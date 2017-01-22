@@ -24,13 +24,17 @@ ArrayDeclaration* ArrayAccess::get_array() const{
 int ArrayAccess::get_index() const{
 	return index;
 }
+
 void ArrayAccess::set_array(ArrayDeclaration *a) {
 	array=a;
 }
+
 void ArrayAccess::set_index(int i) {
 	index=i;
 }
-string ArrayAccess::translate() {
+
+string ArrayAccess::translate() const {
 	string result= array->get_variable()->get_id()+"["+to_string(index)+"]";
 	return result;
 }
+

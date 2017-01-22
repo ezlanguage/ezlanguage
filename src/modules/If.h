@@ -97,7 +97,7 @@ class If
 		 * The instance will be translated with it's C++ equivalent using its informations
 		 * The translation corresponds to its specifications, specificities and values
 		 */
-		string translate();
+		std::string translate() const;
 	
 };
 #endif

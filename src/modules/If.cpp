@@ -30,15 +30,15 @@ void If::set_block_type(int bt){
 	block_type=bt;
 }
 
-string If::translate(){
+string If::translate() const {
 	string res="", block;
 		
 	switch (block_type) {
 		case block_if :
-			block="if("+condition->translate()+")";
+			block="if("+ get_condition().translate()+")";
 			break;
 		case block_else_if :
-			block= "else if("+condition->translate()+")";
+			block= "else if("+get_condition().translate()+")";
 			break;
 		case block_else :
 			block= "else";

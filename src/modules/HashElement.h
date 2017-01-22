@@ -10,8 +10,8 @@
  * @author Johan defaye
  * 
  */
-class HashElement { 
-  
+class HashElement {
+
 private:
   std::string _id;
   

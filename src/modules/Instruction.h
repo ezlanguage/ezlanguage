@@ -6,7 +6,7 @@
 
 //TODO do we have to turn it into an abstract class ?
 /**
- * @brief 
+ * @brief
  * @author Antoine GARNIER
  */
 class Instruction :
@@ -21,12 +21,12 @@ Instruction();
     /**
     * @brief Translation of the instruction into it's C++ counterpart
     * @return a string containing the C++ code of the instruction
-    * 
+    *
     * The instance will be translated with it's C++ equivalent using its informations
     * All subclasses, must reimplement this method so that the translation corresponds
     * to their specifications, specificities and own values
     */
-    virtual string translate() =0;
+    virtual std::string translate() =0;
 
 };
 
