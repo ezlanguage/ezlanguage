@@ -20,7 +20,8 @@ public:
 	int get_begin_iterator() const;
 	int get_end_iterator() const;
 
-    std::string translate();
+    std::string translate() const;
 };
 
 #endif
+

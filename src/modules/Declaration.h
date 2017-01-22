@@ -1,6 +1,8 @@
 #ifndef DECLARATION_H
 #define DECLARATION_H
 
+#include <string>
+
 #include "Node.h"
 
 /** 
@@ -16,13 +18,13 @@
 class Declaration :
         public Node {
 protected:
-    string variable;
-    string type;
-    string scope;
+    std::string variable;
+    std::string type;
+    std::string scope;
     bool isconst;
 
 public:
-    Declaration(string, string, string, bool);
+    Declaration(std::string, std::string, std::string, bool);
     
     /**
      * @brief Translation of the instruction into it's C++ counterpart
@@ -31,6 +33,6 @@ public:
      * The instance will be translated with it's C++ equivalent using its informations
      * The translation corresponds to its specifications, specificities and values
      */
-    string translate();
+    std::string translate();
 };
 #endif

@@ -95,7 +95,7 @@ class ArrayAccess :
 		 * All subclasses, must reimplement this method so that the translation corresponds
 		 * to their specifications, specificities and own values
 		 */
-		std::string translate();
+		std::string translate() const;
 };
 
 #endif

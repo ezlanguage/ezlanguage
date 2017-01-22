@@ -1,7 +1,7 @@
 #compilateur utilisé
 CC = g++-5
 # flags de compilation
-CC_FLAGS = -Wall -std=c++11 #-ggdb 
+CC_FLAGS = -Wall -std=c++11 #-ggdb
 EXT_SRC = 
 CC_MOD_FLAGS = -MM #-MP 
 
@@ -21,12 +21,20 @@ YACC_FLAGS =
 #sources cpp
 # --- RAJOUTER CHAQUE FICHIER CPP DE MODULES ICI ! ---
 # --- FAIRE UN FICHIER CPP POUR CHAQUE FICHIER H S'IL Y A UNE CLASSE DEDANS ---
-MOD_CPP =  src/modules/ArrayDeclaration.cpp src/modules/ArrayAccess.cpp src/modules/Condition.cpp src/modules/Conditionnal_instruction.cpp src/modules/If.cpp src/modules/Declaration.cpp src/modules/Foreach.cpp src/modules/Forall.cpp src/modules/Function.cpp src/modules/HashElement.cpp src/modules/HashTable.cpp src/modules/Instruction.cpp src/modules/Iterative_instruction.cpp src/modules/Node.cpp src/modules/Operator.cpp src/modules/Range.cpp src/modules/Repeat.cpp src/modules/ScopeHashTable.cpp src/modules/Variable.cpp src/modules/While.cpp src/modules/DeclarationFunction.cpp src/modules/DeclarationProcedure.cpp
+
+MOD_CPP = src/modules/Array.cpp src/modules/ArrayDeclaration.cpp src/modules/ArrayAccess.cpp src/modules/Condition.cpp src/modules/Conditionnal_instruction.cpp src/modules/Declaration.cpp src/modules/Foreach.cpp src/modules/Forall.cpp src/modules/If.cpp src/modules/Instruction.cpp src/modules/Iterative_instruction.cpp src/modules/Node.cpp src/modules/Operator.cpp src/modules/Range.cpp src/modules/Repeat.cpp src/modules/While.cpp
+MOD_CPP += src/modules/Holder.cpp src/modules/DTypes.cpp src/modules/DConstants.cpp
+MOD_CPP += src/modules/DeclarationFunction.cpp src/modules/DeclarationProcedure.cpp
+
+# sources table des symboles
+ST_CPP = src/modules/HashElement.cpp src/modules/Function.cpp src/modules/HashTable.cpp src/modules/ScopeHashTable.cpp src/modules/Variable.cpp
+
+ALL_CPP = ${MOD_CPP} ${ST_CPP}
 
 #fichiers objets
-MOD_OBJ = $(MOD_CPP:src/modules/%.cpp=obj/%.o)
+MOD_OBJ = $(ALL_CPP:src/modules/%.cpp=obj/%.o)
 #fichiers de dependances
-MOD_DPDCY = $(MOD_CPP:src/modules/%.cpp=obj/%.d)
+MOD_DPDCY = $(ALL_CPP:src/modules/%.cpp=obj/%.d)
 
 
 #executables
