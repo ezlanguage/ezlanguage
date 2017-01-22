@@ -21,8 +21,10 @@ YACC_FLAGS =
 #sources cpp
 # --- RAJOUTER CHAQUE FICHIER CPP DE MODULES ICI ! ---
 # --- FAIRE UN FICHIER CPP POUR CHAQUE FICHIER H S'IL Y A UNE CLASSE DEDANS ---
+
 MOD_CPP = src/modules/Array.cpp src/modules/ArrayDeclaration.cpp src/modules/ArrayAccess.cpp src/modules/Condition.cpp src/modules/Conditionnal_instruction.cpp src/modules/Declaration.cpp src/modules/Foreach.cpp src/modules/Forall.cpp src/modules/If.cpp src/modules/Instruction.cpp src/modules/Iterative_instruction.cpp src/modules/Node.cpp src/modules/Operator.cpp src/modules/Range.cpp src/modules/Repeat.cpp src/modules/While.cpp
 MOD_CPP += src/modules/Holder.cpp src/modules/DTypes.cpp src/modules/DConstants.cpp
+MOD_CPP += src/modules/DeclarationFunction.cpp src/modules/DeclarationProcedure.cpp
 
 # sources table des symboles
 ST_CPP = src/modules/HashElement.cpp src/modules/Function.cpp src/modules/HashTable.cpp src/modules/ScopeHashTable.cpp src/modules/Variable.cpp
