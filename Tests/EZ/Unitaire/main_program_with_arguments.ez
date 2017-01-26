@@ -1,0 +1,27 @@
+/*
+* @author dbenmoumen
+* N'oubliez pas à passer les parametres en ligne de commande ex: ./hello_arg.exe --c= hello
+*
+*
+*/
+program hello_arg
+
+arguments
+	x is integer as "--x"
+	c is string as "--c"
+end arguments
+
+global max_i is integer = 5
+
+procedure showData (x is integer, c is string)
+	print x, " fois ", c
+end procedure
+
+procedure hello_arg ()
+	variablei is integer =0
+
+	for i in 0.. max_i do
+		showData(i,c)
+	end for
+
+end procedure
