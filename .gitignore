@@ -16,7 +16,7 @@ obj/*
 *.user
 
 #CLion files
-.idea/*
+.idea
 Supprimerait cmake-build-debug/
 Supprimerait exemple.cpp
 Supprimerait tests/exemple.cpp
