@@ -17,3 +17,9 @@ obj/*
 
 #CLion files
 .idea/*
+Supprimerait cmake-build-debug/
+Supprimerait exemple.cpp
+Supprimerait tests/exemple.cpp
+Supprimerait tests/fichier_de_test.ez
+Supprimerait tests/julia.cpp
+Supprimerait tests/person.cpp
