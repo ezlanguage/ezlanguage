@@ -32,7 +32,7 @@ class ScopeHashTable : public HashTable<Variable> {
     
     /**
      * Default constructor 
-     * Construct an empty hash table with a empty scope stack
+     * @brief Construct an empty hash table with a empty scope stack
      * Initialize the current scope to 0
      * @author Johan Defaye
      */
@@ -60,7 +60,7 @@ class ScopeHashTable : public HashTable<Variable> {
     
     
     /**
-     * Give the scope stack of the hash table
+     * @brief Give the scope stack of the hash table
      * @return stack<list< Variable::iterator > >
      * @author Johan Defaye
      */
@@ -68,7 +68,7 @@ class ScopeHashTable : public HashTable<Variable> {
     
     
     /**
-     * Give the current scope of the hash table
+     * @brief Give the current scope of the hash table
      * @return unsigned int : current scope
      * @author Johan Defaye
      */
@@ -81,13 +81,13 @@ class ScopeHashTable : public HashTable<Variable> {
     
     
     /**
-     * Incremente the current scope by one unit
+     * @brief Incremente the current scope by one unit
      * @author Johan Defaye
      */
     void incScope();
     
     /**
-     * Remove all the Variable from the highest scope in the hash table
+     * @brief Remove all the Variable from the highest scope in the hash table
      * Decremente the current scope by one unit
      * @exception : Return a string as exception if the current scope is equal to 0 before decremente
      * @author Johan Defaye
@@ -95,7 +95,7 @@ class ScopeHashTable : public HashTable<Variable> {
     void decScope();
     
     /**
-     * Add a Variable in the hash table 
+     * @brief Add a Variable in the hash table 
      * @param v : Variable to add
      * @exception : Return a string as exception if the hash table is empty
      * @author Johan Defaye
@@ -103,7 +103,7 @@ class ScopeHashTable : public HashTable<Variable> {
      void addElement(Variable & v);
      
     /**
-     * Remove a Variable from the hash table
+     * @brief Remove a Variable from the hash table
      * @param v : Variable to remove
      * @exception : Return a string as exception if the Variable to be removed has too small scope
      * @exception : Return a string as exception if the Variable to be removed is not in the hash table
@@ -113,8 +113,8 @@ class ScopeHashTable : public HashTable<Variable> {
       
       
     /**
-     * Return the type of the Variable with the specified identifier
-     * Return the empty string if the type is not known
+     * @brief Return the type of the Variable with the specified identifier
+     * @brief Return the empty string if the type is not known
      * @param id : identifier of the Variable
      * @exception : Return an exception if not found
      * @return string
@@ -124,7 +124,7 @@ class ScopeHashTable : public HashTable<Variable> {
       
       
      /**
-      * Test if an element is in the hash table
+      * @brief Test if an element is in the hash table
       * @param id : identifier
       * @return boolean
       * @author Johan Defaye
@@ -132,13 +132,13 @@ class ScopeHashTable : public HashTable<Variable> {
       bool contains(const std::string & id) const;
       
       
-      /**
-       * Test if an element is already in the hash table in the specified scope
-       * @param id : identifier
-       * @param s : scope
-       * @author Johan Defaye
-       */
-	   bool contains(const std::string & id, unsigned int s) const;
+     /**
+      * @brief Test if an element is already in the hash table in the specified scope
+      * @param id : identifier
+      * @param s : scope
+      * @author Johan Defaye
+      */
+     bool contains(const std::string & id, unsigned int s) const;
   
 };
 

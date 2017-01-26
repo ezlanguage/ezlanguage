@@ -10,8 +10,8 @@
  * @author Johan defaye
  * 
  */
-class HashElement {
-
+class HashElement { 
+  
 private:
   std::string _id;
   
@@ -26,14 +26,14 @@ public:
   
   /**
    * Default constructor
-   * Set the identifier by the empty string
+   * @brief Set the identifier by the empty string
    * @author Johan Defaye
    */
   HashElement();
   
   /**
    * Constructor with parameters
-   * Set the identifier by the string passed as parameter
+   * @brief Set the identifier by the string passed as parameter
    * @param s : identifier of the hash element
    * @author Johan Defaye
    */
@@ -54,14 +54,14 @@ public:
   
   
   /**
-   * Give the identifier
+   * @brief Give the identifier
    * @return string
    * @author Johan Defaye
    */
   std::string get_id() const {return _id;}
   
   /**
-   * Set the identifier
+   * @brief Set the identifier
    * @param s : an identifier
    * @author Johan Defaye
    */
