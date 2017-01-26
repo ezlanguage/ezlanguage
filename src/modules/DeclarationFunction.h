@@ -2,6 +2,9 @@
 #define DECLARATION_FUNCTION_H
 
 #include "Node.h"
+#include "Variable.h"
+
+#include <vector>
 
 /**
  * @brief Allows the declaration of functions
@@ -19,9 +22,7 @@ class DeclarationFunction
 protected:
     std::string function_name;
     std::string return_type;
-
-    Node* args;
-//    std::vector<std::string> arguments;
+    std::vector<Variable> arguments;
     std::string return_variable;
 
 public:
@@ -39,7 +40,7 @@ public:
      * @param instructions : instructions of the function
      * @param return_variable : name of the variable used as a return value
      */
-    DeclarationFunction(std::string name, Node* arguments, std::string type, Node* instructions, std::string return_variable);
+    DeclarationFunction(std::string name, std::vector<Variable> arguments, std::string type, Node* instructions, std::string return_variable);
 
     /**
      * @brief Getter for the function's name
@@ -57,8 +58,7 @@ public:
      * @brief Getter for the argument's list
      * @return List of arguments
      */
-    Node* getArguments(){return args;}
-//    std::vector<std::string> getArguments(){return arguments;}
+    std::vector<Variable> getArguments(){return arguments;}
 
     /**
      * @brief Getter for the name of the variable used as the return variable
@@ -82,7 +82,7 @@ public:
      * @brief Setter of the list of arguments
      * @param arguments : list of the arguments of the function
      */
-    void setArguments(Node* arguments){args= arguments;}
+    void setArguments(std::vector<Variable> args){arguments= args;}
 //    void setArguments(Node* args){arguments= args;}
 
     /**
