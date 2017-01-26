@@ -1,7 +1,9 @@
 #include <iostream>
 
-void main(){
-    int x = 10;
+int main(){
+    int x;
+    std::cin >> x;
+    
     switch(x){
         case 0 : std::cout << "Ouch !" << std::endl;
         break;
@@ -12,4 +14,6 @@ void main(){
         default : std::cout << "Il faut davantage travailler." << std::endl;
         break;
     }
+    
+    return 0;
 }
