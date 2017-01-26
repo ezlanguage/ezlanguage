@@ -2,6 +2,8 @@
 
 using namespace std;
 
+
+
 Function::Function(): HashElement(), _parameters(), _returnType(""), _class("")
 {}
 
@@ -14,10 +16,12 @@ Function::Function(const Function& f): HashElement(f.get_id()), _parameters(f.ge
 {}
 
 
+
 bool Function::isMethodOf(const string& className) const
 {
   return (_class == className);
 }
+
 
 
 bool Function::is_equal(const Function& f) const
@@ -34,6 +38,7 @@ bool Function::is_equal(const Function& f) const
   
   return equal;
 }
+
 
 
 void Function::print(ostream& flux) const
@@ -90,10 +95,12 @@ ostream& operator<<(ostream& flux, const Function& f)
 }
 
 
+
 bool operator==(const Function& f1, const Function& f2)
 {
   return (f1.is_equal(f2));
 }
+
 
 
 bool operator!=(const Function& f1, const Function& f2)

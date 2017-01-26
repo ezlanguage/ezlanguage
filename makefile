@@ -27,7 +27,7 @@ MOD_CPP += src/modules/Holder.cpp src/modules/DTypes.cpp src/modules/DConstants.
 MOD_CPP += src/modules/DeclarationFunction.cpp src/modules/DeclarationProcedure.cpp
 
 # sources table des symboles
-ST_CPP = src/modules/HashElement.cpp src/modules/Function.cpp src/modules/HashTable.cpp src/modules/ScopeHashTable.cpp src/modules/Variable.cpp
+ST_CPP = src/modules/HashElement.cpp src/modules/Function.cpp src/modules/HashTable.cpp src/modules/ScopeHashTable.cpp src/modules/Variable.cpp src/modules/ClassDeclaration.cpp src/modules/ClassHashTable.cpp
 
 ALL_CPP = ${MOD_CPP} ${ST_CPP}
 
