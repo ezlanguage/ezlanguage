@@ -3,6 +3,9 @@
 *~
 .directory
 
+# Generated documentation
+docs/html/
+
 # Build results
 *.cmake
 bin/*
@@ -16,4 +19,5 @@ obj/*
 *.user
 
 #CLion files
-.idea
+.idea/*
+

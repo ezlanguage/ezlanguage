@@ -1,4 +1,3 @@
-//@author Antoine GARNIER
 #ifndef WHILE_H
 #define WHILE_H
 
@@ -9,14 +8,18 @@
 //special files no to forget to import
 #include "Iterative_instruction.h"
 
-/*
- * Using :
+/**
+ * @brief 
+ * 
+ * @details Using :
  * while condition do
  *    instruction_1
  *    instruction_2
  *    ...
  *    instruction_n
  * end while
+ * 
+ * @author Antoine GARNIER
  */
 class While :
         public Iterative_instruction {
@@ -35,7 +38,14 @@ public:
 
     //getters
 //    Condition get_condition(){ return while_condition; }
-
+    
+    /**
+     * @brief Translation of the instruction into it's C++ counterpart
+     * @return a string containing the C++ code of the while instruction
+     * 
+     * The instance will be translated with it's C++ equivalent using its informations
+     * The translation corresponds to its specifications, specificities and values
+     */
     std::string translate();
 };
 

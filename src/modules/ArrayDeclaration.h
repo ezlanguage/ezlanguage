@@ -1,4 +1,3 @@
-//@author : Ismail ELFAQIR
 #ifndef ARRAYDECLARATION_H
 #define ARRAYDECLARATION_H
 
@@ -6,6 +5,11 @@
 #include "Node.h"
 #include "Variable.h"
 
+/**
+ * @brief 
+ * @author : Ismail ELFAQIR
+ * 
+ */
 class ArrayDeclaration :
         public Node {
 	protected:
@@ -88,7 +92,14 @@ class ArrayDeclaration :
 		/* * * * * * * *
 		* Translation  *
 		* * * * * * * **/
-	
+		
+		/**
+		 * @brief Translation of the instruction into it's C++ counterpart
+		 * @return a string containing the C++ code of the declaration
+		 * 
+		 * The instance will be translated with it's C++ equivalent using its informations
+		 * The translation corresponds to its specifications, specificities and values
+		 */
 		std::string translate();
 };
 

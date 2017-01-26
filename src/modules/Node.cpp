@@ -1,18 +1,27 @@
 #include "Node.h"
 
+using namespace std;
 Node::Node() {};
 
+Node::Node(const string &name) : name(name), left_son(nullptr), right_son(nullptr)
+{}
+
 Node::Node(Node* left, Node* right)
-	: left_son(left), right_son(right)
+        : left_son(left), right_son(right)
 {};
 
-Node::~Node() {};
+Node::~Node()
+{
+    delete left_son;
+    delete right_son;
+}
 
 Node * Node::get_left_son() const {
-	return left_son;
+    return left_son;
 }
+
 Node * Node::get_right_son() const{
-	return right_son;
+    return right_son;
 }
 
 void Node::setLeftSon(Node *son) {

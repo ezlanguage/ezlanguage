@@ -49,6 +49,7 @@ string Operator::translate() {
                 case UNARY:
                     //Unary operator
                     if(ope == "-"){res= "-" + getOperande_1(); }
+                    if(ope == "abs"){res= "abs " + getOperande_1(); }
                     else {};//unknown operator
                     break;
 
@@ -69,26 +70,27 @@ string Operator::translate() {
             }
             break;
 
-        //Allocation's operators (=, +=, -=, *=, /=)
+        //Allocation's operators (=, +=, -=, *=, /=, .)
         case ALLOCATION:
             cout << "Operator's type : allocation" << endl;
-            if(ope == "="){res= getOperande_1() + "=" + getOperande_2();} else
-            if(ope == "+="){res= getOperande_1() + "+=" + getOperande_2();} else
-            if(ope == "-"){res= getOperande_1() + "-=" + getOperande_2();} else
-            if(ope == "*="){res= getOperande_1() + "*=" + getOperande_2();} else
-            if(ope == "/="){res= getOperande_1() + "/=" + getOperande_2();}
+            if(ope == "="){res= getOperande_1() + "= " + getOperande_2();} else
+            if(ope == "+="){res= getOperande_1() + "+= " + getOperande_2();} else
+            if(ope == "-"){res= getOperande_1() + "-= " + getOperande_2();} else
+            if(ope == "*="){res= getOperande_1() + "*= " + getOperande_2();} else
+            if(ope == "/="){res= getOperande_1() + "/= " + getOperande_2();} else
+            if(ope == "."){res= getOperande_1() + " + " + getOperande_2();}
             else {};//unknown operator
             break;
 
         //Comparison's operators (==, !=, <, >, <=, >=)
         case COMPARISON:
             cout << "Operator's type : comparison" << endl;
-            if(ope == "=="){res= getOperande_1() + "==" + getOperande_2();} else
-            if(ope == "!="){res= getOperande_1() + "!=" + getOperande_2();} else
-            if(ope == "<"){res= getOperande_1() + "<" + getOperande_2();} else
-            if(ope == ">"){res= getOperande_1() + ">" + getOperande_2();} else
-            if(ope == "<="){res= getOperande_1() + "<=" + getOperande_2();} else
-            if(ope == ">="){res= getOperande_1() + ">=" + getOperande_2();}
+            if(ope == "=="){res= getOperande_1() + " == " + getOperande_2();} else
+            if(ope == "!="){res= getOperande_1() + " != " + getOperande_2();} else
+            if(ope == "<"){res= getOperande_1() + " < " + getOperande_2();} else
+            if(ope == ">"){res= getOperande_1() + " > " + getOperande_2();} else
+            if(ope == "<="){res= getOperande_1() + " <= " + getOperande_2();} else
+            if(ope == ">="){res= getOperande_1() + " >= " + getOperande_2();}
             else {};//unknown operator
             break;
 

@@ -1,4 +1,3 @@
-//@author : Ismail ELFAQIR
 #ifndef IF_H
 #define IF_H
 
@@ -8,6 +7,11 @@
 #define block_else_if 2 
 #define block_else 3
 
+/**
+ * @brief 
+ * @author : Ismail ELFAQIR
+ * 
+ */
 class If 
 	: public Conditionnal_instruction {
 		
@@ -84,8 +88,16 @@ class If
 
 		/* * * * * * * *
 		* Translation  *
-		* * * * * * * **/		
-		string translate();
+		* * * * * * * **/
+		
+		/**
+		 * @brief Translation of the instruction into it's C++ counterpart
+		 * @return a string containing the C++ code of the instruction
+		 * 
+		 * The instance will be translated with it's C++ equivalent using its informations
+		 * The translation corresponds to its specifications, specificities and values
+		 */
+		std::string translate() const;
 	
 };
 #endif

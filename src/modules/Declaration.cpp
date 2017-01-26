@@ -4,11 +4,6 @@
 
 using namespace std;
 
-//exemple : ma_super_variable is integer
-//variable correspond à la variable
-//faire attention au type qui peut être un type objet
-//faire attention à la portée de la variable
-//faire attention si la variable est constante ou non
 Declaration::Declaration(string var, string ty, string sco, bool iscon) {
     name= "Declaration";
     var = variable;
@@ -34,6 +29,8 @@ string Declaration::translate() {
         res = res + "double ";
     }else if (type == "string"){
         res = res + "string ";
+    }else if (type == "boolean"){
+        res = res + "bool ";
     }else{
         //cas de l'objet
         //exemple : kinder is chocolate

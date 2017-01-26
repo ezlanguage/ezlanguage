@@ -2,28 +2,22 @@
 
 using namespace std;
 
-
-
 Function::Function(): HashElement(), _parameters(), _returnType(""), _class("")
 {}
 
 
-
-Function::Function(const string& id, const vector< string >& param, const string& rtype, const string& className): HashElement(id), _parameters(param), _returnType(rtype), _class(className)
+Function::Function(const std::string &id, const std::vector< std::string > &param, const std::string &rtype, const std::string &className): HashElement(id), _parameters(param), _returnType(rtype), _class(className)
 {}
-
 
 
 Function::Function(const Function& f): HashElement(f.get_id()), _parameters(f.get_param()), _returnType(f.get_returnType()), _class(f.get_class())
 {}
 
 
-
 bool Function::isMethodOf(const string& className) const
 {
   return (_class == className);
 }
-
 
 
 bool Function::is_equal(const Function& f) const
@@ -40,7 +34,6 @@ bool Function::is_equal(const Function& f) const
   
   return equal;
 }
-
 
 
 void Function::print(ostream& flux) const
@@ -97,12 +90,10 @@ ostream& operator<<(ostream& flux, const Function& f)
 }
 
 
-
 bool operator==(const Function& f1, const Function& f2)
 {
   return (f1.is_equal(f2));
 }
-
 
 
 bool operator!=(const Function& f1, const Function& f2)

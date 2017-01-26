@@ -90,17 +90,15 @@ backLine 	\n
 
 (if|IF)              return(IF);
 (else|ELSE)          return(ELSE);
-(endif|ENDIF)        return(ENDIF);
+
+(end|END)            return(END);
 
 (when|WHEN)           return(WHEN);
 (case|CASE)           return(CASE);
-(endcase|ENDCASE)     return(ENDCASE);
 (default|DEFAULT)     return(DEFAULT);
-(endwhen|ENDWHEN)     return(ENDWHEN);
 
 (while|WHILE)         return(WHILE);
 (do|DO)               return(DO);
-(endwhile|ENDWHILE)   return(ENDWHILE);
 
 (repeat|REPEAT)         return(REPEAT);
 (until|UNTIL)           return(UNTIL);
@@ -109,13 +107,10 @@ backLine 	\n
 (for|FOR)        return(FOR);
 (in|IN)          return(IN);
 (step|STEP)      return(STEP);
-(endfor|ENDFOR)  return(ENDFOR);
 
 (function|FUNCTION)         return(FUNCTION);
 (procedure|PROCEDURE)       return(PROCEDURE);
 (return|RETURN)             return(RETURN);
-(endfunction|ENDFUNCTION)   return(ENDFUNCTION);
-(endprocedure|ENDPROCEDURE) return(ENDPROCEDURE);
 
 
 (print|PRINT)     { return(PRINT);        }

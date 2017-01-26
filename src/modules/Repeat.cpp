@@ -4,8 +4,8 @@
 
 Repeat::Repeat(Condition* repeat_cond, Node* repeat_left_son, Node* repeat_right_son)
         :Iterative_instruction(repeat_cond){
-    left_son= repeat_left_son;
-    right_son= repeat_right_son;
+    this->set_left_son(repeat_left_son);
+    this->set_right_son(repeat_right_son);
 }
 
 std::string Repeat::translate() {
@@ -17,13 +17,13 @@ std::string Repeat::translate() {
 //    The first instruction of the loop is the left son
 //    The second instruction is the right son of this left son...etc
 //    So here, we just translate the first one
-    res+= "   " + this->left_son->translate();
+    res+= "   " + this->get_left_son()->translate();
 
 //    The repeat condition is stored in the class
     res+= "}while(" + repeat_condition->translate() + ")\n";
 
 //    don't forget to launch the translation of the instructions that follow this while
-    if(this->right_son) res+= this->right_son->translate();
+    if(this->get_right_son()) res+= this->get_right_son()->translate();
 
     return res;
 }
