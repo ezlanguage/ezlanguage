@@ -4,13 +4,15 @@
 #include <stdlib.h>
 #include <iostream>
 #include <list>
-#include <math.h> /* fmod , pow ... */
-#include <cmath> /* fabs */
+#include <string>
+#include <vector>
 
 #include "../src/global.h"	 // we start from ../obj because it's important
 #include "../src/main.cpp"	 // we start from ../obj because it's important
 #include "../src/modules/Node.h"
-#include "../src/modules/variable.h"
+#include "../src/modules/Variable.h"
+#include "../src/modules/Function.h"
+#include "../src/modules/ScopeHashTable.h"
 //#include "global.h"
 
 #define YYERROR_VERBOSE
@@ -24,6 +26,7 @@ using namespace std;
  extern "C" void yyerror(const std::string&);
 extern int yylineno;
 
+extern ScopeHashTable symbolTable;
 %}
 
 
@@ -47,9 +50,11 @@ extern int yylineno;
 %left PLUS MINUS EGAL
 %left NE LT LE GT GE MULT DIVISE AND OR XOR NOT MOD POW ABS		// Operators
 
-%type<arbre> expression designator expr2 expr3 expr4  statement_sequence
+%type<arbre> expression designator single_expression  statement_sequence function_call
 %type<arbre> next_line  function procedure  string
 %type<arbre> ROOT declarations_list declaration_variables declaration_methods variable_with_scope variable_without_scope
+%type<vecString> liste_argument
+%type<texte> type
 
 %start ROOT
 %%
@@ -59,10 +64,10 @@ ROOT:
       {
         Node *p_decl = $2;
         p_decl->setRightSon($3);
-        Node *n = new Node(NULL,p_decl);
+        Node *racine = new Node(NULL,p_decl);
 
 
-        cout << n->translate() << endl;
+        cout << racine->translate() << endl;
         return 0;
       }
 ;
@@ -92,21 +97,29 @@ declaration_variables:
 ;
 
 variable_without_scope:
-     NAME IS type next_line { $$ = new variable();}
-|    NAME noms ARE type next_line { $$ = new variable(); }
+     NAME IS type next_line { $$ = new Variable();}
+|    NAME noms ARE type next_line { $$ = new Variable(); }
 ;
 
 variable_with_scope:
-    portee NAME IS type next_line { $$ = new variable();  }
-|   portee NAME noms ARE type next_line { $$ = new variable();  }
+    portee NAME IS type next_line { $$ = new Variable();  }
+|   portee NAME noms ARE type next_line { $$ = new Variable();  }
 ;
 
 function:
-FUNCTION NAME LEFT_PARENTHESIS liste_argument RIGHT_PARENTHESIS RETURN type next_line statement_sequence RETURN expression next_line ENDFUNCTION { printf( "declaration d'une fonction \n");}
+FUNCTION NAME LEFT_PARENTHESIS 	 RIGHT_PARENTHESIS RETURN type next_line statement_sequence RETURN expression next_line ENDFUNCTION {}
 ;
 
 procedure:
-PROCEDURE NAME LEFT_PARENTHESIS liste_argument RIGHT_PARENTHESIS next_line statement_sequence  ENDPROCEDURE {cout << "Declaration de la procedure "  << endl;}
+PROCEDURE NAME LEFT_PARENTHESIS liste_argument { symbolTable.incScope(); } RIGHT_PARENTHESIS next_line statement_sequence  ENDPROCEDURE 
+		{ 
+			
+			Function *f = new Function($2,vector<string>(0),"","");
+			f->setLeftSon($7);
+			$$ = f;
+			//$$ = new Node();
+			symbolTable.decScope();
+		}
 ;
 
 statement_sequence:
@@ -115,15 +128,17 @@ statement_sequence:
 ;
 
 liste_argument:
- // No argument
- | NAME IS type { }
- | NAME IS type COMMA liste_argument { }
+ 	 { vector<Variable> v; $$ = v;}
+ | NAME IS type { vector<Variable> v; v.push_back(Variable($1,$3)); $$ = v;}
+ | NAME IS type COMMA liste_argument { $5.push_back(Variable($1,$3)); 
+ 										$$ = $5; }
 ;
 
 statement:
   next_line
 | variable_with_scope {} // variables declaration
 | variable_without_scope {} // variables declaration
+| affectation {}
 | printing {}
 | IF expression DO statement_sequence ELSE statement_sequence ENDIF { printf("SI_SINON_ALORS \n"); }
 | IF expression DO statement_sequence ENDIF { printf("SI   ALORS \n"); }
@@ -181,7 +196,7 @@ noms:
 
 whenbody: /* whenbody can't be empty */
   whenbody CASE expression statement_sequence ENDCASE next_line{}
-| CASE  expression next_line statement_sequence next_line ENDCASE next_line {}
+| CASE  expression next_line statement_sequence ENDCASE next_line {}
 ;
 
 whendefault: /* May not be specified */
@@ -189,38 +204,38 @@ whendefault: /* May not be specified */
 ;
 
 string :
- STRING  { $$= $1;}
+ STRING  { }
 ;
 
 //For  those  rules in comment , the corresponding definition must be written by the C++ team because they (rules) have not effect.
 expression:
-  single_expression { $1 = $1 ;}
-| expression EGAL EGAL expression { /*$1 == $4;*/ }
-| expression NE expression {/* $1 != $3; */}
-| expression LT expression { /*$1 < $3;*/ }
-| expression LE expression {/* $1 <= $3;*/ }
-| expression GT expression {/* $1 > $3 ;*/}
-| expression GE expression { /*$1 >= $3 ;*/}
-| expression PLUS expression {$$ = $1 + $3; }
-| expression MINUS expression { $$ = $1 - $3; }
-| expression MULT expression {$$ = $1 * $3 ;}
-| expression DIVISE expression { $$ =  $1 / $3 ;}
-| expression AND AND expression {/* $1 && $4;  */ }
-| expression OR OR expression {/* $1 || $4 ; */ }
+  single_expression { }
+| expression EGAL EGAL expression {  }
+| expression NE expression {}
+| expression LT expression {  }
+| expression LE expression { }
+| expression GT expression {}
+| expression GE expression { }
+| expression PLUS expression { }
+| expression MINUS expression { }
+| expression MULT expression {}
+| expression DIVISE expression { }
+| expression AND AND expression { }
+| expression OR OR expression { }
 ;
 
 single_expression:
-  PLUS single_expression { $$ = $2;  }
-| single_expression XOR single_expression { /* $1^$3 ; */}
-| NOT single_expression { $$ = !$2 ; }
-| single_expression MOD single_expression { $$ =  fmod($1,$3); }
-| single_expression POW single_expression { $$ = pow($1, $3); }
-| ABS single_expression { $$ = fabs($2);}
-| LEFT_PARENTHESIS expression RIGHT_PARENTHESIS { $$ = $2 ;}
-| NUM_REAL { $$ = $1;} //real
-| NUM_INTEGER { $$ = $1;  }  // integer
+  PLUS single_expression {  }
+| single_expression XOR single_expression { }
+| NOT single_expression { }
+| single_expression MOD single_expression { }
+| single_expression POW single_expression { }
+| ABS single_expression { }
+| LEFT_PARENTHESIS expression RIGHT_PARENTHESIS {}
+| NUM_REAL { } //real
+| NUM_INTEGER {   }  // integer
 | designator {}
-| function_call {  $$ = $1;}
+| function_call {}
 ;
 
 designator:

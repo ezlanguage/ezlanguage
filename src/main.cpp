@@ -5,12 +5,15 @@
 #include <vector>
 #include <algorithm>
 #include <fstream>
+#include "./modules/ScopeHashTable.h"
 
 using namespace std;
 
 extern FILE* yyin;
 extern int yyparse();
 extern FILE* yyout;
+extern ScopeHashTable symbolTable;
+
 
 //FLAGS
 static int verbose_flag;
@@ -116,6 +119,8 @@ void parse_to_cpp(vector<char*> fic_ezl, string &input_files){
             else{
                 // creation des fichiers cpp
                 string fichier_tmp = string(fic_ezl[i]);
+
+                symbolTable = ScopeHashTable(100);
 
                 fichier_tmp = fichier_tmp.substr(fichier_tmp.find_last_of("/")+1, fichier_tmp.find_last_of(".") - fichier_tmp.find_last_of("/"));
                 fichier_tmp +="cpp";

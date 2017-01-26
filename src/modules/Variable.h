@@ -4,7 +4,7 @@
 #include "HashElement.h"
 #include "Node.h"
 
-class variable : public hashElement, public Node {
+class Variable : public HashElement, public Node {
 private:
   
   std::string _type;
@@ -32,7 +32,6 @@ public:
    * Set the identifier and the type by those passed as parameters
    * @param i : id of the variable
    * @param t : type of the variable
-   * @param s : scope of the variable
    * @param c : if the variable is const
    * @author Johan Defaye
    */
@@ -45,6 +44,12 @@ public:
    */
   Variable(const Variable & v);
   
+
+  /**
+   * Default destructor
+   * @author Johan Defaye
+   */
+  ~Variable();
   
   
   /* * * * * * * * * * * * * *

@@ -18,7 +18,6 @@ public:
     Node(Node* left, Node* right);
     ~Node();
 
-    virtual string translate() =0; // this function will allow the translation of the nodes's tree into c++ instructions
     Node * get_left_son() const;
     Node * get_right_son() const;
 	void setLeftSon(Node *son);
