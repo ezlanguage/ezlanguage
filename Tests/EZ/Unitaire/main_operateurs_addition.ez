@@ -1,3 +1,7 @@
+/*
+* Par Morgane Troysi
+*/
+
 program main_operateurs_addition
 
 procedure main_operateurs_addition ()
