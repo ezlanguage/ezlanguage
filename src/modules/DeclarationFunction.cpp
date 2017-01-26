@@ -3,10 +3,10 @@
 #include "String_addon.h"
 
 DeclarationFunction::DeclarationFunction(std::string name, Node* arguments, std::string type, Node* instructions, std::string return_variable)
-    :function_name(name), return_type(type) {
+    :function_name(name), return_type(type), return_variable(return_variable) {
 
     this->setArguments(arguments);
-    this->set_left_son(instructions);
+    this->setLeftSon(instructions);
 }
 
 std::string DeclarationFunction::translate() {

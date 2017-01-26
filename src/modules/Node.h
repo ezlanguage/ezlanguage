@@ -11,9 +11,9 @@ using namespace std;
  */
 class Node {
 protected:
-	string name;
-	Node* left_son;
-	Node* right_son;
+    string name;
+    Node* left_son;
+    Node* right_son;
 
 public:
     /**
@@ -28,6 +28,13 @@ public:
     Node(const std::string &name);
 
     /**
+     * @brief Constructor with nodes
+     * @param left : pointer to the left son
+     * @param right : pointer to the right son
+     */
+    Node(Node* left, Node* right);
+
+    /**
      * @author ROUINEB Hamza
      * The destructor should be virtual so it could be called in inner classes !
      * & don't forget to delete the pointers
@@ -37,9 +44,6 @@ public:
     /**
      * @brief getter on left son
      */
-    Node(Node* left, Node* right);
-    ~Node();
-
     Node * get_left_son() const;
 
     /**
@@ -67,7 +71,7 @@ public:
      * All subclasses, must reimplement this method so that the translation corresponds
      * to their specifications, specificities and own values
      */
-     virtual std::string translate() const =0; // this function will allow the translation of the nodes's tree into c++ instructions*
+    std::string translate(); // this function will allow the translation of the nodes's tree into c++ instructions*
 
 };
 

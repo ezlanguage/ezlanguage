@@ -13,6 +13,9 @@
 #include "../src/modules/Variable.h"
 #include "../src/modules/Function.h"
 #include "../src/modules/ScopeHashTable.h"
+#include "../src/modules/DeclarationProcedure.h"
+#include "../src/modules/DeclarationFunction.h"
+
 //#include "global.h"
 
 #define YYERROR_VERBOSE
@@ -34,7 +37,7 @@ extern ScopeHashTable symbolTable;
 %token<reel_value>	NUM_REAL			// REEL
 %token<texte>	NAME RETOUR	STRING			// NOM
 %token	COMMA  DEGRE POURCENT DIESE POINT QUOTE		// Caractères
-%token TYPE_INTEGER TYPE_REAL TYPE_STRING TYPE_BOOLEAN			// variables type
+%token<texte> TYPE_INTEGER TYPE_REAL TYPE_STRING TYPE_BOOLEAN			// variables typeVar
 %token  EGAL NE LT LE GT GE PLUS MINUS MULT DIVISE
 %token	LEFT_PARENTHESIS RIGHT_PARENTHESIS LEFT_ACCOLADE RIGHT_ACCOLADE LEFT_BRACKET RIGHT_BRACKET FIN BACK_LINE	// Special Characters
 %token CONST  LOCAL  GLOBAL  IS  ARE 		      		         // variables declaration
@@ -51,11 +54,11 @@ extern ScopeHashTable symbolTable;
 %left PLUS MINUS EGAL
 %left NE LT LE GT GE MULT DIVISE AND OR XOR NOT MOD POW ABS		// Operators
 
+%type<texte> typeVar
 %type<arbre> expression designator single_expression  statement_sequence function_call
 %type<arbre> next_line  function procedure  string
 %type<arbre> ROOT declarations_list declaration_variables declaration_methods variable_with_scope variable_without_scope
 %type<vecString> liste_argument
-%type<texte> type
 
 %start ROOT
 %%
@@ -88,31 +91,45 @@ declarations_list:
 ;
 
 declaration_methods:
+ { $$ = new Node();}
 | declaration_methods function next_line { $$ = new Node($1,$2);}
 | declaration_methods procedure next_line { $$ = new Node($1,$2);}
 ;
 
 declaration_variables:
+ { $$ = new Node();}
 | declaration_variables   variable_with_scope {$$ = new Node($1,$2);}
 | declaration_variables   variable_without_scope {$$ = new Node($1,$2);}
 ;
 
 variable_without_scope:
-     NAME IS type next_line { $$ = new Variable();}
-|    NAME noms ARE type next_line { $$ = new Variable(); }
+     NAME IS typeVar next_line { $$ = new Variable();}
+|    NAME noms ARE typeVar next_line { $$ = new Variable(); }
 ;
 
 variable_with_scope:
-    portee NAME IS type next_line { $$ = new Variable();  }
-|   portee NAME noms ARE type next_line { $$ = new Variable();  }
+    portee NAME IS typeVar next_line { $$ = new Variable();  }
+|   portee NAME noms ARE typeVar next_line { $$ = new Variable();  }
 ;
 
 function:
-FUNCTION NAME LEFT_PARENTHESIS liste_argument RIGHT_PARENTHESIS RETURN type next_line statement_sequence RETURN expression next_line END next_endfunction{ printf( "declaration d'une fonction \n");}
+FUNCTION NAME LEFT_PARENTHESIS liste_argument { symbolTable.incScope(); }  RIGHT_PARENTHESIS RETURN typeVar next_line statement_sequence RETURN expression next_line END next_endfunction
+		{
+			DeclarationFunction *f = new DeclarationFunction($2,NULL,$8,$10,"blabla");
+			$$ = f;
+			//$$ = new Node();
+			symbolTable.decScope();
+		}
 ;
 
 procedure:
-PROCEDURE NAME LEFT_PARENTHESIS liste_argument RIGHT_PARENTHESIS next_line statement_sequence END next_endprocedure {cout << "Declaration de la procedure " << $2 << endl;}
+PROCEDURE NAME LEFT_PARENTHESIS liste_argument { symbolTable.incScope(); } RIGHT_PARENTHESIS next_line statement_sequence  END next_endprocedure 
+		{
+			DeclarationProcedure *f = new DeclarationProcedure($2,NULL,$8);
+			$$ = f;
+			//$$ = new Node();
+			symbolTable.decScope();
+		}
 ;
 
 next_endprocedure:
@@ -148,27 +165,18 @@ next_endwhile:
 next_endrepeat:
 /* empty */
 | REPEAT {}
-
-PROCEDURE NAME LEFT_PARENTHESIS liste_argument { symbolTable.incScope(); } RIGHT_PARENTHESIS next_line statement_sequence  ENDPROCEDURE
-		{
-
-			Function *f = new Function($2,vector<string>(0),"","");
-			f->setLeftSon($7);
-			$$ = f;
-			//$$ = new Node();
-			symbolTable.decScope();
-		}
 ;
 
+
 statement_sequence:
- /*empty */
+ /*empty */  { $$ = new Node();}
 | statement_sequence statement{ }
 ;
 
 liste_argument:
  	 { vector<Variable> v; $$ = v;}
- | NAME IS type { vector<Variable> v; v.push_back(Variable($1,$3)); $$ = v;}
- | NAME IS type COMMA liste_argument { $5.push_back(Variable($1,$3));
+ | NAME IS typeVar { vector<Variable> v; v.push_back(Variable($1,$3)); $$ = v;}
+ | NAME IS typeVar COMMA liste_argument { $5.push_back(Variable($1,$3));
  										$$ = $5; }
 ;
 
@@ -220,11 +228,11 @@ portee:
 | GLOBAL {}
 ;
 
-type:
-  TYPE_INTEGER { }
-| TYPE_REAL   { } 
-| TYPE_STRING  { } 
-| TYPE_BOOLEAN  { }
+typeVar:
+  TYPE_INTEGER { $$ = "int";}
+| TYPE_REAL   { $$ = "real";} 
+| TYPE_STRING  { $$ = "string";} 
+| TYPE_BOOLEAN  { $$ = "bool";}
 ;
 
 noms:
@@ -245,35 +253,34 @@ string :
  STRING  { }
 ;
 
-//For  those  rules in comment , the corresponding definition must be written by the C++ team because they (rules) have not effect.
 expression:
-  single_expression { }
-| expression EGAL EGAL expression {  }
-| expression NE expression {}
-| expression LT expression {  }
-| expression LE expression { }
-| expression GT expression {}
-| expression GE expression { }
-| expression PLUS expression { }
-| expression MINUS expression { }
-| expression MULT expression {}
-| expression DIVISE expression { }
-| expression AND AND expression { }
-| expression OR OR expression { }
+  single_expression {  $$ = new Node();}
+| expression EGAL EGAL expression { $$ = new Node(); }
+| expression NE expression {$$ = new Node();}
+| expression LT expression { $$ = new Node(); }
+| expression LE expression { $$ = new Node();}
+| expression GT expression {$$ = new Node();}
+| expression GE expression { $$ = new Node();}
+| expression PLUS expression {$$ = new Node();}
+| expression MINUS expression { $$ = new Node();}
+| expression MULT expression {$$ = new Node();}
+| expression DIVISE expression {$$ = new Node(); }
+| expression AND AND expression { $$ = new Node();}
+| expression OR OR expression {$$ = new Node(); }
 ;
 
 single_expression:
-  PLUS single_expression {  }
-| single_expression XOR single_expression { }
-| NOT single_expression { }
-| single_expression MOD single_expression { }
-| single_expression POW single_expression { }
-| ABS single_expression { }
-| LEFT_PARENTHESIS expression RIGHT_PARENTHESIS {}
-| NUM_REAL { } //real
-| NUM_INTEGER {   }  // integer
-| designator {}
-| function_call {}
+  PLUS single_expression { $$ = new Node(); }
+| single_expression XOR single_expression { $$ = new Node();}
+| NOT single_expression { $$ = new Node();}
+| single_expression MOD single_expression { $$ = new Node();}
+| single_expression POW single_expression { $$ = new Node();}
+| ABS single_expression {$$ = new Node(); }
+| LEFT_PARENTHESIS expression RIGHT_PARENTHESIS {$$ = new Node();}
+| NUM_REAL {$$ = new Node(); } //real
+| NUM_INTEGER {  $$ = new Node(); }  // integer
+| designator {$$ = new Node();}
+| function_call {$$ = new Node();}
 ;
 
 designator:

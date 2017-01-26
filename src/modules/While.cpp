@@ -4,8 +4,8 @@
 
 While::While(Condition* while_cond, Node* while_left_son, Node* while_right_son)
     :Iterative_instruction(while_cond){
-    set_left_son(while_left_son);
-    set_right_son(while_right_son);
+    setLeftSon(while_left_son);
+    setRightSon(while_right_son);
 }
 
 std::string While::translate() {

@@ -7,9 +7,6 @@
 #include "./modules/ScopeHashTable.h"
 #include <vector>
 
-    Node* arbre;
-    vector<Variable> vecString;
-
 /**
  * @struct s_mon_type used to exchange value between flex and bison during parsing
  * @authors Valérian De Leeuw, Florentin Noël
@@ -28,7 +25,6 @@ typedef struct s_mon_type {
 
 #define YYSTYPE mon_type
 extern YYSTYPE yylval;
-extern ScopeHashTable symbolTable;
 
 
 #endif

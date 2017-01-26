@@ -6,7 +6,7 @@ DeclarationProcedure::DeclarationProcedure(std::string name, Node *args, Node* i
     : procedure_name(name){
 
     this->setArguments(args);
-    this->set_left_son(instructions);
+    this->setLeftSon(instructions);
 }
 
 std::string DeclarationProcedure::translate() {

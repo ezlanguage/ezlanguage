@@ -4,8 +4,8 @@
 
 Repeat::Repeat(Condition* repeat_cond, Node* repeat_left_son, Node* repeat_right_son)
         :Iterative_instruction(repeat_cond){
-    this->set_left_son(repeat_left_son);
-    this->set_right_son(repeat_right_son);
+    this->setLeftSon(repeat_left_son);
+    this->setRightSon(repeat_right_son);
 }
 
 std::string Repeat::translate() {
