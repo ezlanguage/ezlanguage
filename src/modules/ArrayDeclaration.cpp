@@ -39,7 +39,7 @@ void ArrayDeclaration::set_size(int s){
 	size=s;
 }
 
-string ArrayDeclaration::translate() {
+string ArrayDeclaration::translate() const{
 	string result="";
 	if(size!=0) {
 		result = var->get_type()+" "+var->get_id()+"["+std::to_string(size)+"]";
