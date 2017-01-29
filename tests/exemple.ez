@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 class A
 begin
 // non static
@@ -9,6 +10,10 @@ begin
   shared procedure f2() 
  end procedure
 end class
+=======
+//program person;
+// petit programme de test
+>>>>>>> compilateur
 
 // function main
 program main
@@ -20,3 +25,18 @@ program main
  A.var2 = 1;
  A.f2();
 
+<<<<<<< HEAD
+=======
+
+when 5 +6 is
+	case b==8
+		 print "ok" 
+	end case
+	case k < 8
+		 print 5
+	end case
+	default
+		x = 8 * 9
+	end case
+end when
+>>>>>>> compilateur

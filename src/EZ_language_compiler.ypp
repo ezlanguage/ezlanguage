@@ -5,7 +5,7 @@
 #include <iostream>
 #include <list>
 #include <math.h> /* fmod , pow ... */
-#include <cmath>
+#include <cmath> /* fabs */
 
 #include "../src/global.h"	 // we start from ../obj because it's important
 #include "../src/main.cpp"	 // we start from ../obj because it's important
@@ -40,7 +40,7 @@ extern int yylineno;
 %token FOR IN STEP ENDFOR
 %token FUNCTION PROCEDURE RETURN	 				 // functions
 %token PRINT	
-%token BEGINN END						       // can't use  'BEGIN'   
+%token BEGINN END						       // can't use  'BEGIN'
 %token END_OF_FILE
 %token CLASS PROGRAM MAIN DESTRUCT					//class
 
@@ -145,6 +145,7 @@ next_endclass:
 | CLASS {}
 ;
 
+
 next_endprocedure:
 /* emplty */
 | PROCEDURE {}
@@ -228,7 +229,7 @@ statement:
 | declaration_methods {}
 | destruct {}
 | printing {}
-| overloading {} 
+| overloading {}
 | IF expression DO statement_sequence ELSE statement_sequence END next_endif { printf("SI_SINON_ALORS \n"); }
 | IF expression DO statement_sequence END next_endif { printf("SI   ALORS \n"); }
 | WHEN expression IS next_line whenbody whendefault END next_endwhen {  printf("when .. case .. \n"); }
@@ -333,7 +334,6 @@ single_expression:
 | NUM_INTEGER { $$ = $1;  }  // integer
 | designator {}
 | function_call {  $$ = $1;}
-
 ;
 
 designator:

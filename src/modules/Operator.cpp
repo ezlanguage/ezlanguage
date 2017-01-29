@@ -24,15 +24,15 @@ string Operator::translate() {
             switch(ope_nb){
                 case UNARY:
                     //Unary operator
-                    if(ope == "not"){res= "!" + this->left_son->translate();} //TODO left son or right son here ?
+                    if(ope == "not"){res= "!" + getOperande_1(); }
                     else {};//unknown operator
                     break;
 
                 case BINARY:
                     //Binary operators
-                    if(ope == "and"){res= this->left_son->translate() + "&&" + this->right_son->translate();} else
-                    if(ope == "or"){res= this->left_son->translate() + "||" + this->right_son->translate();} else
-                    if(ope == "xor"){res= this->left_son->translate() + "^" + this->right_son->translate();}
+                    if(ope == "and"){res= getOperande_1(); + "&&" + getOperande_2(); } else
+                    if(ope == "or"){res= getOperande_1(); + "||" + getOperande_2(); } else
+                    if(ope == "xor"){res= getOperande_1(); + "^" + getOperande_2(); }
                     else {};//unknown operator
 
                     break;
@@ -48,18 +48,19 @@ string Operator::translate() {
             switch(ope_nb){
                 case UNARY:
                     //Unary operator
-                    if(ope == "-"){res= "-" + this->left_son->translate();} //TODO left son or right son to use "-a" ?
+                    if(ope == "-"){res= "-" + getOperande_1(); }
+                    if(ope == "abs"){res= "abs " + getOperande_1(); }
                     else {};//unknown operator
                     break;
 
                 case BINARY:
                     //Binary operator
-                    if(ope == "-"){res= this->left_son->translate() + "-" + this->right_son->translate();} else
-                    if(ope == "+"){res= this->left_son->translate() + "+" + this->right_son->translate();} else
-                    if(ope == "*"){res= this->left_son->translate() + "*" + this->right_son->translate();} else
-                    if(ope == "/"){res= this->left_son->translate() + "/" + this->right_son->translate();} else
-                    if(ope == "mod"){res= this->left_son->translate() + "%" + this->right_son->translate();} else
-                    if(ope == "pow"){res= this->left_son->translate() + "pow" + this->right_son->translate();}
+                    if(ope == "-"){res= getOperande_1() + "-" + getOperande_2();} else
+                    if(ope == "+"){res= getOperande_1() + "+" + getOperande_2();} else
+                    if(ope == "*"){res= getOperande_1() + "*" + getOperande_2();} else
+                    if(ope == "/"){res= getOperande_1() + "/" + getOperande_2();} else
+                    if(ope == "mod"){res= getOperande_1() + "%" + getOperande_2();} else
+                    if(ope == "pow"){res= getOperande_1() + "pow" + getOperande_2();}
                     else {};//unknown operator
                     break;
 
@@ -69,34 +70,35 @@ string Operator::translate() {
             }
             break;
 
-        //Allocation's operators (=, +=, -=, *=, /=)
+        //Allocation's operators (=, +=, -=, *=, /=, .)
         case ALLOCATION:
             cout << "Operator's type : allocation" << endl;
-            if(ope == "="){res= this->left_son->translate() + "=" + this->right_son->translate();} else
-            if(ope == "+="){res= this->left_son->translate() + "+=" + this->right_son->translate();} else
-            if(ope == "-"){res= this->left_son->translate() + "-=" + this->right_son->translate();} else
-            if(ope == "*="){res= this->left_son->translate() + "*=" + this->right_son->translate();} else
-            if(ope == "/="){res= this->left_son->translate() + "/=" + this->right_son->translate();}
+            if(ope == "="){res= getOperande_1() + "= " + getOperande_2();} else
+            if(ope == "+="){res= getOperande_1() + "+= " + getOperande_2();} else
+            if(ope == "-"){res= getOperande_1() + "-= " + getOperande_2();} else
+            if(ope == "*="){res= getOperande_1() + "*= " + getOperande_2();} else
+            if(ope == "/="){res= getOperande_1() + "/= " + getOperande_2();} else
+            if(ope == "."){res= getOperande_1() + " + " + getOperande_2();}
             else {};//unknown operator
             break;
 
         //Comparison's operators (==, !=, <, >, <=, >=)
         case COMPARISON:
             cout << "Operator's type : comparison" << endl;
-            if(ope == "=="){res= this->left_son->translate() + "==" + this->right_son->translate();} else
-            if(ope == "!="){res= this->left_son->translate() + "!=" + this->right_son->translate();} else
-            if(ope == "<"){res= this->left_son->translate() + "<" + this->right_son->translate();} else
-            if(ope == ">"){res= this->left_son->translate() + ">" + this->right_son->translate();} else
-            if(ope == "<="){res= this->left_son->translate() + "<=" + this->right_son->translate();} else
-            if(ope == ">="){res= this->left_son->translate() + ">=" + this->right_son->translate();}
+            if(ope == "=="){res= getOperande_1() + " == " + getOperande_2();} else
+            if(ope == "!="){res= getOperande_1() + " != " + getOperande_2();} else
+            if(ope == "<"){res= getOperande_1() + " < " + getOperande_2();} else
+            if(ope == ">"){res= getOperande_1() + " > " + getOperande_2();} else
+            if(ope == "<="){res= getOperande_1() + " <= " + getOperande_2();} else
+            if(ope == ">="){res= getOperande_1() + " >= " + getOperande_2();}
             else {};//unknown operator
             break;
 
         //Increment operators (a++, ++a, a--, --a)
         case INCREMENT:
             cout << "Operator's type : increment" << endl;
-            if(ope == "++"){res= "++" + this->left_son->translate();} else
-            if(ope == "--"){res= "--" + this->left_son->translate();} else {};//unknown operator
+            if(ope == "++"){res= "++" + getOperande_1();} else
+            if(ope == "--"){res= "--" + getOperande_1();} else {};//unknown operator
             break;
     }
 
