@@ -42,7 +42,7 @@ extern int yylineno;
 %token PRINT	
 %token BEGINN END						       // can't use  'BEGIN'
 %token END_OF_FILE
-%token CLASS PROGRAM MAIN DESTRUCT					//class
+%token CLASS PROGRAM  DESTRUCT					//class
 
 %left PLUS MINUS EGAL
 %left NE LT LE GT GE MULT DIVISE AND OR XOR NOT MOD POW ABS OPERATOR		// Operators
@@ -54,7 +54,7 @@ extern int yylineno;
 %%
 
 ROOT:
-  next_line_null declaration_class PROGRAM MAIN next_line declaration_variables  statement_sequence END_OF_FILE { cout << "Fichier parsé." << endl; return 0;}
+  next_line_null declaration_class PROGRAM NAME next_line declaration_variables  statement_sequence END_OF_FILE { cout << "Fichier parsé." << endl; return 0;}
 ;
 
 next_line_null: /* can be empty */
@@ -86,22 +86,34 @@ class:
 CLASS NAME next_line BEGINN next_line  statement_sequence END next_endclass { cout << "declaration de la class" << $2 << endl; }
 ;
 
+
+start_with_name:
+   variable_without_scope  next_line { }
+|  affectation  next_line { } 
+|  function_call next_line {}
+;
+
 variable_without_scope:
-     NAME IS shared type next_line { cout << "Declaration de la variable1 " << $1 << endl; }
-|    NAME noms ARE shared type next_line { cout << "Declaration des variables1 "<< $1 << endl; }
-|    affectation  next_line { } 
-|    function_call next_line {}
+     NAME IS shared type affect  { cout << "Declaration de la variable1 " << $1 << endl; }
+|    NAME noms ARE shared type affect  { cout << "Declaration des variables1 "<< $1 << endl; }
+|    declaration_construct  { cout << " declaration de contructeur " << endl ;}
 ;
 
 variable_with_scope:
-    portee NAME IS shared type next_line { cout << "Declaration de la variable2 " << $2 << endl; }
-|   portee NAME noms ARE shared type next_line { cout << "Declaration des variables2 "<< $2 << endl; }
+    portee NAME IS shared type affect next_line { cout << "Declaration de la variable2 " << $2 << endl; }
+|   portee NAME noms ARE shared type affect next_line { cout << "Declaration des variables2 "<< $2 << endl; }
 ;
 
 declaration_construct:
    NAME IS NAME {}  // ex: c is Maclasse
 |  NAME IS NAME LEFT_PARENTHESIS class_liste_argument RIGHT_PARENTHESIS {} // c is MaClass(val1,va2)
 |  NAME IS NAME LEFT_PARENTHESIS class_liste_argument_with_assignment RIGHT_PARENTHESIS {} // p is Person(nom="nom")
+;
+
+affect:
+/* No assigned value */
+| EGAL expression { }
+| EGAL string { }
 ;
 
 shared:
@@ -223,9 +235,8 @@ operators:
 // 		---------------------------------------------------------------------
 statement:
   next_line
-| declaration_construct { cout << "declaration de constructeur" << endl;} 
 | variable_with_scope {} 
-| variable_without_scope {} 
+| start_with_name {}  // variables - functions - construct
 | declaration_methods {}
 | destruct {}
 | printing {}
