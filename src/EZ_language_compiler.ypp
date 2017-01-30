@@ -54,7 +54,7 @@ extern int yylineno;
 %%
 
 ROOT:
-  next_line_null declaration_class PROGRAM NAME next_line declaration_variables  statement_sequence END_OF_FILE { cout << "Fichier parsé." << endl; return 0;}
+  next_line_null declaration_class PROGRAM NAME next_line declaration_class  statement_sequence END_OF_FILE { cout << "Fichier parsé." << endl; return 0;} 
 ;
 
 next_line_null: /* can be empty */
@@ -66,7 +66,7 @@ next_line:  // one or several new line
 ;
 
 
-declaration_class:
+declaration_class: 
 | declaration_class class next_line {} 
 ;
 
@@ -76,14 +76,9 @@ declaration_methods:
 | declaration_methods procedure next_line {}
 ;
 
-declaration_variables:
-/* empty */
-| declaration_variables   variable_with_scope {}
-| declaration_variables   variable_without_scope {}
-;
 
 class:
-CLASS NAME next_line BEGINN next_line  statement_sequence END next_endclass { cout << "declaration de la class" << $2 << endl; }
+CLASS NAME next_line BEGINN next_line statement_sequence END next_endclass { cout << "declaration de la class" << $2 << endl; }
 ;
 
 
@@ -100,8 +95,8 @@ variable_without_scope:
 ;
 
 variable_with_scope:
-    portee NAME IS shared type affect next_line { cout << "Declaration de la variable2 " << $2 << endl; }
-|   portee NAME noms ARE shared type affect next_line { cout << "Declaration des variables2 "<< $2 << endl; }
+    portee NAME IS shared type affect next_line { cout << "= Declaration de la variable avec portee " << $2 << endl; }
+|   portee NAME noms ARE shared type next_line { cout << "  Declaration des variables  avec portee "<< $2 << endl; }
 ;
 
 declaration_construct:
@@ -145,7 +140,7 @@ class_liste_argument_with_assignment:
 
 
 function:
-shared FUNCTION NAME LEFT_PARENTHESIS liste_argument RIGHT_PARENTHESIS RETURN type next_line statement_sequence RETURN expression next_line END next_endfunction{  cout << "declaration de la fonction" << $3 << endl;}
+shared FUNCTION NAME LEFT_PARENTHESIS liste_argument RIGHT_PARENTHESIS RETURN type next_line  BEGINN  next_line statement_sequence RETURN expression next_line END next_endfunction{  cout << "declaration de la fonction" << $3 << endl;}
 ;
 
 procedure:
@@ -235,7 +230,7 @@ operators:
 // 		---------------------------------------------------------------------
 statement:
   next_line
-| variable_with_scope {} 
+| variable_with_scope  {} 
 | start_with_name {}  // variables - functions - construct
 | declaration_methods {}
 | destruct {}
@@ -304,12 +299,12 @@ noms:
 ;
 
 whenbody: /* whenbody can't be empty */
-  whenbody CASE expression statement_sequence END next_endcase next_line{}
-| CASE  expression next_line statement_sequence next_line END next_endcase next_line {}
+  CASE  expression next_line statement_sequence  END next_endcase next_line  { cout << "case body" << endl; }
+| CASE  expression next_line statement_sequence  END next_endcase next_line whenbody { cout << "case body" << endl;}
 ;
 
 whendefault: /* May not be specified */
-| DEFAULT statement_sequence END next_endcase next_line{}
+| DEFAULT next_line statement_sequence  END next_endcase next_line{}
 ;
 
 string :
