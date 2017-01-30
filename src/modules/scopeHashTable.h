@@ -107,8 +107,16 @@ class scopeHashTable : public hashTable<variable> {
      * @author Johan Defaye
      */
       std::string get_type(const std::string & id, unsigned int s) const;
-    
-  
+      
+      
+    /**
+     * Test if an element is in the hash table
+     * @param id : identifier
+     * @return boolean
+     * @author Johan Defaye
+     */
+      bool contains(const std::string & id) const;
+
 };
 
 #endif

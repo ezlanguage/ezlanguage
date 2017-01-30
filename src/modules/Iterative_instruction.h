@@ -1,30 +1,82 @@
 #ifndef ITERATIVE_INSTRUCTION_H
 #define ITERATIVE_INSTRUCTION_H
-// ie -> add by Ismail ELFAQIR
-#include <vector> // <- ie
-#include "Node.h" // <- ie
-#include "Instruction.h"
-#include "Condition.h"  // <- ie
-/*
-I think maybe this class will be abstuct  and well not define translate function,
-because they are classes how herite from Iterative_instruction like (repeat) and they have there own translation method
-*/
-//boucles : forall, foreach, while, repeat
+
+#include "Node.h" 
+#include "Condition.h"
+
+/**
+ * @brief 
+ * @author : Ismail ELFAQIR
+ * 
+ * loops : forall, foreach, while, repeat
+ */
 class Iterative_instruction :
-        public Node /*public Instruction*/  { // <- ie : Iterative_instruction can't herite from Instruction because the bloc for or while can have multiple instructions
+        public Node /*public Instruction*/  { // <-  Iterative_instruction can't herite from Instruction because the bloc for or while can have multiple instructions
 protected:
-	std::vector<Instruction> instructions; // <- ie all instructions
-	Condition condition; // <- ie  the Condition
-	//int Iterative_instruction_type;
+	Condition *condition; // condition if it's an for or while 
 public:
-	Iterative_instruction(); //<- ie
-	Iterative_instruction(const Condition &c, const vector<Instruction> &i);  //<- ie
-	Iterative_instruction(const Iterative_instruction &i);  //<- ie
-	virtual ~Iterative_instruction(); //<- ie
-	const Condition & getCondition() const; //<- ie
-	const std::vector<Instruction> & getInstructions() const; //<- ie
-	void setCondition(const Condition &c); //<- ie
-	void setInstructions(std::vector<Instruction> &i); //<- ie
-    std::string translate();
+	/* * * * * * * * *
+	* CONSTRUCTORS  *
+	* * * * * * * * */
+
+
+	/**
+	* Default constructor
+	* Set condition to NULL 
+	* @author Ismail ELFAQIR
+	*/
+	Iterative_instruction(); 
+
+	/**
+	* Default constructor
+	* Set the condition to the parameter passed to the constructor
+	* @param c : pointer to the condition
+	* @author Ismail ELFAQIR
+	*/
+	Iterative_instruction(Condition *c);
+
+	/**
+	* Copy constructor
+	* @param c : the Iterative_instruction
+	* @author Ismail ELFAQIR
+	*/
+	Iterative_instruction(const Iterative_instruction &i);
+
+	/**
+	* Destructor
+	* @author Ismail ELFAQIR
+	*/
+	virtual ~Iterative_instruction();
+
+	/* * * * * * * * * * * * * *
+	* ACCESSORS  AND MUTATORS *
+	* * * * * * * * * * * * * */
+	
+	/**
+	* getter of the condition
+	* @author Ismail ELFAQIR
+	*/	
+	Condition * getCondition() const; 
+
+	/**
+	* setter of condition
+	* @param c : pointer of the condition
+	* @author Ismail ELFAQIR
+	*/
+	void setCondition(Condition *c);
+
+	/* * * * * * * *
+	* Translation  *
+	* * * * * * * **/
+	
+	/**
+	 * @brief Translation of the instruction into it's C++ counterpart
+	 * @return a string containing the C++ code of the instruction
+	 * 
+	 * The instance will be translated with it's C++ equivalent using its informations
+	 * All subclasses, must reimplement this method so that the translation corresponds
+	 * to their specifications, specificities and own values
+	 */
+    	virtual std::string translate() const=0;
 };
 #endif
