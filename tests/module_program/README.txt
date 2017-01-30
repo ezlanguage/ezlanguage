@@ -1,1 +1,1 @@
-Hello world !
+Le module person est utilisé dans programme "program.ez"
