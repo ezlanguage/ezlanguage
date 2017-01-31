@@ -44,4 +44,6 @@ begin
   max = v.max(age)
 
   print "maximum of ages = ", max
+
 end
+
