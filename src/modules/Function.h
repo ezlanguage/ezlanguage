@@ -60,43 +60,43 @@ class Function : public HashElement {
   
   
   /**
-   * Give the parameters of the function
+   * @brief Give the parameters of the function
    * @return vector<string>
    * @author Johan Defaye
    */
   std::vector<std::string> get_param() const { return _parameters;}
   
   /**
-   * Give the returned type of the function
+   * @brief Give the returned type of the function
    * @return string
    * @author Johan Defaye
    */
   std::string get_returnType() const { return _returnType;}
   
   /**
-   * Give the class which contains the function
+   * @brief Give the class which contains the function
    * Return the empty string if it's not a method
    * @return string
    * @author Johan Defaye
    */
   std::string get_class() const { return _class;}
   
-    /**
-   * Set the parameters of the function
+  /**
+   * @brief Set the parameters of the function
    * @param param : parameters of the function
    * @author Johan Defaye
    */
    void set_param(const std::vector<std::string> & param) { _parameters = param;}
   
   /**
-   * Set the returned type of the function
+   * @brief Set the returned type of the function
    * @param returnType : type of the function's returned value
    * @author Johan Defaye
    */
   void set_returnType(const std::string & returnType) {_returnType = returnType;}
   
   /**
-   * Set the class which contains the function
+   * @brief Set the class which contains the function
    * Return the empty string if it's not a method
    * @param className : name of a class
    * @author Johan Defaye
@@ -111,7 +111,7 @@ class Function : public HashElement {
   
   
   /**
-   * Test if the function belong to the class whose name is passed as parameter
+   * @brief Test if the function belong to the class whose name is passed as parameter
    * @param className : name of a class
    * @return boolean
    * @author Johan Defaye
@@ -126,7 +126,7 @@ class Function : public HashElement {
   
   
   /**
-   * Return true if the function given as parameter is the same
+   * @brief Return true if the function given as parameter is the same
    * @param f : another function
    * @return boolean
    * @author Johan Defaye
@@ -134,7 +134,7 @@ class Function : public HashElement {
   bool is_equal(const Function & f) const;
   
   /**
-   * Print the function 
+   * @brief Print the function 
    * @param flux : flux where function will be print 
    * @author Johan Defaye
    */
@@ -148,7 +148,7 @@ class Function : public HashElement {
  * @param f1 : first function
  * @param f2 : second function
  * @return boolean
- * @author Johan Defaye
+ * @author Johan Defa@brief ye
  */
 bool operator==(const Function & f1, const Function & f2);
 
@@ -156,7 +156,7 @@ bool operator!=(const Function & f1, const Function & f2);
 
 
 /** 
- * Display a function
+ * @brief Display a function
  * @param flux : flux where the function will be print 
  * @param f : the function to display
  * @return ostream&

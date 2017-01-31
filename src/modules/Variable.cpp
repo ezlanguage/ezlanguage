@@ -54,10 +54,10 @@ void Variable::print(ostream& flux) const
 
 
 
-ostream& operator<<(ostream& flux, const Variable& v)
+ostream& operator<<(ostream& flux, const Variable& element)
 {
-	v.print(flux);
-	return flux;
+  element.print(flux);
+  return flux;
 }
 
 string Variable::translate(){

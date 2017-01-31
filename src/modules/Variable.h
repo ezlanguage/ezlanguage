@@ -22,24 +22,24 @@ public:
   
   /**
    * Default constructor
-   * Set the identifier and the type of the variable by the empty string
+   * @brief Set the identifier and the type of the Variable by the empty string
    * @author Johan Defaye
    */
   Variable();
   
   /**
    * Constructor with parameters
-   * Set the identifier and the type by those passed as parameters
-   * @param i : id of the variable
-   * @param t : type of the variable
-   * @param c : if the variable is const
+   * @brief Set the identifier and the type by those passed as parameters
+   * @param i : id of the Variable
+   * @param t : type of the Variable
+   * @param c : if the Variable is const
    * @author Johan Defaye
    */
   Variable(const std::string & i, const std::string & t, bool c = false);
   
   /**
    * Copy constructor
-   * @param v : another variable
+   * @param v : another Variable
    * @author Johan Defaye
    */
   Variable(const Variable & v);
@@ -50,7 +50,7 @@ public:
    * @author Johan Defaye
    */
   ~Variable();
-  
+
   
   /* * * * * * * * * * * * * *
    * ACCESSORS  AND MUTATORS *
@@ -58,42 +58,42 @@ public:
   
   
   /**
-   * Give the type
+   * @brief Give the type
    * @return string
    * @author Johan Defaye
    */
   std::string get_type() const {return _type;}
   
   /**
-   * Set the type
+   * @brief Set the type
    * @param s : an identifier
    * @author Johan Defaye
    */
   void set_type(const std::string & t) {_type = t;}
   
   /**
-   * Give the type
+   * @brief Give the type
    * @return unsigned int
    * @author Johan Defaye
    */
   unsigned int get_scope() const {return _scope;}
   
   /**
-   * Set the scope
+   * @brief Set the scope
    * @param s : a scope
    * @author Johan Defaye
    */
   void set_scope(unsigned int s) {_scope = s;}
   
   /**
-   * Return true if the variable is const
+   * @brief Return true if the Variable is const
    * @return bool
    * @author Johan Defaye
    */
    bool is_const() const { return _const;}
    
   /**
-   * Set the _const attribute of the variable
+   * @brief Set the _const attribute of the Variable
    * @param c : const or not
    * @author Johan Defaye
    */
@@ -105,16 +105,16 @@ public:
    * * * * * * * * * * * * */
 
   /**
-   * Return true if the variable given as parameter has the same identifier and the same type
-   * @param v : another variable
+   * @brief Return true if the Variable given as parameter has the same identifier and the same type
+   * @param v : another Variable
    * @return boolean
    * @author Johan Defaye
    */
   bool is_equal(const Variable & v) const;
   
   /**
-   * Print the variable 
-   * @param flux : flux where the variable will be print 
+   * @brief Print the Variable
+   * @param flux : flux where the Variable will be print
    * @author Johan Defaye
    */
   void print(std::ostream & flux) const;
@@ -124,9 +124,9 @@ public:
 
 
 /**
- * Check if two variables are the same
- * @param v1 : first variable
- * @param v2 : second variable
+ * @brief Check if two Variables are the same
+ * @param v1 : first Variable
+ * @param v2 : second Variable
  * @return boolean
  * @author Johan Defaye
  */
@@ -135,13 +135,13 @@ bool operator==(const Variable & v1, const Variable & v2);
 bool operator!=(const Variable & v1, const Variable & v2);
 
 /** 
- * Display a variable
- * @param flux : flux where the variable will be print 
- * @param element : the variable to display
+ * @brief Display a Variable
+ * @param flux : flux where the Variable will be print
+ * @param element : the Variable to display
  * @return std::ostream&
  * @author Johan Defaye
  */
-std::ostream& operator<<(std::ostream &flux, const Variable & v);
+std::ostream& operator<<(std::ostream &flux, const Variable & element);
 
 
 

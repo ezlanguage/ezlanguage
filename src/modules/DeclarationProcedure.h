@@ -2,6 +2,9 @@
 #define DECLARATION_PROCEDURE_H
 
 #include "Node.h"
+#include "Variable.h"
+
+#include <vector>
 
 /**
  * @brief Allows the declaration of procedures
@@ -16,7 +19,7 @@ class DeclarationProcedure
 
 protected:
     std::string procedure_name;
-    Node* arguments;
+    std::vector<Variable> arguments;
 
 public:
     /**
@@ -30,7 +33,7 @@ public:
      * @param args : arguments list of the procedure
      * @param instructions : instructions of the procedure
      */
-    DeclarationProcedure(std::string name, Node* args, Node* instructions);
+    DeclarationProcedure(std::string name, std::vector<Variable> args, Node* instructions);
 
     /**
      * @brief Getter for the procedure's name
@@ -42,7 +45,7 @@ public:
      * @brief Getter for the argument's list
      * @return List of arguments
      */
-    Node* getArguments(){return arguments;}
+    std::vector<Variable> getArguments(){return arguments;}
 
     /**
      * @brief Setter of the procedure's name
@@ -54,7 +57,7 @@ public:
      * @brief Setter of the list of arguments
      * @param arguments : list of the arguments of the function
      */
-    void setArguments(Node* args){arguments= args;}
+    void setArguments(std::vector<Variable> args){arguments= args;}
 
     /**
     * @brief : translate the procedure in C++
