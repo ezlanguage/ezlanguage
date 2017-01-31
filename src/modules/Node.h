@@ -44,12 +44,12 @@ public:
     /**
      * @brief getter on left son
      */
-    Node * get_left_son() const;
+    Node * getLeftSon() const;
 
     /**
      * @brief getter on right son
      */
-    Node * get_right_son() const;
+    Node * getRightSon() const;
 
     /**
      * @brief setter on left son

@@ -18,13 +18,13 @@ std::string While::translate() {
 //    The first instruction of the loop is the left son
 //    The second instruction is the right son of this left son...etc
 //    So here, we just translate the first one
-    res+= "   "+ get_left_son()->translate();
+    res+= "   "+ getLeftSon()->translate();
 
 //    The instructions are translated, the loop closes
     res+= "};";
 
 //    don't forget to launch the translation of the instructions that follow this while
-    if(get_right_son()) res+= get_right_son()->translate();
+    if(getRightSon()) res+= getRightSon()->translate();
 
     return res;
 }

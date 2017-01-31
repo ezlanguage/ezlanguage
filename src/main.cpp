@@ -180,7 +180,7 @@ int main(int argc , char ** argv){
 		//getopt_long recupere l'option ici
 		int option_index = 0;
 		
-		opt = getopt_long(argc, argv, "ho:f:O:w", long_options, &option_index);
+		opt = getopt_long(argc, argv, "ho:f:O:w:v", long_options, &option_index);
 		
 		//fin des options
 		if(opt == -1){

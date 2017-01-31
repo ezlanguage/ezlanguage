@@ -16,14 +16,15 @@
  * faire attention si la variable est constante ou non
  */
 class Declaration :
-        public Node {
+    public Node {
 protected:
-    std::string variable;
     std::string type;
     std::string scope;
     bool isconst;
 
 public:
+    Declaration();
+
     Declaration(std::string, std::string, std::string, bool);
 
     /**

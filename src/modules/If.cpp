@@ -49,12 +49,12 @@ string If::translate() const {
 		/*
 			here the first instruction is in the left_son the other are in his right_son ( of the left_son)
 		*/
-		if(this->get_left_son() != nullptr) {
-			res += this->get_left_son()->translate()+"\n";
-			Node *my_instruction = this->get_left_son()->get_right_son();
+		if(this->getLeftSon() != nullptr) {
+			res += this->getLeftSon()->translate()+"\n";
+			Node *my_instruction = this->getLeftSon()->getRightSon();
 			while(my_instruction != nullptr) {
 				res += my_instruction->translate()+"\n";
-				my_instruction = my_instruction->get_right_son();
+				my_instruction = my_instruction->getRightSon();
 			}			
 		}
 	res+="\n}";

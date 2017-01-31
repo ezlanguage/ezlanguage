@@ -4,18 +4,20 @@
 
 using namespace std;
 
+
+Declaration::Declaration() {}
+
 Declaration::Declaration(string var, string ty, string sco, bool iscon) {
-    name= "Declaration";
-    var = variable;
-    ty = type;
-    sco = scope;
-    iscon = isconst;
+    name =  var;
+    type = ty;
+    scope = sco;
+    isconst = iscon;
 }
 
 string Declaration::translate() {
     string res = "";
     if(isconst){
-        res = res + "const ";
+        res += "const ";
     }
     if(scope == "global"){
         //ne rien ajouter
@@ -36,6 +38,6 @@ string Declaration::translate() {
         //exemple : kinder is chocolate
         res = res + type;
     }
-    res = res + variable+";";
+    res = res + name+";";
     return res;
 }

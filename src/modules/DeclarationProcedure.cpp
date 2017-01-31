@@ -47,9 +47,9 @@ std::string DeclarationProcedure::translate() {
     res+= "){\n";
 
     //translation of the instructions
-    res+= " "+ this->get_left_son()->translate();
+    res+= " "+ this->getLeftSon()->translate();
     res+= "}";
 
-    res= this->get_right_son()->translate();
+    res= this->getRightSon()->translate();
     return res;
 }

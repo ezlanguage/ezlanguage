@@ -48,12 +48,12 @@ std::string DeclarationFunction::translate() {
     res+= getReturnType() + " " + getVariable() + ";";
 
     //translation of the instructions
-    res+= " "+ this->get_left_son()->translate();
+    res+= " "+ this->getLeftSon()->translate();
 
 
     res+= "return " + getVariable() + ";\n";
     res+= "}";
 
-    res= this->get_right_son()->translate();
+    res= this->getRightSon()->translate();
     return res;
 }

@@ -59,7 +59,3 @@ ostream& operator<<(ostream& flux, const Variable& element)
   element.print(flux);
   return flux;
 }
-
-string Variable::translate(){
-	return "traduction variable";
-}

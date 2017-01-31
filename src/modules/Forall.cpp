@@ -15,7 +15,7 @@ string Forall::translate() {
 	//Temporary solution before refactoring indices
 	string i = "indice_" + to_string(imbrication);
 	string res = "for(int " + i + " = " + to_string(ind_begin - 1) + "; " + i + " < " + to_string(ind_end - 1) + "; " + i + " = " + i + "+" + to_string(step) + "){\n";
-	res = res + "\t" + this->get_left_son()->translate() + "\n";
+	res = res + "\t" + this->getLeftSon()->translate() + "\n";
 	res = res + "}";
 	return res;
 }

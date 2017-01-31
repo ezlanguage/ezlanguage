@@ -2,9 +2,8 @@
 #define VARIABLE_H
 
 #include "HashElement.h"
-#include "Node.h"
 
-class Variable : public HashElement, public Node {
+class Variable : public HashElement {
 private:
   
   std::string _type;
@@ -119,7 +118,6 @@ public:
    */
   void print(std::ostream & flux) const;
   
-  string translate();
 };
 
 

@@ -9,6 +9,7 @@ global rr,e are integer
 
  function test() return INTEGER
    x = 5 
+   x = 1 + 2
 return 5+9
 end function
 
@@ -26,7 +27,7 @@ while adam > driss do
 	print "adam m9owd"
 end while
 
-repeat x = x +1
+repeat x = x + 1
 UNTIL 
 	5>B
 END REPEAT

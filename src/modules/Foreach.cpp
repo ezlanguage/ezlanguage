@@ -12,7 +12,7 @@ Foreach::Foreach(string v, string e) {
 
 string Foreach::translate() {
     string res = "for(auto "+element+" : "+vector+"){";
-    res = res + this->get_left_son()->translate();
+    res = res + this->getLeftSon()->translate();
     res = res + "}";
     return res;
 }

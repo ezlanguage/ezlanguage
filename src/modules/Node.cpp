@@ -16,11 +16,11 @@ Node::~Node()
     delete right_son;
 }
 
-Node * Node::get_left_son() const {
+Node * Node::getLeftSon() const {
     return left_son;
 }
 
-Node * Node::get_right_son() const{
+Node * Node::getRightSon() const{
     return right_son;
 }
 
@@ -39,5 +39,5 @@ string Node::translate() {
 		left_translate = left_son->translate();
 	if (right_son != NULL)
 		right_translate = right_son->translate();
-	return "traduction noeud" + left_translate + "\n" + right_translate;
+	return "traduction noeud\n" + left_translate + "\n" + right_translate;
 }
