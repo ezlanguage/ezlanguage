@@ -48,7 +48,7 @@ extern int yylineno;
 %left NE LT LE GT GE MULT DIVISE AND OR XOR NOT MOD POW ABS OPERATOR		// Operators
 
 %type<reel_value> expression single_expression designator statement_sequence function_call
-%type<texte> next_line  function procedure  string operators
+%type<texte>  function procedure  string operators
 
 %start ROOT
 %%
@@ -89,14 +89,18 @@ start_with_name:
 ;
 
 variable_without_scope:
-     NAME IS shared type affect  { cout << "Declaration de la variable1 " << $1 << endl; }
-|    NAME noms ARE shared type affect  { cout << "Declaration des variables1 "<< $1 << endl; }
+     NAME IS  type affect  { cout << "Declaration de la variable1 " << $1 << endl; }
+|    NAME noms ARE  type affect  { cout << "Declaration des variables1 "<< $1 << endl; }
+|    NAME IS SHARED type affect  { cout << "Declaration de la variable1 " << $1 << endl; }
+|    NAME noms ARE SHARED type affect  { cout << "Declaration des variables1 "<< $1 << endl; }
 |    declaration_construct  { cout << " declaration de contructeur " << endl ;}
 ;
 
 variable_with_scope:
-    portee NAME IS shared type affect next_line { cout << "= Declaration de la variable avec portee " << $2 << endl; }
-|   portee NAME noms ARE shared type next_line { cout << "  Declaration des variables  avec portee "<< $2 << endl; }
+    portee NAME IS type affect next_line { cout << "= Declaration de la variable avec portee " << $2 << endl; }
+|   portee NAME noms ARE type next_line { cout << "  Declaration des variables  avec portee "<< $2 << endl; }
+|   portee NAME IS SHARED type affect next_line { cout << "= Declaration de la variable avec portee " << $2 << endl; }
+|   portee NAME noms ARE SHARED type next_line { cout << "  Declaration des variables  avec portee "<< $2 << endl; }
 ;
 
 declaration_construct:
@@ -109,11 +113,6 @@ affect:
 /* No assigned value */
 | EGAL expression { }
 | EGAL string { }
-;
-
-shared:
-/* empty */
-| SHARED { }
 ;
 
 class_liste_argument:
@@ -140,12 +139,15 @@ class_liste_argument_with_assignment:
 
 
 function:
-shared FUNCTION NAME LEFT_PARENTHESIS liste_argument RIGHT_PARENTHESIS RETURN type next_line  BEGINN  next_line statement_sequence RETURN expression next_line END next_endfunction{  cout << "declaration de la fonction" << $3 << endl;}
+SHARED FUNCTION NAME LEFT_PARENTHESIS liste_argument RIGHT_PARENTHESIS RETURN type next_line  BEGINN  next_line statement_sequence RETURN expression next_line END next_endfunction{  cout << "declaration de la fonction" << $3 << endl;}
+| FUNCTION NAME LEFT_PARENTHESIS liste_argument RIGHT_PARENTHESIS RETURN type next_line  BEGINN  next_line statement_sequence RETURN expression next_line END next_endfunction{  cout << "declaration de la fonction" << $2 << endl;}
 ;
 
 procedure:
-shared PROCEDURE NAME LEFT_PARENTHESIS liste_argument RIGHT_PARENTHESIS next_line statement_sequence END next_endprocedure {cout << "Declaration de la procedure " << $3 << endl;}
-|shared PROCEDURE PRINT LEFT_PARENTHESIS  RIGHT_PARENTHESIS next_line statement_sequence END next_endprocedure {cout << "Surcharge de la methode d'affichage \"print\" "  << endl;}
+  PROCEDURE NAME LEFT_PARENTHESIS liste_argument RIGHT_PARENTHESIS next_line statement_sequence END next_endprocedure {cout << "Declaration de la procedure " << $2 << endl;}
+| PROCEDURE PRINT LEFT_PARENTHESIS  RIGHT_PARENTHESIS next_line statement_sequence END next_endprocedure {cout << "Surcharge de la methode d'affichage \"print\" "  << endl;}
+| SHARED PROCEDURE NAME LEFT_PARENTHESIS liste_argument RIGHT_PARENTHESIS next_line statement_sequence END next_endprocedure {cout << "Declaration de la procedure " << $3 << endl;}
+| SHARED PROCEDURE PRINT LEFT_PARENTHESIS  RIGHT_PARENTHESIS next_line statement_sequence END next_endprocedure {cout << "Surcharge de la methode d'affichage \"print\" "  << endl;}
 ;
 
 next_endclass:

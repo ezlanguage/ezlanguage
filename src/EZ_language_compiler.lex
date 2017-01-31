@@ -125,7 +125,7 @@ backLine 	\n
 
 {ID}	{	yylval.texte= yytext;
 	    		return (NAME);
-		}
+	}
 
 
 <<EOF>>     return END_OF_FILE;
