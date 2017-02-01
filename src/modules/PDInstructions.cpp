@@ -7,9 +7,5 @@
 PDInstructions::PDInstructions() {}
 
 PDInstructions::PDInstructions(const std::string &name) : Holder(name, Holder::TYPES::INST) {
-    this->set_right_son(nullptr);
-}
-
-std::string PDInstructions::translate() {
-    return "";
+    this->setRightSon(nullptr);
 }

@@ -54,8 +54,6 @@ public:
 
     void set_type(TYPES type);
 
-    virtual std::string translate() const = 0;
-
     ~Holder();
 
 protected:
