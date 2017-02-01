@@ -43,21 +43,22 @@ extern ScopeHashTable symbolTable;
 %token<texte> TYPE_INTEGER TYPE_REAL TYPE_STRING TYPE_BOOLEAN			// variables typeVar
 %token  EGAL NE LT LE GT GE PLUS MINUS MULT DIVISE
 %token	LEFT_PARENTHESIS RIGHT_PARENTHESIS LEFT_ACCOLADE RIGHT_ACCOLADE LEFT_BRACKET RIGHT_BRACKET FIN BACK_LINE	// Special Characters
-%token<texte> CONST  LOCAL  GLOBAL  IS  ARE 		      		         // variables declaration
-%token IF DO ELSE   						 // if else
+%token<texte> CONST  LOCAL  GLOBAL  IS  ARE SHARED		      		         // variables declaration
+%token IF DO ELSE   						 // if else 
 %token WHEN CASE  DEFAULT ENDWHEN				 // switch case ...
 %token WHILE ENDWHILE							 // while .. do ..
 %token REPEAT UNTIL ENDREPEAT 						 // do .. while ...
 %token FOR IN STEP ENDFOR
-%token END
-%token FUNCTION PROCEDURE RETURN ENDFUNCTION ENDPROCEDURE	 	 // functions
+%token FUNCTION PROCEDURE RETURN	 				 // functions
 %token PRINT
+%token BEGINN END						       // can't use  'BEGIN'
 %token END_OF_FILE
+%token CLASS PROGRAM  DESTRUCT					//class
 
 %left PLUS MINUS EGAL
-%left NE LT LE GT GE MULT DIVISE AND OR XOR NOT MOD POW ABS		// Operators
+%left NE LT LE GT GE MULT DIVISE AND OR XOR NOT MOD POW ABS OPERATOR		// Operators
 
-%type<texte> typeVar
+%type<texte> typeVar operators
 %type<arbre> expression designator single_expression  statement_sequence function_call
 %type<arbre> next_line  function procedure  string
 %type<arbre> ROOT declarations_list declaration_variables declaration_methods variable_with_scope variable_without_scope
@@ -67,6 +68,7 @@ extern ScopeHashTable symbolTable;
 %%
 
 ROOT:
+  next_line_null declaration_class PROGRAM NAME next_line declaration_class  statement_sequence END_OF_FILE { cout << "Fichier parsé." << endl; return 0;}
   next_line_null declarations_list  statement_sequence END_OF_FILE
       {
         Node *p_decl = $2;
@@ -91,6 +93,8 @@ declarations_list:
   /* no declaration */
   declaration_variables  declaration_methods  { $$ = new Node($1,$2);}
 
+declaration_class:
+| declaration_class class next_line {}
 ;
 
 declaration_methods:
@@ -103,19 +107,77 @@ declaration_variables:
  { $$ = new Node();}
 | declaration_variables   variable_with_scope {$$ = new Node($1,$2);}
 | declaration_variables   variable_without_scope {$$ = new Node($1,$2);}
+
+class:
+CLASS NAME next_line BEGINN next_line statement_sequence END next_endclass { cout << "declaration de la class" << $2 << endl; }
 ;
 
+
+start_with_name:
+   variable_without_scope  next_line { }
+|  affectation  next_line { }
+|  function_call next_line {}
+;
+
+variable_without_scope:
+     NAME IS  type affect  { cout << "Declaration de la variable1 " << $1 << endl; }
+|    NAME noms ARE  type affect  { cout << "Declaration des variables1 "<< $1 << endl; }
+|    NAME IS SHARED type affect  { cout << "Declaration de la variable1 " << $1 << endl; }
+|    NAME noms ARE SHARED type affect  { cout << "Declaration des variables1 "<< $1 << endl; }
+|    declaration_construct  { cout << " declaration de contructeur " << endl ;}
 variable_without_scope:
      NAME IS typeVar next_line { Variable v($1,$3); symbolTable.addElement(v); $$ = new Declaration($1,$3,"",false);}
 |    NAME noms ARE typeVar next_line { $$ = new Declaration(); }
 ;
 
 variable_with_scope:
+    portee NAME IS type affect next_line { cout << "= Declaration de la variable avec portee " << $2 << endl; }
+|   portee NAME noms ARE type next_line { cout << "  Declaration des variables  avec portee "<< $2 << endl; }
+|   portee NAME IS SHARED type affect next_line { cout << "= Declaration de la variable avec portee " << $2 << endl; }
+|   portee NAME noms ARE SHARED type next_line { cout << "  Declaration des variables  avec portee "<< $2 << endl; }
+    // TODO adapt this
     portee NAME IS typeVar next_line { Variable v($2,$4); symbolTable.addElement(v); $$ = new Declaration($2,$4,$1,false);  }
 |   portee NAME noms ARE typeVar next_line { $$ = new Declaration();  }
 ;
 
+declaration_construct:
+   NAME IS NAME {}  // ex: c is Maclasse
+|  NAME IS NAME LEFT_PARENTHESIS class_liste_argument RIGHT_PARENTHESIS {} // c is MaClass(val1,va2)
+|  NAME IS NAME LEFT_PARENTHESIS class_liste_argument_with_assignment RIGHT_PARENTHESIS {} // p is Person(nom="nom")
+;
+
+affect:
+/* No assigned value */
+| EGAL expression { }
+| EGAL string { }
+;
+
+class_liste_argument:
+  string { }
+| NUM_INTEGER  {}
+| NUM_REAL  {}
+| NAME  {}
+| string COMMA class_liste_argument  { }
+| NUM_INTEGER COMMA class_liste_argument  {}
+| NUM_REAL COMMA class_liste_argument  {}
+| NAME COMMA class_liste_argument {}
+;
+
+class_liste_argument_with_assignment:
+  NAME EGAL string { }
+| NAME EGAL NUM_INTEGER   {}
+| NAME EGAL NUM_REAL  {}
+| NAME EGAL NAME  {}
+| NAME EGAL string COMMA class_liste_argument_with_assignment  { }
+| NAME EGAL NUM_INTEGER COMMA class_liste_argument_with_assignment  {}
+| NAME EGAL NUM_REAL COMMA class_liste_argument_with_assignment  {}
+| NAME EGAL NAME COMMA class_liste_argument_with_assignment {}
+;
+
+// TODO
 function:
+SHARED FUNCTION NAME LEFT_PARENTHESIS liste_argument RIGHT_PARENTHESIS RETURN type next_line  BEGINN  next_line statement_sequence RETURN expression next_line END next_endfunction{  cout << "declaration de la fonction" << $3 << endl;}
+| FUNCTION NAME LEFT_PARENTHESIS liste_argument RIGHT_PARENTHESIS RETURN type next_line  BEGINN  next_line statement_sequence RETURN expression next_line END next_endfunction{  cout << "declaration de la fonction" << $2 << endl;}
 FUNCTION NAME LEFT_PARENTHESIS liste_argument { symbolTable.incScope(); }  RIGHT_PARENTHESIS RETURN typeVar next_line statement_sequence RETURN expression next_line END next_endfunction
 		{
 			DeclarationFunction *f = new DeclarationFunction($2,$4,$8,$10,"blabla");
@@ -125,8 +187,13 @@ FUNCTION NAME LEFT_PARENTHESIS liste_argument { symbolTable.incScope(); }  RIGHT
 		}
 ;
 
+// TODO
 procedure:
-PROCEDURE NAME LEFT_PARENTHESIS liste_argument { symbolTable.incScope(); } RIGHT_PARENTHESIS next_line statement_sequence  END next_endprocedure 
+  PROCEDURE NAME LEFT_PARENTHESIS liste_argument RIGHT_PARENTHESIS next_line statement_sequence END next_endprocedure {cout << "Declaration de la procedure " << $2 << endl;}
+| PROCEDURE PRINT LEFT_PARENTHESIS  RIGHT_PARENTHESIS next_line statement_sequence END next_endprocedure {cout << "Surcharge de la methode d'affichage \"print\" "  << endl;}
+| SHARED PROCEDURE NAME LEFT_PARENTHESIS liste_argument RIGHT_PARENTHESIS next_line statement_sequence END next_endprocedure {cout << "Declaration de la procedure " << $3 << endl;}
+| SHARED PROCEDURE PRINT LEFT_PARENTHESIS  RIGHT_PARENTHESIS next_line statement_sequence END next_endprocedure {cout << "Surcharge de la methode d'affichage \"print\" "  << endl;}
+PROCEDURE NAME LEFT_PARENTHESIS liste_argument { symbolTable.incScope(); } RIGHT_PARENTHESIS next_line statement_sequence  END next_endprocedure
 		{
 			DeclarationProcedure *f = new DeclarationProcedure($2,$4,$8);
 			$$ = f;
@@ -134,6 +201,11 @@ PROCEDURE NAME LEFT_PARENTHESIS liste_argument { symbolTable.incScope(); } RIGHT
 			symbolTable.decScope();
 		}
 ;
+
+next_endclass:
+| CLASS {}
+;
+
 
 next_endprocedure:
 /* empty */
@@ -170,45 +242,85 @@ next_endrepeat:
 | REPEAT {}
 ;
 
-
+next_enddestruct:
+/* empty */
+| DESTRUCT {}
+;
 statement_sequence:
  /*empty */  { $$ = new Node();}
 | statement_sequence statement{ }
 ;
 
+// TODO
 liste_argument:
+ // No argument
+ | NAME IS type { }
+ | NAME IS type COMMA liste_argument { }
+ | NAME noms ARE type {}
  	 { vector<Variable> v; $$ = v;}
  | NAME IS typeVar { vector<Variable> v; v.push_back(Variable($1,$3)); $$ = v;}
  | NAME IS typeVar COMMA liste_argument { $5.push_back(Variable($1,$3));
  										$$ = $5; }
 ;
 
-statement:
-  next_line
-| variable_with_scope {} // variables declaration
-| variable_without_scope {} // variables declaration
-| affectation {}
-| printing {}
-| IF expression DO statement_sequence ELSE statement_sequence END next_endif { }
-| IF expression DO statement_sequence END next_endif {  }
-| WHEN expression IS next_line whenbody whendefault END next_endwhen {  }
-| WHILE expression DO  statement_sequence END next_endwhile { }
-| REPEAT statement_sequence UNTIL next_line expression next_line END next_endrepeat{ }
-| for {}
+destruct:
+  DESTRUCT next_line statement_sequence  END next_enddestruct { cout << "destructeur " << endl;}
 ;
 
+overloading:
+  OPERATOR operators LEFT_PARENTHESIS NAME IS NAME RIGHT_PARENTHESIS RETURN type next_line statement_sequence END { cout << "operateur " <<  $2 << endl; }
+;
+
+operators:
+ EGAL EGAL { $$ = "==";}
+|  EGAL   { $$ = "=";}
+|  NE  { $$= "!="; }
+|  LT  { $$ =  "<"; }
+|  LE  { $$ = "<=";}
+|  GT  { $$ = ">";}
+|  GE  { $$ = ">=";}
+|  PLUS   {$$ ="+";}
+|  MINUS  { $$ = "-";}
+|  MULT   {$$ = "*";}
+|  DIVISE { $$ =  "/";}
+;
+
+// 		---------------------------------------------------------------------
+statement:
+  next_line
+| variable_with_scope  {}
+| start_with_name {}  // variables - functions - construct
+| declaration_methods {}
+| destruct {}
+| printing {}
+| overloading {}
+| IF expression DO statement_sequence ELSE statement_sequence END next_endif {}
+| IF expression DO statement_sequence END next_endif {}
+| WHEN expression IS next_line whenbody whendefault END next_endwhen {}
+| WHILE expression DO  statement_sequence END next_endwhile {}
+| REPEAT statement_sequence UNTIL next_line expression next_line END next_endrepeat{}
+| for {}
+;
+// 		---------------------------------------------------------------------
+
 affectation:
-  NAME EGAL expression { yyprint("affectation : "+$1+" = expression"); }
-| NAME PLUS PLUS {  }
-| NAME MINUS MINUS { }
-| PLUS PLUS NAME  { }
-| MINUS MINUS NAME  { }
+  NAME EGAL expression { cout << "Affectation name " <<  endl; }
+| NAME POINT NAME EGAL expression { cout << "Affectation name.name " <<  endl; }
+| NAME PLUS PLUS { cout << "Affectation ++" <<  endl; }
+| NAME MINUS MINUS {  cout << "Affectation --" <<  endl; }
+| PLUS PLUS NAME  { cout << "++ Affectation " <<  endl; }
+| MINUS MINUS NAME  { cout << "-- Affectation " <<  endl;  }
 ;
 
 printing :
- PRINT string { }
-|PRINT string noms {  } 
-|PRINT expression {}
+PRINT expressions  next_line { }
+;
+
+expressions:
+  expression   { cout <<"affichage  : " <<  $1  << endl; }
+| string    {   cout << "affichage  : " << $1 << endl; }
+| expression COMMA expressions { cout <<"affichage  : " <<  $1 << endl; }
+| string  COMMA expressions {   cout << "affichage : " << $1 << endl; }
 ;
 
 for :
@@ -218,12 +330,13 @@ for :
 
 function_call : 
 NAME POINT NAME LEFT_PARENTHESIS RIGHT_PARENTHESIS {}
+| NAME POINT NAME { }
 ;
 
 nbrOrName:
   NUM_INTEGER  {}
 | NUM_REAL
-| designator {}
+| NAME {}
 ;
 
 portee: 
@@ -233,8 +346,8 @@ portee:
 
 typeVar:
   TYPE_INTEGER { $$ = "int";}
-| TYPE_REAL   { $$ = "real";} 
-| TYPE_STRING  { $$ = "string";} 
+| TYPE_REAL   { $$ = "real";}
+| TYPE_STRING  { $$ = "string";}
 | TYPE_BOOLEAN  { $$ = "bool";}
 ;
 
@@ -244,18 +357,19 @@ noms:
 ;
 
 whenbody: /* whenbody can't be empty */
-  whenbody CASE expression statement_sequence END next_endcase next_line{}
-| CASE  expression next_line statement_sequence next_line END next_endcase next_line {}
+  CASE  expression next_line statement_sequence  END next_endcase next_line  { cout << "case body" << endl; }
+| CASE  expression next_line statement_sequence  END next_endcase next_line whenbody { cout << "case body" << endl;}
 ;
 
 whendefault: /* May not be specified */
-| DEFAULT statement_sequence END next_endcase next_line{}
+| DEFAULT next_line statement_sequence  END next_endcase next_line{}
 ;
 
 string :
  STRING  { $$ = $1; }
 ;
 
+//For  those  rules in comment , the corresponding definition must be written by the C++ team because their (rules) have not effect.
 expression:
  expression EGAL EGAL expression { $$ = new Node(); }
 | expression NE expression {$$ = new Node();}

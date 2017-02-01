@@ -1,4 +1,7 @@
-//program person;
+
+
+program person
+
 // petit programme de test
 
 local i, max are integer
@@ -15,3 +18,10 @@ when 5 +6 is
 		x = 8 * 9
 	end case
 end when
+
+
+shared function name() return integer
+BEGIN
+return 5
+end
+
