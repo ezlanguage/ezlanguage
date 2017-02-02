@@ -19,16 +19,9 @@ private:
 public:
     Program();
 
-    Program(const std::string &program_name, DConstants *son);
+    Program(const std::string &program_name, Node *son);
 
     Program(const std::string &program_name);
-
-    /*
-     * This will be the entry point to the other children
-     * */
-    void setRightSon(DConstants *son) {
-	throw std::exception(); //"Not yet implemented, need constant type"
-    }
 
     // normally we should have some sort of a function to get the reference of the program in question
     // stand by : waiting for the function to be implemented in class hashTable

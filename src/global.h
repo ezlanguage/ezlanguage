@@ -3,8 +3,8 @@
 
 
 #include "./modules/Node.h"
-#include "./modules/Variable.h"
-#include "./modules/ScopeHashTable.h"
+#include "./hash_table/Variable.h"
+#include "./hash_table/ScopeHashTable.h"
 #include <vector>
 
 /**

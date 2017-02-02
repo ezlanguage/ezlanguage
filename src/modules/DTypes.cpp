@@ -13,7 +13,3 @@ DTypes::DTypes(const std::string &name, PDVariables *son) : Holder(name, Holder:
     this->setRightSon(son);
 }
 
-std::string DTypes::translate() {
-    // still unclear what to do exactly here !
-    return "";
-}

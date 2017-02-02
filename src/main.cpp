@@ -6,7 +6,7 @@
 #include <algorithm>
 #include <fstream>
 #include "aide.h"
-#include "./modules/ScopeHashTable.h"
+#include "./hash_table/ScopeHashTable.h"
 
 using namespace std;
 

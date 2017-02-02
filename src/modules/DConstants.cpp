@@ -11,8 +11,3 @@ DConstants::DConstants(const std::string &name) : Holder(name, Holder::TYPES::CO
 DConstants::DConstants(const std::string &name, DTypes *son) : Holder(name, Holder::TYPES::CONST) {
     this->setRightSon(son);
 }
-
-std::string DConstants::translate() const {
-    // same thing : not yet implemented
-    return "";
-}

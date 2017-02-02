@@ -8,14 +8,15 @@
 #include <vector>
 
 #include "../src/global.h"	 // we start from ../obj because it's important
+#include "../src/hash_table/Function.h"
+#include "../src/hash_table/ScopeHashTable.h"
+#include "../src/hash_table/Variable.h"
 #include "../src/main.cpp"	 // we start from ../obj because it's important
-#include "../src/modules/Node.h"
-#include "../src/modules/Variable.h"
-#include "../src/modules/Function.h"
-#include "../src/modules/ScopeHashTable.h"
-#include "../src/modules/DeclarationProcedure.h"
-#include "../src/modules/DeclarationFunction.h"
+#include "../src/modules/Class.h"
 #include "../src/modules/Declaration.h"
+#include "../src/modules/DeclarationFunction.h"
+#include "../src/modules/DeclarationProcedure.h"
+#include "../src/modules/Node.h"
 #include "../src/modules/Program.h"
 
 
@@ -66,8 +67,8 @@ extern ScopeHashTable symbolTable;
 %left NE LT LE GT GE MULT DIVISE AND OR XOR NOT MOD POW ABS OPERATOR		// Operators
 
 %type<texte> type operators portee string designator
-%type<arbre> expression statement_sequence function_call
-%type<arbre> next_line  function procedure
+%type<arbre> expression statement_sequence function_call single_expression
+%type<arbre> next_line  function procedure class
 %type<arbre> ROOT declaration_class declarations_list declaration_variables declaration_methods variable_with_scope variable_without_scope
 %type<vecString> liste_argument
 
@@ -75,11 +76,11 @@ extern ScopeHashTable symbolTable;
 %%
 
 ROOT:
-  next_line_null PROGRAM NAME next_line declaration_class declarations_list statement_sequence END_OF_FILE
+  next_line_null PROGRAM NAME next_line declaration_class declarations_list BEGINN statement_sequence END END_OF_FILE
       {
         Node* p_decl_class = $5;
         Node* p_decl_list = $6;
-        Node* p_prog = $7;
+        Node* p_prog = $8;
         p_decl_class->setRightSon(p_decl_list);
         p_decl_list->setRightSon(p_prog);
 
@@ -100,25 +101,29 @@ next_line:  // one or several new line
 
 declarations_list:
   /* no declaration */
-  declaration_variables  declaration_methods  { $$ = new Node($1,$2);}
+|  declaration_variables  declaration_methods  { $$ = new Declaration();}
 
 declaration_class:
-| declaration_class class next_line {}
+| class declaration_class next_line {
+										Class* c = (Class *) $1;
+										$1->setRightSon($2);
+										$$ = c;
+									}
 ;
 
 declaration_methods:
- { $$ = new Node();}
-| declaration_methods function next_line { $$ = new Node($1,$2);}
-| declaration_methods procedure next_line { $$ = new Node($1,$2);}
+ { $$ = new Declaration();}
+| declaration_methods function next_line { $$ = new Declaration();}
+| declaration_methods procedure next_line { $$ = new Declaration();}
 ;
 
 declaration_variables:
- { $$ = new Node();}
-| declaration_variables   variable_with_scope {$$ = new Node($1,$2);}
-| declaration_variables   variable_without_scope {$$ = new Node($1,$2);}
+ { $$ = new Declaration();}
+| declaration_variables   variable_with_scope {$$ = new Declaration();}
+| declaration_variables   variable_without_scope {$$ = new Declaration();}
 
 class:
-CLASS NAME next_line BEGINN next_line statement_sequence END next_endclass { cout << "declaration de la class" << $2 << endl; }
+CLASS NAME next_line BEGINN next_line statement_sequence END next_endclass { $$ = new Class(); }
 ;
 
 
@@ -183,7 +188,7 @@ SHARED FUNCTION NAME LEFT_PARENTHESIS liste_argument { symbolTable.incScope(); }
 		{
 			DeclarationFunction *f = new DeclarationFunction($2,$4,$8,$12,"blabla");
 			$$ = f;
-			//$$ = new Node();
+			//$$ = new Declaration();
 			symbolTable.decScope();
 		}
 ;
@@ -196,7 +201,7 @@ procedure:
 		{
 			DeclarationProcedure *f = new DeclarationProcedure($2,$4,$8);
 			$$ = f;
-			//$$ = new Node();
+			//$$ = new Declaration();
 			symbolTable.decScope();
 		}
 ;
@@ -246,7 +251,7 @@ next_enddestruct:
 | DESTRUCT {}
 ;
 statement_sequence:
- /*empty */  { $$ = new Node();}
+ /*empty */  { $$ = new Declaration();}
 | statement_sequence statement{ }
 ;
 
@@ -387,33 +392,31 @@ string :
 
 //For  those  rules in comment , the corresponding definition must be written by the C++ team because their (rules) have not effect.
 expression:
- expression EGAL EGAL expression { $$ = new Node(); }
-| expression NE expression {$$ = new Node();}
-| expression LT expression { $$ = new Node(); }
-| expression LE expression { $$ = new Node();}
-| expression GT expression {$$ = new Node();}
-| expression GE expression { $$ = new Node();}
-| expression PLUS expression {$$ = new Node();}
-| expression MINUS expression { $$ = new Node();}
-| expression MULT expression {$$ = new Node();}
-| expression DIVISE expression {$$ = new Node(); }
-| expression AND AND expression { $$ = new Node();}
-| expression OR OR expression {$$ = new Node(); }
-| designator {$$ = new Node();}
-| NUM_REAL { $$ = new Node(); } //real
-| NUM_INTEGER {$$ = new Node(); }  // integer
-//| single_expression {yyprint("single_expression");  $$ = new Node();}
+ expression EGAL EGAL expression { $$ = new Declaration(); }
+| expression NE expression {$$ = new Declaration();}
+| expression LT expression { $$ = new Declaration(); }
+| expression LE expression { $$ = new Declaration();}
+| expression GT expression {$$ = new Declaration();}
+| expression GE expression { $$ = new Declaration();}
+| expression PLUS expression {$$ = new Declaration();}
+| expression MINUS expression { $$ = new Declaration();}
+| expression MULT expression {$$ = new Declaration();}
+| expression DIVISE expression {$$ = new Declaration(); }
+| expression AND AND expression { $$ = new Declaration();}
+| expression OR OR expression {$$ = new Declaration(); }
+| designator {$$ = new Declaration();}
+| NUM_REAL { $$ = new Declaration(); } //real
+| NUM_INTEGER {$$ = new Declaration(); }  // integer
+| single_expression {yyprint("single_expression");  $$ = new Declaration();}
 
 single_expression:   
-  PLUS single_expression { $$ = $2;  }
-| single_expression XOR single_expression { /* $1^$3 ; */}
-| NOT single_expression { $$ = !$2 ; }
-| single_expression MOD single_expression { $$ =  fmod($1,$3); }
-| single_expression POW single_expression { $$ = pow($1, $3); }
-| ABS single_expression { $$ = fabs($2);}
-| LEFT_PARENTHESIS expression RIGHT_PARENTHESIS { $$ = $2 ;}
-| NUM_REAL { $$ = $1;} //real
-| NUM_INTEGER { $$ = $1;  }  // integer
+  PLUS single_expression { $$ = new Declaration(); }
+| single_expression XOR single_expression { $$ = new Declaration();}
+| NOT single_expression {$$ = new Declaration();}
+| single_expression MOD single_expression { $$ = new Declaration();}
+| single_expression POW single_expression { $$ = new Declaration(); }
+| ABS single_expression { $$ = new Declaration();}
+| LEFT_PARENTHESIS expression RIGHT_PARENTHESIS { $$ = new Declaration();}
 | designator {}
 | function_call {  $$ = $1;}
 | function_string {}

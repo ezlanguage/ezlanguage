@@ -12,7 +12,7 @@ Program::Program() : Node("Program")
 Program::Program(const string &program_name) : Node("Program"), _program_name(program_name)
 {}
 
-Program::Program(const string &program_name, DConstants *son) :Program(program_name)
+Program::Program(const string &program_name, Node *son) :Program(program_name)
 {
     setRightSon(son);
 }
