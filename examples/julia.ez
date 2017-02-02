@@ -1,4 +1,14 @@
-//program julia
+program julia
+// Fichier permettant de tester la compilation d'un programme utilisant :
+// + parallel
+// + boucles for et while
+// + matrix
+// + sortie sur flux
+// + condition if
+
+//Syntaxe non valide (le parsing doit échouer) :
+// + l'implémentation parallel n'est pas prévue
+// + il y a une erreur de syntaxe sur un return : "retrun"
 
 global K is integer // number of processors
 
@@ -64,7 +74,7 @@ end
 // -----------------------------
 // program
 // -----------------------------
-procedure julia() 
+procedure julia()
 begin
 	jset.fill('_')
 	julia_set()

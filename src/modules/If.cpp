@@ -30,34 +30,40 @@ void If::set_block_type(int bt){
 	block_type=bt;
 }
 
-string If::translate() const {
-	string res="", block;
-		
-	switch (block_type) {
-		case block_if :
-			block="if("+ get_condition().translate()+")";
-			break;
-		case block_else_if :
-			block= "else if("+get_condition().translate()+")";
-			break;
-		case block_else :
-			block= "else";
-			break;	
+string If::preTranslate() const
+{
+    string res="", block;
+
+    switch (block_type) {
+	case block_if :
+	    block="if("+ get_condition().translate()+")";
+	    break;
+	case block_else_if :
+	    block= "else if("+get_condition().translate()+")";
+	    break;
+	case block_else :
+	    block= "else";
+	    break;
+    }
+
+    res=block+"{\n";
+    /*
+     * here the first instruction is in the left_son the other are in his right_son ( of the left_son)
+     */
+    if(this->getLeftSon() != nullptr) {
+	res += this->getLeftSon()->translate()+"\n";
+	Node *my_instruction = this->getLeftSon()->getRightSon();
+	while(my_instruction != nullptr) {
+	    res += my_instruction->translate()+"\n";
+	    my_instruction = my_instruction->getRightSon();
 	}
-	
-	res=block+"{\n";
-		/*
-			here the first instruction is in the left_son the other are in his right_son ( of the left_son)
-		*/
-		if(this->getLeftSon() != nullptr) {
-			res += this->getLeftSon()->translate()+"\n";
-			Node *my_instruction = this->getLeftSon()->getRightSon();
-			while(my_instruction != nullptr) {
-				res += my_instruction->translate()+"\n";
-				my_instruction = my_instruction->getRightSon();
-			}			
-		}
-	res+="\n}";
-	
-	return res;
+    }
+
+    return res;
+}
+
+
+string If::postTranslate() const
+{
+    return "}";
 }

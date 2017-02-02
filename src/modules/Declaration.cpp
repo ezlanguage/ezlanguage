@@ -8,13 +8,14 @@ using namespace std;
 Declaration::Declaration() {}
 
 Declaration::Declaration(string var, string ty, string sco, bool iscon) {
-    name =  var;
-    type = ty;
-    scope = sco;
-    isconst = iscon;
+    name= "Declaration";
+    var = variable_name;
+    ty = type;
+    sco = scope;
+    iscon = isconst;
 }
 
-string Declaration::translate() {
+string Declaration::preTranslate() const{
     string res = "";
     if(isconst){
         res += "const ";
@@ -38,6 +39,6 @@ string Declaration::translate() {
         //exemple : kinder is chocolate
         res = res + type;
     }
-    res = res + name+";";
+    res = res + variable_name+";";
     return res;
 }

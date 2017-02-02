@@ -11,7 +11,7 @@ using namespace std;
  */
 class Node {
 protected:
-    string name;
+    std::string name;
     Node* left_son;
     Node* right_son;
 
@@ -45,18 +45,18 @@ public:
      * @brief getter on left son
      */
     Node * getLeftSon() const;
-
+    
     /**
      * @brief getter on right son
      */
     Node * getRightSon() const;
-
+    
     /**
      * @brief setter on left son
      * @param node : New left son
      */
     void setLeftSon(Node *son);
-
+    
     /**
      * @brief setter on right son
      * @param node : New right son
@@ -64,14 +64,32 @@ public:
     void setRightSon(Node* son);
 
     /**
+     * @brief Translate the begining part of the Node
+     * @return a string containing the C++ code of the node
+     *
+     * All subclasses, must reimplement this method so that the translation corresponds
+     * to their specifications, specificities and own values
+     */
+    virtual std::string preTranslate() const =0;
+
+    /**
+     * @brief Translate the end part of the Node
+     * @return a string containing the C++ code of the instruction
+     *
+     * By default, the post-translation is an empty string.
+     * But, some subclasses, may reimplement this method so that the translation corresponds
+     * to their specifications, specificities and own values
+     */
+    virtual std::string postTranslate() const;
+
+    /**
      * @brief Translation of the instruction into it's C++ counterpart
      * @return a string containing the C++ code of the instruction
      *
      * The instance will be translated with it's C++ equivalent using its informations
-     * All subclasses, must reimplement this method so that the translation corresponds
-     * to their specifications, specificities and own values
+     * This method must not be reimplemented by subclasses
      */
-    std::string translate(); // this function will allow the translation of the nodes's tree into c++ instructions*
+    virtual std::string translate() const final;
 
 };
 

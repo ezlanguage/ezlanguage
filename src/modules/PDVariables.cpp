@@ -11,7 +11,3 @@ PDVariables::PDVariables(const std::string &name) : Holder(name, Holder::TYPES::
 PDVariables::PDVariables(const std::string &name, PDFunctions *right_son) : Holder(name, Holder::TYPES::VAR) {
     this->setRightSon(right_son);
 }
-
-std::string PDVariables::translate() {
-    return "";
-}

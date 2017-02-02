@@ -1,6 +1,6 @@
 //@author Antoine GARNIER
 #include "DeclarationFunction.h"
-#include "String_addon.h"
+#include "../addons/String_addon.h"
 
 DeclarationFunction::DeclarationFunction(std::string name, std::vector<Variable> args, std::string type, Node* instructions, std::string return_variable)
     :function_name(name), return_type(type), arguments(args) {
@@ -8,7 +8,7 @@ DeclarationFunction::DeclarationFunction(std::string name, std::vector<Variable>
     this->setLeftSon(instructions);
 }
 
-std::string DeclarationFunction::translate() {
+string DeclarationFunction::preTranslate() const {
     std::string res= "";
     std::vector<Variable> args= this->getArguments();
 
@@ -47,13 +47,16 @@ std::string DeclarationFunction::translate() {
     res+= "){\n";
     res+= getReturnType() + " " + getVariable() + ";";
 
-    //translation of the instructions
-    res+= " "+ this->getLeftSon()->translate();
+    return res;
+}
 
-
+string DeclarationFunction::postTranslate() const
+{
+    string res= "";
     res+= "return " + getVariable() + ";\n";
     res+= "}";
 
     res= this->getRightSon()->translate();
     return res;
 }
+

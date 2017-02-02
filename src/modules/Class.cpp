@@ -1,6 +1,6 @@
 //@author Ismail ELFAQIR
 #include "Class.h"
-#include "String_addon.h"
+#include "../addons/String_addon.h"
 #include <iostream>
 using namespace std;
 
@@ -124,8 +124,8 @@ bool Class::is_in_class(Variable * variable){
 	return false;
 }
 
-string Class::translate() const{
-	
+string Class::preTranslate() const
+{
 	string res="#ifndef "+toUpperCase(m_class->get_id())+"_H\n";
 	res+="#define "+toUpperCase(m_class->get_id())+"_H\n";
 	res+"#include <iostream>\n";
@@ -167,9 +167,14 @@ string Class::translate() const{
 			res+=public_functions[i]->translate()+"\n";
 		}
 
-	res+="};\n";
-	res+="#endif";
-
 	return res;
 }
 
+string Class::postTranslate() const
+{
+    string res= "";
+    res+="};\n";
+    res+="#endif";
+    
+    return res;
+}

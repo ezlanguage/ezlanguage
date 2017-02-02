@@ -10,9 +10,10 @@ Foreach::Foreach(string v, string e) {
     element = e;
 }
 
-string Foreach::translate() {
-    string res = "for(auto "+element+" : "+vector+"){";
-    res = res + this->getLeftSon()->translate();
-    res = res + "}";
-    return res;
+string Foreach::preTranslate() const {
+    return "for(auto "+element+" : "+vector+") {";
+}
+
+string Foreach::postTranslate() const {
+    return "}";
 }

@@ -57,12 +57,17 @@ extern ScopeHashTable symbolTable;
 %token END_OF_FILE
 %token CLASS PROGRAM  DESTRUCT					//class
 
+%token LENGTH TOUPPERCASE TOLOWERCASE
+%token SUBSTRING SPLIT STRIP
+%token REPLACE CONTAINS
+%token FIND FINDFIRSTOF FINDLASTOF
+
 %left PLUS MINUS EGAL
 %left NE LT LE GT GE MULT DIVISE AND OR XOR NOT MOD POW ABS OPERATOR		// Operators
 
 %type<texte> type operators portee string designator
 %type<arbre> expression statement_sequence function_call
-%type<arbre> next_line  function procedure  
+%type<arbre> next_line  function procedure
 %type<arbre> ROOT declaration_class declarations_list declaration_variables declaration_methods variable_with_scope variable_without_scope
 %type<vecString> liste_argument
 
@@ -323,6 +328,27 @@ NAME POINT NAME LEFT_PARENTHESIS RIGHT_PARENTHESIS {}
 | NAME POINT NAME { }
 ;
 
+function_string :
+NAME POINT LENGTH LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("lENGTH() called \n"); }
+| NAME POINT TOUPPERCASE LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("toUpperCase() called \n"); }
+| NAME POINT TOLOWERCASE LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("toLowerCase() called \n"); }
+| NAME POINT SUBSTRING LEFT_PARENTHESIS NUM_INTEGER RIGHT_PARENTHESIS { printf("SUBSTRING(int) called \n"); }
+| NAME POINT SUBSTRING LEFT_PARENTHESIS NAME RIGHT_PARENTHESIS { printf("SUBSTRING(int) called \n"); }
+| NAME POINT SUBSTRING LEFT_PARENTHESIS NUM_INTEGER COMMA NUM_INTEGER RIGHT_PARENTHESIS { printf("SUBSTRING(int,int) called \n"); }
+| NAME POINT SUBSTRING LEFT_PARENTHESIS NAME COMMA NUM_INTEGER RIGHT_PARENTHESIS { printf("SUBSTRING(int,int) called \n"); }
+| NAME POINT SUBSTRING LEFT_PARENTHESIS NUM_INTEGER COMMA NAME RIGHT_PARENTHESIS { printf("SUBSTRING(int,int) called \n"); }
+| NAME POINT SUBSTRING LEFT_PARENTHESIS NAME COMMA NAME RIGHT_PARENTHESIS { printf("SUBSTRING(int,int) called \n"); }
+| NAME POINT SPLIT LEFT_PARENTHESIS STRING RIGHT_PARENTHESIS { printf("SPLIT(\"str\") called \n"); }
+| NAME POINT STRIP LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("strip() called \n"); }
+| NAME POINT STRIP LEFT_PARENTHESIS STRING RIGHT_PARENTHESIS { printf("strip(\"str\") called \n"); }
+| NAME POINT REPLACE LEFT_PARENTHESIS STRING COMMA STRING RIGHT_PARENTHESIS { printf("replace(\"str\",\"str\") called \n"); }
+| NAME POINT CONTAINS LEFT_PARENTHESIS STRING RIGHT_PARENTHESIS { printf("contain(\"str\") called \n"); }
+| NAME POINT FIND LEFT_PARENTHESIS STRING RIGHT_PARENTHESIS { printf("find(\"str\") called \n"); }
+| NAME POINT FINDFIRSTOF LEFT_PARENTHESIS STRING RIGHT_PARENTHESIS { printf("findFirstOF(\"str\") called \n"); }
+| NAME POINT FINDLASTOF LEFT_PARENTHESIS STRING RIGHT_PARENTHESIS { printf("findFirstOF(\"str\") called \n"); }
+;
+
+
 nbrOrName:
   NUM_INTEGER  {}
 | NUM_REAL
@@ -378,14 +404,19 @@ expression:
 | NUM_INTEGER {$$ = new Node(); }  // integer
 //| single_expression {yyprint("single_expression");  $$ = new Node();}
 
-//| single_expression XOR single_expression { $$ = new Node();}
-//| NOT single_expression { $$ = new Node();}
-//| single_expression MOD single_expression { $$ = new Node();}
-//| single_expression POW single_expression { $$ = new Node();}
-//| ABS single_expression {$$ = new Node(); }
-| LEFT_PARENTHESIS expression RIGHT_PARENTHESIS {$$ = new Node();}
-| function_call {$$ = new Node();}
-//| PLUS single_expression { $$ = new Node(); }
+single_expression:   
+  PLUS single_expression { $$ = $2;  }
+| single_expression XOR single_expression { /* $1^$3 ; */}
+| NOT single_expression { $$ = !$2 ; }
+| single_expression MOD single_expression { $$ =  fmod($1,$3); }
+| single_expression POW single_expression { $$ = pow($1, $3); }
+| ABS single_expression { $$ = fabs($2);}
+| LEFT_PARENTHESIS expression RIGHT_PARENTHESIS { $$ = $2 ;}
+| NUM_REAL { $$ = $1;} //real
+| NUM_INTEGER { $$ = $1;  }  // integer
+| designator {}
+| function_call {  $$ = $1;}
+| function_string {}
 ;
 
 designator:

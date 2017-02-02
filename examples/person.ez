@@ -1,4 +1,10 @@
-program person;
+program person
+// Fichier permettant de tester la compilation :
+// + d'une structure
+// + l'utilisation d'un vecteur
+// + l'utilisation de boucles for
+// + le flux de sortie
+//La syntaxe reste à valider
 
 // definition of a person
 structure Person is

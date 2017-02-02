@@ -27,7 +27,7 @@ void Conditionnal_instruction::set_condition(Condition * c) {
 	condition = c;
 }
 
-// std::string Conditionnal_instruction::translate() const {
+// std::string Conditionnal_instruction::preTranslate() const {
 //
 //     string res = "";
 //

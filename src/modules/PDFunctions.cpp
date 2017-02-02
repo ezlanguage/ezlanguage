@@ -11,7 +11,3 @@ PDFunctions::PDFunctions(const std::string &name) : Holder(name, Holder::TYPES::
 PDFunctions::PDFunctions(const std::string &name, PDInstructions *right_son) : Holder(name, Holder::TYPES::FUNC) {
     this->setRightSon(right_son);
 }
-
-std::string PDFunctions::translate() {
-    return "";
-}

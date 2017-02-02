@@ -14,7 +14,7 @@ Operator::Operator(int ope_type, string ope) {
     ope= ope;
 }
 
-string Operator::translate() {
+string Operator::preTranslate() const {
     string res= "";
 
     switch(ope_type){

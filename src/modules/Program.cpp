@@ -5,8 +5,19 @@
 
 using namespace std;
 
-Program::Program() : name("PROGRAM ROOT"), left_son(nullptr) {}
+Program::Program() : Node("Program")
+{}
 
-Program::Program(const string &name, const Node *_right_son) : name(name), right_son(_right_son) {}
 
-Program::Program(const string &name) : name(name), left_son(nullptr) {}
+Program::Program(const string &program_name) : Node("Program"), _program_name(program_name)
+{}
+
+Program::Program(const string &program_name, DConstants *son) :Program(program_name)
+{
+    setRightSon(son);
+}
+
+std::string Program::preTranslate() const
+{
+    return "// Program " + _program_name;
+}

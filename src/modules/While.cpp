@@ -1,6 +1,6 @@
 //@author Antoine GARNIER
 #include "While.h"
-#include "String_addon.h"
+#include "../addons/String_addon.h"
 
 While::While(Condition* while_cond, Node* while_left_son, Node* while_right_son)
     :Iterative_instruction(while_cond){
@@ -8,23 +8,24 @@ While::While(Condition* while_cond, Node* while_left_son, Node* while_right_son)
     setRightSon(while_right_son);
 }
 
-std::string While::translate() {
+string While::preTranslate() const {
     std::string res;
     Condition* while_condition= getCondition();
 
 //    The while condition is stored in the class
-	res= "while(" + while_condition->translate() + "){\n";
+	res= "while(" + while_condition->translate() + ") {";
 
 //    The first instruction of the loop is the left son
 //    The second instruction is the right son of this left son...etc
 //    So here, we just translate the first one
     res+= "   "+ getLeftSon()->translate();
 
-//    The instructions are translated, the loop closes
-    res+= "};";
-
-//    don't forget to launch the translation of the instructions that follow this while
-    if(getRightSon()) res+= getRightSon()->translate();
-
     return res;
+}
+
+string While::postTranslate() const
+{
+
+    //    The instructions are translated, the loop closes
+    return "}";
 }
