@@ -20,8 +20,6 @@ public:
 
     PDFunctions(const std::string &name);
 
-    std::string translate();
-
 };
 
 

@@ -18,7 +18,7 @@
 class Declaration :
         public Node {
 protected:
-    std::string variable;
+    std::string variable_name;
     std::string type;
     std::string scope;
     bool isconst;
@@ -27,12 +27,12 @@ public:
     Declaration(std::string, std::string, std::string, bool);
     
     /**
-     * @brief Translation of the instruction into it's C++ counterpart
-     * @return a string containing the C++ code of the declaration instruction
-     * 
-     * The instance will be translated with it's C++ equivalent using its informations
-     * The translation corresponds to its specifications, specificities and values
+     * @brief Translate the begining part of the Declaration
+     * @return a string containing the C++ code of the instruction
+     *
+     * All subclasses, should reimplement this method so that the translation corresponds
+     * to their specifications, specificities and own values
      */
-    std::string translate();
+    virtual std::string preTranslate() const;
 };
 #endif
