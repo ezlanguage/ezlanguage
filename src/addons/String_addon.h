@@ -26,13 +26,24 @@ string operator+ (string s, float i);
 
 /**
 * @brief splitting an string by an character
-* @param s : the string that we want to split
+* @param str : the string that we want to split
 * @param delim : split the string with this character
 * @return vector of string computed by splitting this string
 * @author Ismail ELFAQIR
 */
 
-std::vector<std::string> split(std::string const & s, char delim);
+std::vector<std::string> split(std::string const & str, char delim);
+
+/**
+* @brief splitting an string by an string
+* @param str : the string that we want to split
+* @param delim : split the string with this string
+* @return vector of string computed by splitting this string
+* @author Ismail ELFAQIR, Zakaria LAHYANI
+*/
+
+std::vector<std::string> split(std::string const & str, const std::string &delim);
+
 
 /**
 * @brief concat an vector of string
@@ -41,7 +52,16 @@ std::vector<std::string> split(std::string const & s, char delim);
 * @return string
 * @author Ismail ELFAQIR
 */
-string join(const std::vector<std::string> &array_of_string, string join_with="");
+string join(const std::vector<std::string> &array_of_string, const string &join_with="");
+
+/**
+* @brief concat an vector of string
+* @param array_of_string : vector of string
+* @param join_with : character to separate the element of the vector
+* @return string
+* @author Ismail ELFAQIR, Zakaria LAHYANI
+*/
+string join(const std::vector<std::string> &array_of_string, char join_with);
 
 /**
 * @brief simpler function to convert an string to upper case
@@ -63,10 +83,11 @@ string toLowerCase(const string &str);
 * @brief function to replace all string an another one
 * @param str : reference of the string
 * @param to_replace : the string that we want to replace
+* @param replace_with : replace with this string all occurent of to_replace
 * @return string
-* @author Ismail ELFAQIR
+* @author Ismail ELFAQIR, Zakaria LAHYANI
 */
-string replace(const string &str, const string &to_replace );
+string replace(const string &str, const string &to_replace, const string &replace_with );
 
 /**
 * @brief check if a string contains another one

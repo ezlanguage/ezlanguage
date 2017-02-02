@@ -8,10 +8,6 @@
 #include "Condition.h"
 #include "Instruction.h"
 
-// <- ie condition if, condition if else or condition when
-#define CIf 1
-#define CIfElse 2
-#define CWhen 3
 
 /**
  * @brief Represents conditional instructions
@@ -20,12 +16,16 @@
  * ez language : If / c++ : if
  * ez language : when / c++ : switch
  */
+
+/*
+ 	Conditionnal_instruction can't herite from Instruction because the bloc if can have multiple instructions
+	for more see the language validated document by ANDRES Hervé "les_fonctions_procédures_conditions"
+*/
+
 class Conditionnal_instruction :
-    public Node/*public Instruction*/ { // Conditionnal_instruction can't herite from Instruction because the bloc if can have multiple instructions
-    									 //  for more see the language validated document by ANDRES Hervé "les_fonctions_procédures_conditions"
+    public Node/*public Instruction*/ { 
 private:
     Condition *condition;
-    int condition_type;
 
 public:
 
@@ -71,11 +71,6 @@ public:
      */
     const Condition & get_condition() const;
 
-    /**
-     * @brief Get all instructions
-     *
-     */
-    const std::vector< std::vector<Instruction> > & get_instructions() const;
 
     /**
      * @brief setter of condition
