@@ -1,0 +1,28 @@
+/*
+* Par ANDRES Hervé
+*/
+
+program TestProcedure
+
+
+procedure addition (variable A, B, C are integer)
+    C = A + B
+end procedure
+
+procedure addition (variable A, B, D, C are integer)
+    C = A + B + D
+end procedure
+
+
+procedure TestProcedure ()
+    variable a, b, c, d are integer
+    a = 5
+    b = 10
+    d = 10
+    
+    addition(a, b, c)
+    print c
+    
+    addition(a, b, d, c)
+    print c
+end procedure

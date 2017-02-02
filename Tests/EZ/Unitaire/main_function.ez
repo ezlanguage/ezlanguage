@@ -1,0 +1,24 @@
+/*
+* Par ANDRES Hervé
+*/
+
+program TestFonction
+
+
+function addition (variable A, B are integer) return integer
+    variable C is integer
+    C = A + B
+    return C
+end function
+
+
+procedure TestFonction ()
+    variable a, b are integer
+    a = 5
+    b = 10
+    
+    variable var is integer
+    var = addition(a, b)
+
+    print var
+end procedure
