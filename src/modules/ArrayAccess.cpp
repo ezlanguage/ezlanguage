@@ -33,7 +33,7 @@ void ArrayAccess::set_index(int i) {
 	index=i;
 }
 
-string ArrayAccess::translate() const {
+string ArrayAccess::preTranslate() const {
 	string result= array->get_variable()->get_id()+"["+to_string(index)+"]";
 	return result;
 }

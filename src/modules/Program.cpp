@@ -1,16 +1,23 @@
 //
 // Created by ROUINEB Hamza
 //
-
 #include "Program.h"
 
-Program::Program() : name(""), left_son(nullptr) {}
+using namespace std;
 
-Program::Program(const string &name, Constants *son) : name(name), right_son(son) {}
+Program::Program() : Node("Program")
+{}
 
-Program::Program(const string &name) : name(name), left_son(nullptr) {}
 
-// should it be the name of the class or the program's name
-string Program::translate() {
-    return name;
+Program::Program(const string &program_name) : Node("Program"), _program_name(program_name)
+{}
+
+Program::Program(const string &program_name, DConstants *son) :Program(program_name)
+{
+    setRightSon(son);
+}
+
+std::string Program::preTranslate() const
+{
+    return "// Program " + _program_name;
 }

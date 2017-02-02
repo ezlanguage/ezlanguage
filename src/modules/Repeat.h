@@ -34,16 +34,24 @@ public:
     //getters
 //    The getter is located in the superclass
 //    Condition get_condition(){ return repeat_condition; }
-
+    
     /**
-     * @brief Translation of the instruction into it's C++ counterpart
-     * @return a string containing the C++ code of the repeat (for) instruction
-     * 
-     * The instance will be translated with it's C++ equivalent using its informations
-     * All subclasses, must reimplement this method so that the translation corresponds
+     * @brief Translate the begining part of the Repeat
+     * @return a string containing the C++ code of the instruction
+     *
+     * All subclasses, should reimplement this method so that the translation corresponds
      * to their specifications, specificities and own values
      */
-    std::string translate();
+    virtual std::string preTranslate() const;
+    
+    /**
+     * @brief Translate the end part of the Repeat
+     * @return a string containing the C++ code of the instruction
+     *
+     * All subclasses, should reimplement this method so that the translation corresponds
+     * to their specifications, specificities and own values
+     */
+    virtual std::string postTranslate() const;
 
 };
 #endif
