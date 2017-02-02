@@ -3,7 +3,7 @@
 
 //essential libraries
 #include <vector>
-#include <string.h>
+#include <string>
 
 //special files no to forget to import
 #include "Iterative_instruction.h"
@@ -39,14 +39,25 @@ public:
     //getters
 //    Condition get_condition(){ return while_condition; }
     
+    /*** Translations ***/
+    
     /**
-     * @brief Translation of the instruction into it's C++ counterpart
-     * @return a string containing the C++ code of the while instruction
-     * 
-     * The instance will be translated with it's C++ equivalent using its informations
-     * The translation corresponds to its specifications, specificities and values
+     * @brief Translate the begining part of the While
+     * @return a string containing the C++ code of the instruction
+     *
+     * All subclasses, should reimplement this method so that the translation corresponds
+     * to their specifications, specificities and own values
      */
-    std::string translate();
+    virtual std::string preTranslate() const;
+    
+    /**
+     * @brief Translate the end part of the While
+     * @return a string containing the C++ code of the instruction
+     *
+     * All subclasses, should reimplement this method so that the translation corresponds
+     * to their specifications, specificities and own values
+     */
+    virtual std::string postTranslate() const;
 };
 
 #endif

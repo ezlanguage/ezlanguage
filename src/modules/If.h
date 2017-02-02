@@ -15,89 +15,98 @@
 class If 
 	: public Conditionnal_instruction {
 		
-	protected:
-		int block_type; 
+protected:
+    int block_type;
 	
-	public:
-		/* * * * * * * * *
-		* CONSTRUCTORS  *
-		* * * * * * * * */
-	
-	
-		/**
-		* Default constructor
-		* Set block_type to block_else
-		* @author Ismail ELFAQIR
-		*/
-		If();
-		
-		/**
-		* Constructor with parameters
-		* Set the block_type to the parameter passed to the constructor
-		* @param bt : the block_type
-		* @author Ismail ELFAQIR
-		*/		
-		If(int bt);
+public:
+    /* * * * * * * * *
+    * CONSTRUCTORS  *
+    * * * * * * * * */
 
-		/**
-		* Constructor with parameters
-		* Set the condition to the parameter passed to the constructor and the block_type to block_else
-		* @param c : pointer to the condition
-		* @author Ismail ELFAQIR
-		*/		
-		If(Condition *c);
-		
-		/**
-		* Constructor with parameters
-		* Set the block_type and the condition to the parameter passed to the constructor
-		* @param c : pointer to the condition
-		* @param bt : the block_type
-		* @author Ismail ELFAQIR
-		*/		
-		If(Condition *c, int bt);
-		
-		/**
-		* Copy constructor
-		* @param obj : the If to copy
-		* @author Ismail ELFAQIR
-		*/
-		If(const If &obj);
-	
-		/**
-		* Destructor
-		* @author Ismail ELFAQIR
-		*/	
-		virtual ~If();
 
-		/* * * * * * * * * * * * * *
-		* ACCESSORS  AND MUTATORS *
-		* * * * * * * * * * * * * */
-		
-		/**
-		* getter of the block_type
-		* @author Ismail ELFAQIR
-		*/		
-		int get_block_type() const;
-		
-		/**
-		* setter of block_type
-		* @param bt : the block_type
-		* @author Ismail ELFAQIR
-		*/
-		void set_block_type(int bt);
+    /**
+    * Default constructor
+    * Set block_type to block_else
+    * @author Ismail ELFAQIR
+    */
+    If();
 
-		/* * * * * * * *
-		* Translation  *
-		* * * * * * * **/
-		
-		/**
-		 * @brief Translation of the instruction into it's C++ counterpart
-		 * @return a string containing the C++ code of the instruction
-		 * 
-		 * The instance will be translated with it's C++ equivalent using its informations
-		 * The translation corresponds to its specifications, specificities and values
-		 */
-		std::string translate() const;
-	
+    /**
+    * Constructor with parameters
+    * Set the block_type to the parameter passed to the constructor
+    * @param bt : the block_type
+    * @author Ismail ELFAQIR
+    */
+    If(int bt);
+
+    /**
+    * Constructor with parameters
+    * Set the condition to the parameter passed to the constructor and the block_type to block_else
+    * @param c : pointer to the condition
+    * @author Ismail ELFAQIR
+    */
+    If(Condition *c);
+
+    /**
+    * Constructor with parameters
+    * Set the block_type and the condition to the parameter passed to the constructor
+    * @param c : pointer to the condition
+    * @param bt : the block_type
+    * @author Ismail ELFAQIR
+    */
+    If(Condition *c, int bt);
+
+    /**
+    * Copy constructor
+    * @param obj : the If to copy
+    * @author Ismail ELFAQIR
+    */
+    If(const If &obj);
+
+    /**
+    * Destructor
+    * @author Ismail ELFAQIR
+    */
+    virtual ~If();
+
+    /* * * * * * * * * * * * * *
+    * ACCESSORS  AND MUTATORS *
+    * * * * * * * * * * * * * */
+
+    /**
+    * getter of the block_type
+    * @author Ismail ELFAQIR
+    */
+    int get_block_type() const;
+
+    /**
+    * setter of block_type
+    * @param bt : the block_type
+    * @author Ismail ELFAQIR
+    */
+    void set_block_type(int bt);
+
+    /* * * * * * * *
+    * Translation  *
+    * * * * * * * **/
+    
+    /**
+     * @brief Translate the begining part of the If
+     * @return a string containing the C++ code of the If
+     *
+     * All subclasses, should reimplement this method so that the translation corresponds
+     * to their specifications, specificities and own values
+     */
+    virtual std::string preTranslate() const;
+    
+    /**
+     * @brief Translate the end part of the If
+     * @return a string containing the C++ code of the If
+     *
+     * All subclasses, should reimplement this method so that the translation corresponds
+     * to their specifications, specificities and own values
+     */
+    virtual std::string postTranslate() const;
+
 };
 #endif

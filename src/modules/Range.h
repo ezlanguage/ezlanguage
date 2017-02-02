@@ -24,8 +24,15 @@ public:
     //getters
     int get_start_iterator(){return start_iterator;};
     int get_end_iterator(){return end_iterator;};
-
-    std::string translate();
+    
+    /**
+     * @brief Translate the begining part of the Range
+     * @return a string containing the C++ code of the node
+     *
+     * All subclasses, must reimplement this method so that the translation corresponds
+     * to their specifications, specificities and own values
+     */
+    virtual std::string preTranslate() const;
 };
 
 

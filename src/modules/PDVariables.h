@@ -20,9 +20,6 @@ public:
 
     PDVariables(const std::string &name);
 
-    std::string translate();
-
 };
-
 
 #endif

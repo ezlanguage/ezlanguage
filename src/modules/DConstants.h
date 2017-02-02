@@ -17,9 +17,6 @@ public:
     DConstants(const std::string &name, DTypes *son);
 
     DConstants(const std::string &name);
-
-    std::string translate() const;
-
 };
 
 #endif //PROJECT_CONSTANTS_H
