@@ -18,7 +18,7 @@ class Program : public Node {
 public:
     Program();
 
-    Program(const std::string &name, const DConstants *right_son);
+    Program(const std::string &name, const Node *right_son);
 
     Program(const std::string &name);
 };

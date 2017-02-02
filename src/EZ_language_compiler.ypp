@@ -60,9 +60,9 @@ extern ScopeHashTable symbolTable;
 %left PLUS MINUS EGAL
 %left NE LT LE GT GE MULT DIVISE AND OR XOR NOT MOD POW ABS OPERATOR		// Operators
 
-%type<texte> type operators portee
-%type<arbre> expression designator statement_sequence function_call
-%type<arbre> next_line  function procedure  string
+%type<texte> type operators portee string designator
+%type<arbre> expression statement_sequence function_call
+%type<arbre> next_line  function procedure  
 %type<arbre> ROOT declaration_class declarations_list declaration_variables declaration_methods variable_with_scope variable_without_scope
 %type<vecString> liste_argument
 
