@@ -25,5 +25,9 @@ To do so, you need to run the file *EZ_language\_compiler* located in the *bin* 
 Some EZLanguage files examples are available in the *test* folder.
 
 In order to :
-	* To get some help : `EZ_language_compiler --help`
+	* get some help : `EZ_language_compiler --help`
+	* compile an EZLanguage file : `EZ_language_compiler myfile.ezl`
+	* test a file : `EZ_language_compiler --directinput`
+
+Do not hesitate to create git *Issues* at the github website if you encounter an inopinate problem. 
 	  
