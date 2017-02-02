@@ -10,8 +10,12 @@
  * 
  * loops : forall, foreach, while, repeat
  */
+
+/*
+	Iterative_instruction can't herite from Instruction because the bloc for or while can have multiple instructions
+*/
 class Iterative_instruction :
-        public Node /*public Instruction*/  { // <-  Iterative_instruction can't herite from Instruction because the bloc for or while can have multiple instructions
+        public Node /*public Instruction*/  { 
 protected:
 	Condition *condition; // condition if it's an for or while 
 public:
