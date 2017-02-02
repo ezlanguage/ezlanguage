@@ -1,14 +1,14 @@
 //@author GARNIER Antoine
 #include "DeclarationProcedure.h"
-#include "String_addon.h"
+#include "../addons/String_addon.h"
 
 DeclarationProcedure::DeclarationProcedure(std::string name, std::vector<Variable> args, Node* instructions)
     : procedure_name(name), arguments(args) {
 
-    this->set_left_son(instructions);
+    this->setLeftSon(instructions);
 }
 
-std::string DeclarationProcedure::translate() {
+std::string DeclarationProcedure::preTranslate() const {
     std::string res= "";
     std::vector<Variable> args= this->getArguments();
 
@@ -44,12 +44,12 @@ std::string DeclarationProcedure::translate() {
         }
     }
 
-    res+= "){\n";
+    res+= "){";
 
-    //translation of the instructions
-    res+= " "+ this->get_left_son()->translate();
-    res+= "}";
-
-    res= this->get_right_son()->translate();
     return res;
+}
+
+string DeclarationProcedure::postTranslate() const
+{
+    return "}";
 }
