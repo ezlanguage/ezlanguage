@@ -1,3 +1,7 @@
+/*
+* Par ANDRES Hervé
+*/
+
 #include <iostream>
 #include <string>
 

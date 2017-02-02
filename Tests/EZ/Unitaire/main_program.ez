@@ -2,12 +2,12 @@ program hello_prog
 
 global max_i is integer = 5
 
-procedure showData (x is integer, c is string)
+procedure showData (variable x is integer, c is string)
 	print x, " fois ", c
 end procedure
 
 procedure hello_prog ()
-	variable i is integer =0
+	variable i is integer = 0
 	variable c is string = "hello"
 
 	for i in 0.. max_i do

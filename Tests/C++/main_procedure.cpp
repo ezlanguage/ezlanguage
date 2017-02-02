@@ -1,3 +1,7 @@
+/*
+* Par ANDRES Hervé
+*/
+
 #include <iostream>
 
 void addition(int &A, int &B, int &C){
