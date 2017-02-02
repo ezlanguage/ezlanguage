@@ -13,7 +13,7 @@
  * Please don't forget to set the right son & it should be a constants's pointer
  *
  * */
-class Program : public Holder {
+class Program : public Node {
 
 
 public:
@@ -26,9 +26,7 @@ public:
     /*
      * This will be the entry point to the other children
      * */
-    bool set_son() {
-        throw exception("Not yet implemented, need constant type");
-    }
+    void set_son();
 
     // normally we should have some sort of a function to get the reference of the program in question
     // stand by : waiting for the function to be implemented in class hashTable
