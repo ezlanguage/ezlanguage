@@ -18,7 +18,13 @@ Implemented classes :
  + Range : `..` range operator
  + Repeat : `repeat ... until` loop
  + While : `while` loop
- 
+ + DeclarationContainer : Mother class for caontainers déclaration
+ + DeclarationVector : class representing the vector data structer
+ + DeclarationList : class representing the list data structer
+ + DeclarationMap : class representing the map data structer
+ + DeclarationSet : class representing the set data structer
+
+
 Non implemented classes :
  + Condition :
  + Conditionnal_Instruction :
