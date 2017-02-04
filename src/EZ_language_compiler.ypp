@@ -49,6 +49,8 @@ extern int yylineno;
 %token REPLACE CONTAINS     
 %token FIND FINDFIRSTOF FINDLASTOF     
 
+%token ARRAY VECTOR LIST SET MAP OF     
+
 %left PLUS MINUS EGAL
 %left NE LT LE GT GE MULT DIVISE AND OR XOR NOT MOD POW ABS OPERATOR		// Operators
 
@@ -282,6 +284,8 @@ NAME POINT NAME LEFT_PARENTHESIS RIGHT_PARENTHESIS {}
 | NAME POINT NAME { }
 ;
 
+
+//    -----------------------------STRING METHODS----------------------------------------
 function_string : 
 NAME POINT LENGTH LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("lENGTH() called \n"); }
 | NAME POINT TOUPPERCASE LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("toUpperCase() called \n"); }
@@ -303,6 +307,46 @@ NAME POINT LENGTH LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("lENGTH() called \
 ;
 
 
+//    -----------------------------array Declaration----------------------------------------
+array_declaration :
+portee NAME IS ARRAY LEFT_BRACKET NUM_INTEGER POINT POINT NUM_INTEGER RIGHT_BRACKET OF type { printf("array declaration with lower and upper bound \n"); }
+| portee NAME IS ARRAY LEFT_BRACKET NUM_INTEGER POINT POINT NAME RIGHT_BRACKET OF type { printf("array declaration with lower and upper bound \n"); }
+| portee NAME IS ARRAY LEFT_BRACKET NAME POINT POINT NUM_INTEGER RIGHT_BRACKET OF type { printf("array declaration with lower and upper bound\n"); }
+| portee NAME IS ARRAY LEFT_BRACKET NUM_INTEGER RIGHT_BRACKET OF type { printf("array declaration with size \n"); }
+| portee NAME IS ARRAY LEFT_BRACKET NAME RIGHT_BRACKET OF type { printf("array declaration with size \n"); }
+| portee NAME IS ARRAY LEFT_BRACKET NUM_INTEGER RIGHT_BRACKET OF type EGAL LEFT_ACCOLADE noms RIGHT_ACCOLADE { printf("array declaration  with initializer list \n"); }
+| portee NAME IS ARRAY LEFT_BRACKET NAME RIGHT_BRACKET OF type EGAL LEFT_ACCOLADE noms RIGHT_ACCOLADE { printf("array declaration with size with initializer list \n"); }
+;
+
+//    -----------------------------vector Declaration----------------------------------------
+vector_declaration : 
+portee NAME IS VECTOR OF type { printf("vector declaration  \n"); }
+| portee NAME IS VECTOR LEFT_BRACKET NUM_INTEGER RIGHT_BRACKET OF type { printf("vector declaration with size \n"); }
+| portee NAME IS VECTOR LEFT_BRACKET NAME RIGHT_BRACKET OF type { printf("vector declaration with size \n"); }
+| portee NAME IS VECTOR OF type EGAL LEFT_ACCOLADE noms RIGHT_ACCOLADE { printf("vector declaration with initializer list \n"); }
+;
+
+//    -----------------------------list Declaration----------------------------------------
+list_declaration : 
+portee NAME IS LIST OF type { printf("list declaration  \n"); }
+| portee NAME IS LIST OF type EGAL LEFT_ACCOLADE noms RIGHT_ACCOLADE { printf("list declaration with initializer list \n"); }
+;
+
+//    -----------------------------set Declaration----------------------------------------
+set_declaration : 
+portee NAME IS SET OF type { printf("set declaration  \n"); }
+| portee NAME IS SET LEFT_BRACKET NUM_INTEGER RIGHT_BRACKET OF type { printf("set declaration with size \n"); }
+| portee NAME IS SET LEFT_BRACKET NAME RIGHT_BRACKET OF type { printf("set declaration with size \n"); }
+| portee NAME IS SET OF type EGAL LEFT_ACCOLADE noms RIGHT_ACCOLADE { printf("set declaration with initializer list \n"); }
+;
+
+//    -----------------------------map Declaration----------------------------------------
+map_declaration : 
+portee NAME IS MAP OF LT type COMMA type GT { printf("map declaration  \n"); }
+| map_declaration EGAL LEFT_ACCOLADE noms RIGHT_ACCOLADE { printf("map declaration with initializer list \n"); }
+;
+
+
 nbrOrName:
   NUM_INTEGER  {}
 | NUM_REAL
@@ -321,8 +365,10 @@ type:
 | TYPE_BOOLEAN  { }
 ;
 
+//    -----------------------------Initializer List----------------------------------------
 noms:
-  COMMA NAME noms {}
+NAME {}
+| COMMA NAME noms {}
 | COMMA NAME {}
 ;
 
@@ -369,6 +415,11 @@ single_expression:
 | designator {}
 | function_call {  $$ = $1;}
 | function_string {}
+| map_declaration {}
+| array_declaration {}
+| vector_declaration   {}
+| list_declaration  {}
+| set_declaration {}
 ;
 
 designator:
