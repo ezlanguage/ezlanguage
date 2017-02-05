@@ -15,7 +15,6 @@ extern int yylineno;
 
 %}
 
-phrase \"(\\.|[^"])*\"
 
 separateurs     [ \t]+
 number         [0-9]
@@ -25,12 +24,16 @@ reel			{entier}("."{entier})?
 
 mot 		    [A-z]+
 
+quote ["]
+
 ID ([a-z]|[A-Z])([a-z]|[A-Z]|[0-9]|_)*
 
-commentaire		(\/\*(.*)\*\/)|(\/\/(.*))
+phrase (\\.|[^"])*
+
+commentaire		(\/\*((.*)|(\n*))*\*\/)|(\/\/(.*))
 
 backLine 	\n
-
+minus     [-]
 
 %%
 
@@ -41,7 +44,6 @@ backLine 	\n
 
 {backLine}	return(BACK_LINE);
 
-{phrase}  {yylval.texte = yytext; return(STRING);}
 
 ","		return(COMMA);
 
@@ -55,7 +57,7 @@ backLine 	\n
 ">"     return GT; 
 ">="    return GE; 
 "+"     return PLUS; 
-"-"     return MINUS; 
+{minus}     return MINUS; 
 "*"     return MULT; 
 "/"   	return DIVISE;
 
@@ -74,6 +76,13 @@ backLine 	\n
 "]"		return (RIGHT_BRACKET);
 "."	        return (POINT);
 
+{quote}		return (QUOTATION_MARKS);
+
+(import|IMPORT)      return(IMPORT);
+(include|INCLUDE)    return(INCLUDE);
+(library|LIBRARY)    return(LIBRARY);
+(extern|EXTERN)      return(EXTERN);
+
 (mod|MOD)            return(MOD);
 (pow|POW)            return(POW);
 (abs|ABS)            return(ABS);
@@ -87,9 +96,10 @@ backLine 	\n
 (real|REAL)          return(TYPE_REAL);
 (string|STRING)      return(TYPE_STRING);
 (boolean|BOOLEAN)    return(TYPE_BOOLEAN);
-(shared|SHARED)    return(SHARED);
+(shared|SHARED)      return(SHARED);
 
 (if|IF)              return(IF);
+(then|THEN)          return(THEN);
 (else|ELSE)          return(ELSE);
 
 (begin|BEGIN)        return(BEGINN);
@@ -116,16 +126,21 @@ backLine 	\n
 
 (operator|OPERATOR)         return(OPERATOR);
 
-(class|CLASS)              return(CLASS);
-(program|PROGRAM)          return(PROGRAM);
-(destruct|DESTRUCT)                return(DESTRUCT);
+(class|CLASS)               return(CLASS);
+(program|PROGRAM)           return(PROGRAM);
+(destruct|DESTRUCT)         return(DESTRUCT);
 
-(print|PRINT)     { return(PRINT);        }
+(print|PRINT)     	    return(PRINT);   
 
+(arguments|ARGUMENTS)       return(ARGUMENTS);
+(as|AS)     		    return(AS);   
 
 {ID}	{	yylval.texte= yytext;
 	    		return (NAME);
 	}
+
+{quote}{minus}{minus}{ID}{quote}  {yylval.texte = yytext; return(STRING_PARAM);}
+{quote}{phrase}{quote}  {yylval.texte = yytext; return(STRING);}
 
 
 <<EOF>>     return END_OF_FILE;
