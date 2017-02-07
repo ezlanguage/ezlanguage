@@ -1,0 +1,23 @@
+class Person
+	nom is string
+	prenom is string
+
+	function get_nom() return string
+		return nom.toUpperCase()
+	end function
+
+	function get_prenom() return string
+		return nom.toLowerCase()
+	end function
+end class
+
+//classe main en ez
+
+program main
+procedure main()
+	p is Person
+	p.nom=”dupont”
+	p.prenom=”andre”
+	print "nom : " , p.get_nom(), ”\n”
+	print "prenom :" , p.get_prenom() , “\n”
+end procedure

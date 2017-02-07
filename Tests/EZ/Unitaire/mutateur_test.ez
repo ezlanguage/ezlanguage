@@ -1,0 +1,36 @@
+class Person
+	nom is string
+	prenom is string
+	age is integer
+
+	procedure set_nom(_nom is string)
+		nom= _nom.toLowerCase()
+	end procedure
+
+	procedure set_prenom(_prenom is string)
+		prenom= _prenom.toLowerCase()
+	end procedure
+
+	procedure set_age(_age is integer)
+	
+		if _age <=0 or _age>100 then
+			print “l’age n’est pas correct ! “
+		else
+			age = _age
+		end if
+	end procedure
+end class
+
+//classe main en ez
+program main
+
+procedure main()
+	p is Person
+	p.nom=”duPOnt”
+	p.prenom=”anDRe”
+	p.age=26
+	print "nom " , p.nom, ”\n”
+	print "prenom " , p.prenom , “\n”
+	print "age " , p.age , “\n”
+end procedure
+

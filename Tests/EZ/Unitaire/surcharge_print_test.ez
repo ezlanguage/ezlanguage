@@ -1,0 +1,26 @@
+class Person
+
+ 
+    nom is string
+    prenom is string
+    age is integer
+
+    procedure print() 
+        print “nom: ” , nom,  “  prenom:”, prenom, “  age: ”, age  
+    end procedure
+
+end class
+
+//main
+
+program main
+
+procedure main() 
+     
+     p is Person(“dupont”,”laurent”,25)
+     print p
+   
+end procedure
+
+//ouput
+nom: dupont  prenom: laurent  age: 25

@@ -1,0 +1,2 @@
+Il n’est pas nécessaire de définir un destructeur en langage EZ car il doit
+être créé automatiquement lors de la génération du code C++.

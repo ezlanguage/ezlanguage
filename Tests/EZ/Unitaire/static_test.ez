@@ -1,0 +1,30 @@
+class A 
+   // non static
+    var1 is integer 
+    procedure f1() 
+    end procedure
+
+
+   //static
+ var2 is shared integer = 0
+   
+ shared procedure f2() 
+ end procedure
+    
+end class
+
+
+// function main
+procedure main() 
+
+
+   // non static
+    a is A
+    a.var1 = 1
+    a.f1()
+   //static
+    A.var2 = 1; 
+    A.f2();
+
+
+end procedure

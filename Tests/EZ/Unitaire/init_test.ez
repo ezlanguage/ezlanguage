@@ -1,0 +1,11 @@
+class Person
+	// L’initialisation de la variable statique est obligatoire
+	compteur is shared integer=0
+	nom is string
+	prenom is string
+
+	__init__()
+		Person.compteur++
+	end init
+
+end class

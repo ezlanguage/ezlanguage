@@ -1,0 +1,21 @@
+class Person
+	nom is string
+	prenom is string
+	age is integer
+end class
+
+program main 
+
+procedure main()
+
+	// Déclaration de l’objet
+	p1 is ​ Person
+	// Initialisation des attributs
+	p.nom=​ "dupont"
+	p.prenom=​ "stephanie"
+	p.age=​ 26
+	// Construction de l’objet à partir du
+	constructeur de copie
+	p2 is ​ Person​ (p1)
+
+end procedure

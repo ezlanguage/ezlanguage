@@ -1,0 +1,22 @@
+
+//Méthode 1 
+function add() return integer
+       v is integer
+       v = 1 + 2
+       return v
+end function
+//Méthode 2
+
+function add(a,b are integer) return integer
+       v is integer
+       v = a + b
+       return v
+end function
+
+//Méthode 3
+
+function add(a,b,c are integer) return integer
+       v is integer
+       v = a + b + c
+       return v
+end function
