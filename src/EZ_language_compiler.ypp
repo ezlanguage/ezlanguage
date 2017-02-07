@@ -76,11 +76,11 @@ extern ScopeHashTable symbolTable;
 %%
 
 ROOT:
-  next_line_null PROGRAM NAME next_line declaration_class declarations_list BEGINN statement_sequence END END_OF_FILE
-      {
-        Node* p_decl_class = $5;
+  next_line_null PROGRAM NAME next_line declaration_class declarations_list PROCEDURE NAME LEFT_PARENTHESIS RIGHT_PARENTHESIS next_line statement_sequence  END  END_OF_FILE
+	{
+    	Node* p_decl_class = $5;
         Node* p_decl_list = $6;
-        Node* p_prog = $8;
+        Node* p_prog = $12;
         p_decl_class->setRightSon(p_decl_list);
         p_decl_list->setRightSon(p_prog);
 
@@ -88,7 +88,7 @@ ROOT:
 
         cout << racine->translate() << endl;
         return 0;
-      }
+	}
 ;
 
 next_line_null: /* can be empty */
@@ -101,29 +101,54 @@ next_line:  // one or several new line
 
 declarations_list:
   /* no declaration */
-|  declaration_variables  declaration_methods  { $$ = new Declaration();}
+| declaration_variables  declaration_methods  
+	{ 
+		PDVariables* vars = (PDVariables*) $1;
+		PDFunctions* functs = (PDFunctions*) $2;
+		$1->setRightSon(functs);
+		$$ = vars;
+	}
 
 declaration_class:
-| class declaration_class next_line {
-										Class* c = (Class *) $1;
-										$1->setRightSon($2);
-										$$ = c;
-									}
+| class declaration_class next_line 
+	{
+		Class* c = (Class *) $1;
+		$1->setRightSon($2);
+		$$ = c;
+	}
 ;
 
 declaration_methods:
- { $$ = new Declaration();}
-| declaration_methods function next_line { $$ = new Declaration();}
-| declaration_methods procedure next_line { $$ = new Declaration();}
+ 	{ $$ = NULL;}
+| function next_line declaration_methods
+	{ 
+		DeclarationFunction* f = (DeclarationFunction*) $1;
+		f->setRightSon($2);
+		$$ = f;
+	}
+| procedure next_line declaration_methods 
+	{ 
+		DeclarationProcedure* p = (DeclarationProcedure*) $1;
+		p->setRightSon($2);
+		$$ = p;
+	}
 ;
 
 declaration_variables:
- { $$ = new Declaration();}
-| declaration_variables   variable_with_scope {$$ = new Declaration();}
-| declaration_variables   variable_without_scope {$$ = new Declaration();}
+ 	{ $$ = NULL;}
+| variable_with_scope declaration_variables
+	{
+	}
+| variable_without_scope declaration_variables
+	{ 
+		$$ = new Declaration(); 
+	}
 
 class:
-CLASS NAME next_line BEGINN next_line statement_sequence END next_endclass { $$ = new Class(); }
+  CLASS NAME next_line BEGINN next_line statement_sequence END next_endclass 
+	{ 
+		$$ = new Class(); 
+	}
 ;
 
 
@@ -134,18 +159,51 @@ start_with_name:
 ;
 
 variable_without_scope:
-     NAME IS  type affect  { Variable v($1,$3); symbolTable.addElement(v); $$ = new Declaration($1,$3,"",false); }
-|    NAME noms ARE  type affect  { cout << "Declaration des variables1 "<< $1 << endl; }
-|    NAME IS SHARED type affect  { cout << "Declaration de la variable1 " << $1 << endl; }
-|    NAME noms ARE SHARED type affect  { cout << "Declaration des variables1 "<< $1 << endl; }
-|    declaration_construct  { cout << " declaration de contructeur " << endl ;}
+  NAME IS  type affect  
+	{ 
+		Variable v($1,$3); 
+		symbolTable.addElement(v); 
+		$$ = new Declaration($1,$3,"",false); 
+	}
+| NAME noms ARE  type affect  
+	{ 
+		cout << "Declaration des variables1 "<< $1 << endl; 
+	}
+| NAME IS SHARED type affect  
+	{ 
+		cout << "Declaration de la variable1 " << $1 << endl; 
+	}
+| NAME noms ARE SHARED type affect  
+	{ 
+		cout << "Declaration des variables1 "<< $1 << endl; 
+	}
+| declaration_construct  
+	{ 
+		cout << " declaration de contructeur " << endl ;
+	}
 ;
 
 variable_with_scope:
-    portee NAME IS type affect next_line { Variable v($2,$4); symbolTable.addElement(v); $$ = new Declaration($2,$4,$1,false); }
-|   portee NAME noms ARE type next_line { cout << "  Declaration des variables  avec portee "<< $2 << endl; }
-|   portee NAME IS SHARED type affect next_line {  Variable v($2,$4); symbolTable.addElement(v); $$ = new Declaration($2,$4,$1,true);  }
-|   portee NAME noms ARE SHARED type next_line { cout << "  Declaration des variables  avec portee "<< $2 << endl; }
+  portee NAME IS type affect next_line 
+  	{ 
+  		Variable v($2,$4); 
+  		symbolTable.addElement(v); 
+  		$$ = new Declaration($2,$4,$1,false); 
+  	}
+| portee NAME noms ARE type next_line 
+	{ 
+		cout << "  Declaration des variables  avec portee "<< $2 << endl; 
+	}
+| portee NAME IS SHARED type affect next_line 
+	{  
+		Variable v($2,$4); 
+		symbolTable.addElement(v); 
+		$$ = new Declaration($2,$4,$1,true);  
+	}
+| portee NAME noms ARE SHARED type next_line 
+	{ 
+		cout << "  Declaration des variables  avec portee "<< $2 << endl; 
+	}
 ;
 
 declaration_construct:
@@ -183,27 +241,39 @@ class_liste_argument_with_assignment:
 ;
 
 function:
-SHARED FUNCTION NAME LEFT_PARENTHESIS liste_argument { symbolTable.incScope(); } RIGHT_PARENTHESIS RETURN type next_line  BEGINN  next_line statement_sequence RETURN expression next_line END next_endfunction{  cout << "declaration de la fonction" << $3 << endl;}
+  SHARED FUNCTION NAME LEFT_PARENTHESIS liste_argument { symbolTable.incScope(); } RIGHT_PARENTHESIS RETURN type next_line  BEGINN  next_line statement_sequence RETURN expression next_line END next_endfunction
+	{  
+		cout << "declaration de la fonction " << $3 << endl;
+	}
 | FUNCTION NAME LEFT_PARENTHESIS liste_argument { symbolTable.incScope(); } RIGHT_PARENTHESIS RETURN type next_line  BEGINN  next_line statement_sequence RETURN expression next_line END next_endfunction{  cout << "declaration de la fonction" << $2 << endl;}
-		{
-			DeclarationFunction *f = new DeclarationFunction($2,$4,$8,$12,"blabla");
-			$$ = f;
-			//$$ = new Declaration();
-			symbolTable.decScope();
-		}
+	{
+		DeclarationFunction *f = new DeclarationFunction($2,$4,$8,$12,"blabla");
+		$$ = f;
+		//$$ = new Declaration();
+		symbolTable.decScope();
+	}
 ;
 
 procedure:
-  PROCEDURE PRINT LEFT_PARENTHESIS  RIGHT_PARENTHESIS next_line statement_sequence END next_endprocedure {cout << "Surcharge de la methode d'affichage \"print\" "  << endl;}
-| SHARED PROCEDURE NAME LEFT_PARENTHESIS liste_argument RIGHT_PARENTHESIS next_line statement_sequence END next_endprocedure {cout << "Declaration de la procedure " << $3 << endl;}
-| SHARED PROCEDURE PRINT LEFT_PARENTHESIS  RIGHT_PARENTHESIS next_line statement_sequence END next_endprocedure {cout << "Surcharge de la methode d'affichage \"print\" "  << endl;}
+  PROCEDURE PRINT LEFT_PARENTHESIS  RIGHT_PARENTHESIS next_line statement_sequence END next_endprocedure 
+  	{
+  		cout << "Surcharge de la methode d'affichage \"print\" "  << endl;
+  	}
+| SHARED PROCEDURE NAME LEFT_PARENTHESIS liste_argument RIGHT_PARENTHESIS next_line statement_sequence END next_endprocedure 
+	{
+		cout << "Declaration de la procedure " << $3 << endl;
+	}
+| SHARED PROCEDURE PRINT LEFT_PARENTHESIS  RIGHT_PARENTHESIS next_line statement_sequence END next_endprocedure 
+	{
+		cout << "Surcharge de la methode d'affichage \"print\" "  << endl;
+	}
 | PROCEDURE NAME LEFT_PARENTHESIS liste_argument { symbolTable.incScope(); } RIGHT_PARENTHESIS next_line statement_sequence  END next_endprocedure
-		{
-			DeclarationProcedure *f = new DeclarationProcedure($2,$4,$8);
-			$$ = f;
-			//$$ = new Declaration();
-			symbolTable.decScope();
-		}
+	{
+		DeclarationProcedure *f = new DeclarationProcedure($2,$4,$8);
+		$$ = f;
+		//$$ = new Declaration();
+		symbolTable.decScope();
+	}
 ;
 
 next_endclass:
@@ -258,8 +328,17 @@ statement_sequence:
 // TODO
 liste_argument:
  /* No argument */ { vector<Variable> v; $$ = v;}
- | NAME IS type { vector<Variable> v; v.push_back(Variable($1,$3)); $$ = v;}
- | NAME IS type COMMA liste_argument { $5.push_back(Variable($1,$3)); $$ = $5; }
+ | NAME IS type 
+ 	{ 
+ 		vector<Variable> v; 
+ 		v.push_back(Variable($1,$3));
+ 		$$ = v;
+ 	}
+ | NAME IS type COMMA liste_argument 
+ 	{ 
+ 		$5.push_back(Variable($1,$3)); 
+ 		$$ = $5; 
+ 	}
  | NAME noms ARE type {}
 ;
 
@@ -304,8 +383,8 @@ statement:
 // 		---------------------------------------------------------------------
 
 affectation:
-  NAME EGAL expression { cout << "Affectation name " <<  endl; }
-| NAME POINT NAME EGAL expression { cout << "Affectation name.name " <<  endl; }
+  NAME EGAL expression { cout << "Affectation " << $1 <<  endl; }
+| NAME POINT NAME EGAL expression { cout << "Affectation " << $1 << "."<<$3 <<  endl; }
 | NAME PLUS PLUS { cout << "Affectation ++" <<  endl; }
 | NAME MINUS MINUS {  cout << "Affectation --" <<  endl; }
 | PLUS PLUS NAME  { cout << "++ Affectation " <<  endl; }
