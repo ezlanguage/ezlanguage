@@ -1,0 +1,76 @@
+/**
+ * Created by : Fatima AMZIL
+ * About : this is a simple EZ test program about vectors in EZ language on primitif type.
+ */
+
+  print "###### Programme de test des vectors sur type primitif ######"
+
+  /*declare two vectors of int*/
+   v1 is vector of 10 integer
+   v2 is vector of 10 integer
+
+  /*fill vector*/
+  v1.fill(1);
+
+
+   /*fill in the vector with random values between 1..100*/
+   v2.randomize(1,100)
+
+   /*max element of vector*/
+   v2.max()
+   /*min element of vector*/
+   v2.min()
+
+   /*sort vector  */
+   v2.sort()
+
+   /*put first*/
+   v2.put_first(44)
+   /*put last*/
+   v2.put_last(77)
+
+   /*remove first*/
+   v2.remove_first()
+   /*remove last*/
+   v2.remove_last()
+
+   /*sum*/
+   v2.sum()
+
+   /*average*/
+   v2.average()
+
+   /*count*/
+  v2.count(60)
+
+   /*remove*/
+   v2.remove(44)
+   /*remove at a given index as param*/
+   v2.remove_at(4)
+
+   /*find*/
+  v2.find(44)
+
+   /*store in file outside src folder*/
+   v2.store( "../data/data.txt")
+
+   /*restore from file*/
+   v is vector of integer
+   v.restore( "../data/data.txt");
+
+   /*print vectors*/
+   print "print original vector"
+   v2.print();
+   print "print restored vector from file"
+   v.print()
+
+   /*check if vector is empty and clear the vector if so*/
+   if  v.is_empty()  then
+      v.clear()
+   end if
+   if v1.is_empty() then
+      v1.clear()
+   end if
+   if  v2.is_empty()  then
+     v2.clear()
+   end if
