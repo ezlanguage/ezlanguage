@@ -4,15 +4,18 @@
 #include <string>
 #include "Node.h"
 
-//boolean value (used in the loop)
+/**
+ * @brief 
+ * @author Antoine GARNIER
+ * 
+ * boolean value (used in the loop)
+ */
 class Condition :
         public Node {
 protected:
 
 public:
     Condition();
-
-    std::string translate();
 
 };
 

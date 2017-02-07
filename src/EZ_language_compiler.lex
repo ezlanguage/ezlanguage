@@ -25,7 +25,7 @@ reel			{entier}("."{entier})?
 
 mot 		    [A-z]+
 
-ID ([a-z]|[A-Z])([a-z]|[A-Z]|[0-9])*
+ID ([a-z]|[A-Z])([a-z]|[A-Z]|[0-9]|_)*
 
 commentaire		(\/\*(.*)\*\/)|(\/\/(.*))
 
@@ -57,7 +57,12 @@ backLine 	\n
 "+"     return PLUS; 
 "-"     return MINUS; 
 "*"     return MULT; 
-"/"   	return DIVISE; 
+"/"   	return DIVISE;
+
+"&"		return (AND);
+"|"		return (OR);
+"^"	        return (XOR);
+"!"	        return (NOT); 
 
 "("		return (LEFT_PARENTHESIS);
 ")"		return (RIGHT_PARENTHESIS);
@@ -67,8 +72,11 @@ backLine 	\n
 
 "["		return (LEFT_BRACKET);
 "]"		return (RIGHT_BRACKET);
-"."	    return (POINT);
+"."	        return (POINT);
 
+(mod|MOD)            return(MOD);
+(pow|POW)            return(POW);
+(abs|ABS)            return(ABS);
 
 (const|CONST)        return(CONST);
 (local|LOCAL)        return(LOCAL);
@@ -79,20 +87,20 @@ backLine 	\n
 (real|REAL)          return(TYPE_REAL);
 (string|STRING)      return(TYPE_STRING);
 (boolean|BOOLEAN)    return(TYPE_BOOLEAN);
+(shared|SHARED)    return(SHARED);
 
 (if|IF)              return(IF);
 (else|ELSE)          return(ELSE);
-(endif|ENDIF)        return(ENDIF);
+
+(begin|BEGIN)        return(BEGINN);
+(end|END)            return(END);
 
 (when|WHEN)           return(WHEN);
 (case|CASE)           return(CASE);
-(endcase|ENDCASE)     return(ENDCASE);
 (default|DEFAULT)     return(DEFAULT);
-(endwhen|ENDWHEN)     return(ENDWHEN);
 
 (while|WHILE)         return(WHILE);
 (do|DO)               return(DO);
-(endwhile|ENDWHILE)   return(ENDWHILE);
 
 (repeat|REPEAT)         return(REPEAT);
 (until|UNTIL)           return(UNTIL);
@@ -101,21 +109,45 @@ backLine 	\n
 (for|FOR)        return(FOR);
 (in|IN)          return(IN);
 (step|STEP)      return(STEP);
-(endfor|ENDFOR)  return(ENDFOR);
 
 (function|FUNCTION)         return(FUNCTION);
 (procedure|PROCEDURE)       return(PROCEDURE);
 (return|RETURN)             return(RETURN);
-(endfunction|ENDFUNCTION)   return(ENDFUNCTION);
-(endprocedure|ENDPROCEDURE) return(ENDPROCEDURE);
 
+(operator|OPERATOR)         return(OPERATOR);
+
+(class|CLASS)              return(CLASS);
+(program|PROGRAM)          return(PROGRAM);
+(destruct|DESTRUCT)        return(DESTRUCT);
 
 (print|PRINT)     { return(PRINT);        }
 
 
+(length|LENGTH)     			{ return(LENGTH);}
+(toUpperCase|TOUPPERCASE)     	{ return(TOUPPERCASE);}
+(toLowerCase|TOLOWERCASE)     	{ return(TOLOWERCASE);}
+(substring|SUBSTRING)     		{ return(SUBSTRING);}
+(split|SPLIT)     				{ return(SPLIT);}
+(strip|STRIP)     				{ return(STRIP);}
+(replace|REPLACE)     			{ return(REPLACE);}
+(contains|CONTAINS)     		{ return(CONTAINS);}
+(find|FIND)     				{ return(FIND);}
+(findFirstOf|FINDFIRSTOF)     	{ return(FINDFIRSTOF);}
+(findLastOf|FINDLASTOF)  		{ return(FINDLASTOF);}
+
+
+(array|ARRAY)        	return(ARRAY);
+(vector|VECTOR)        	return(VECTOR);
+(list|LIST)        		return(LIST);
+(set|SET)        		return(SET);
+(map|MAP)        		return(MAP);
+(of|OF)              	return(OF);
+
+
+
 {ID}	{	yylval.texte= yytext;
 	    		return (NAME);
-		}
+	}
 
 
 <<EOF>>     return END_OF_FILE;

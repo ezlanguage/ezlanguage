@@ -1,27 +1,31 @@
+//@author Antoine GARNIER
 #include "While.h"
+#include "../addons/String_addon.h"
 
-While::While(Condition while_cond, std::vector<std::string> instructions)
-    :while_condition(while_cond){
-    std::vector<std::string> res;
-    for(int i= 0; i < instructions.size(); ++i){
-        res[i]= instructions[i];
-    }
-    instructions= res;
+While::While(Condition* while_cond, Node* while_left_son, Node* while_right_son)
+    :Iterative_instruction(while_cond){
+    setLeftSon(while_left_son);
+    setRightSon(while_right_son);
 }
 
-std::string While::translate() {
+string While::preTranslate() const {
     std::string res;
-    Condition while_condition= get_condition();
-    std::vector<std::string> instructions= get_instructions();
+    Condition* while_condition= getCondition();
 
-    res= "while(" + while_condition + "){\n";
+//    The while condition is stored in the class
+	res= "while(" + while_condition->translate() + ") {";
 
-    for(int i= 0; i < instructions.size(); ++i){
-        std::string instruction_raw;
-        //white spaces here or not ?
-        instruction_raw= "   "+instructions[i]+";\n";
-        res+= instruction_raw;
-    }
-    res+= "}\n";
+//    The first instruction of the loop is the left son
+//    The second instruction is the right son of this left son...etc
+//    So here, we just translate the first one
+    res+= "   "+ getLeftSon()->translate();
+
     return res;
+}
+
+string While::postTranslate() const
+{
+    
+    //    The instructions are translated, the loop closes
+    return "}";
 }
