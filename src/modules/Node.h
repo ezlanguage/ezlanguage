@@ -9,11 +9,14 @@
  *
  */
 class Node {
+
 protected:
     std::string name;
+
+private:
     Node* left_son;
     Node* right_son;
-    
+
 public:
     /**
      * @brief Default constructor
