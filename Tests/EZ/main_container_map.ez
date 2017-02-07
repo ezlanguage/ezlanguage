@@ -1,0 +1,40 @@
+myMap is map of <string, integer>
+
+m.insert("a",1)
+m.insert("b",2)
+m.insert("c",3)
+
+print "The values are inserted"
+
+myMap.size()
+print "The size of myMap : ","\n"
+
+if myMap.is_empty() then
+	print "The map is empty","\n"
+else
+	print "The map is not empty"
+end if
+
+myMap.print()
+
+if myMap.exist(a) then
+	print "Key a found","\n"
+else
+	print "Key a not found","\n"
+end if
+
+
+myMap.find(a)
+print "The value of the key a :  ","\n"
+
+
+myMap.remove(b)
+print "The pair with key b has erased ","\n"
+myMap.print()
+
+myMap.clear();
+print "All pairs are removed ","\n"
+
+myMap.size()
+print "The size of myMap : ","\n"
+

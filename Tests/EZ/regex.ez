@@ -1,0 +1,44 @@
+program p
+procedure p()
+begin
+
+variable s1 is string = "This is a global example")
+variable s2 is string = "hello world! here you can find a global example! "
+variable s3 is string = "hello world! here you can find a global example! "
+
+print "Match example : \n"
+
+variable r1 is regex ="(This)(.*)"
+
+if r1.match(s1) then
+print "String object matched\n"
+end procedure
+
+
+print "\nSearch example : \n"
+
+variable r2 is regex ="\\b(he)([^ ]*)"
+
+variable m is smatch
+
+while r2.search (s2,m)
+do
+	foreach(x in m) do
+	print "x"
+	end each
+
+print "\n" 1
+
+s2 = m.suffix().str();
+
+end while
+
+print "\n"
+
+print "Replace example : \n"
+
+variable r3 is regex ="\\b(he)([^ ]*)"
+
+print "s3.replace(r3," He-$2") \n"
+
+end
