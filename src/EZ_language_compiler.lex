@@ -126,14 +126,28 @@ minus     [-]
 
 (operator|OPERATOR)         return(OPERATOR);
 
-(class|CLASS)               return(CLASS);
-(program|PROGRAM)           return(PROGRAM);
-(destruct|DESTRUCT)         return(DESTRUCT);
+(class|CLASS)              return(CLASS);
+(program|PROGRAM)          return(PROGRAM);
+(destruct|DESTRUCT)        return(DESTRUCT);
 
-(print|PRINT)     	    return(PRINT);   
+
+(print|PRINT)     	        return(PRINT);
 
 (arguments|ARGUMENTS)       return(ARGUMENTS);
-(as|AS)     		    return(AS);   
+(as|AS)     		        return(AS);
+
+(length|LENGTH)     			{ return(LENGTH);}
+(toUpperCase|TOUPPERCASE)     	{ return(TOUPPERCASE);}
+(toLowerCase|TOLOWERCASE)     	{ return(TOLOWERCASE);}
+(substring|SUBSTRING)     		{ return(SUBSTRING);}
+(split|SPLIT)     				{ return(SPLIT);}
+(strip|STRIP)     				{ return(STRIP);}
+(replace|REPLACE)     			{ return(REPLACE);}
+(contains|CONTAINS)     		{ return(CONTAINS);}
+(find|FIND)     				{ return(FIND);}
+(findFirstOf|FINDFIRSTOF)     	{ return(FINDFIRSTOF);}
+(findLastOf|FINDLASTOF)  		{ return(FINDLASTOF);}
+
 
 {ID}	{	yylval.texte= yytext;
 	    		return (NAME);

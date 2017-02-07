@@ -2,7 +2,7 @@
 #define DECLARATION_FUNCTION_H
 
 #include "Node.h"
-#include "Variable.h"
+#include "../hash_table/Variable.h"
 
 #include <vector>
 
@@ -46,25 +46,25 @@ public:
      * @brief Getter for the function's name
      * @return name of the function
      */
-    std::string getFunctionName(){return function_name;}
+    std::string getFunctionName() const {return function_name;}
 
     /**
      * @brief Getter for the return's type
      * @return return's type
      */
-    std::string getReturnType(){return return_type;}
+    std::string getReturnType() const {return return_type;}
 
     /**
      * @brief Getter for the argument's list
      * @return List of arguments
      */
-    std::vector<Variable> getArguments(){return arguments;}
+    std::vector<Variable> getArguments() const {return arguments;}
 
     /**
      * @brief Getter for the name of the variable used as the return variable
      * @return name of the variable returned by the function
      */
-    std::string getVariable(){return return_variable;}
+    std::string getVariable() const {return return_variable;}
 
     /**
      * @brief Setter of the function's name
@@ -90,11 +90,24 @@ public:
      * @param variable : variable's name used as the return value of the function
      */
     void setVariable(std::string variable){return_variable= variable;}
-
+    
     /**
-     * @brief : translate the function in C++
+     * @brief Translate the begining part of the DeclarationFunction
+     * @return a string containing the C++ code of the instruction
+     *
+     * All subclasses, should reimplement this method so that the translation corresponds
+     * to their specifications, specificities and own values
      */
-    std::string translate();
+    virtual std::string preTranslate() const;
+    
+    /**
+     * @brief Translate the end part of the DeclarationFunction
+     * @return a string containing the C++ code of the instruction
+     *
+     * All subclasses, should reimplement this method so that the translation corresponds
+     * to their specifications, specificities and own values
+     */
+    virtual std::string postTranslate() const;
 
 };
 

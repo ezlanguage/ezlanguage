@@ -14,6 +14,7 @@ obj/*
 !obj/*.md
 *.o
 *.gch
+*.output
 
 # User-specific files
 *.user

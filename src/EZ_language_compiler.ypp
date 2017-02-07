@@ -58,6 +58,11 @@ string get_argument_value(string & str ){
 %token CLASS PROGRAM  DESTRUCT						//class
 %token ARGUMENTS AS							// arguments	
 
+%token LENGTH TOUPPERCASE TOLOWERCASE     
+%token SUBSTRING SPLIT STRIP    
+%token REPLACE CONTAINS     
+%token FIND FINDFIRSTOF FINDLASTOF     
+
 %left PLUS MINUS EGAL
 %left NE LT LE GT GE MULT DIVISE AND OR XOR NOT MOD POW ABS OPERATOR		// Operators
 
@@ -115,6 +120,7 @@ param_type:
   TYPE_INTEGER { $$ = $1; }
 | TYPE_REAL   { $$ = $1; } 
 | TYPE_STRING  {$$ = $1; } 
+;
 
 class:
 CLASS NAME next_line begin  statement_sequence END next_endclass { cout << "declaration de la class" << $2 << endl; }
@@ -353,6 +359,27 @@ params:
 | expression COMMA params { $$ = $1 ;}
 ;
 
+function_string : 
+NAME POINT LENGTH LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("lENGTH() called \n"); }
+| NAME POINT TOUPPERCASE LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("toUpperCase() called \n"); }
+| NAME POINT TOLOWERCASE LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("toLowerCase() called \n"); }
+| NAME POINT SUBSTRING LEFT_PARENTHESIS NUM_INTEGER RIGHT_PARENTHESIS { printf("SUBSTRING(int) called \n"); }
+| NAME POINT SUBSTRING LEFT_PARENTHESIS NAME RIGHT_PARENTHESIS { printf("SUBSTRING(int) called \n"); }
+| NAME POINT SUBSTRING LEFT_PARENTHESIS NUM_INTEGER COMMA NUM_INTEGER RIGHT_PARENTHESIS { printf("SUBSTRING(int,int) called \n"); }
+| NAME POINT SUBSTRING LEFT_PARENTHESIS NAME COMMA NUM_INTEGER RIGHT_PARENTHESIS { printf("SUBSTRING(int,int) called \n"); }
+| NAME POINT SUBSTRING LEFT_PARENTHESIS NUM_INTEGER COMMA NAME RIGHT_PARENTHESIS { printf("SUBSTRING(int,int) called \n"); }
+| NAME POINT SUBSTRING LEFT_PARENTHESIS NAME COMMA NAME RIGHT_PARENTHESIS { printf("SUBSTRING(int,int) called \n"); }
+| NAME POINT SPLIT LEFT_PARENTHESIS STRING RIGHT_PARENTHESIS { printf("SPLIT(\"str\") called \n"); }
+| NAME POINT STRIP LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("strip() called \n"); }
+| NAME POINT STRIP LEFT_PARENTHESIS STRING RIGHT_PARENTHESIS { printf("strip(\"str\") called \n"); }
+| NAME POINT REPLACE LEFT_PARENTHESIS STRING COMMA STRING RIGHT_PARENTHESIS { printf("replace(\"str\",\"str\") called \n"); }
+| NAME POINT CONTAINS LEFT_PARENTHESIS STRING RIGHT_PARENTHESIS { printf("contain(\"str\") called \n"); }
+| NAME POINT FIND LEFT_PARENTHESIS STRING RIGHT_PARENTHESIS { printf("find(\"str\") called \n"); }
+| NAME POINT FINDFIRSTOF LEFT_PARENTHESIS STRING RIGHT_PARENTHESIS { printf("findFirstOF(\"str\") called \n"); }
+| NAME POINT FINDLASTOF LEFT_PARENTHESIS STRING RIGHT_PARENTHESIS { printf("findFirstOF(\"str\") called \n"); }
+;
+
+
 nbrOrName:
   NUM_INTEGER  { $$ = to_string($1);}
 | NUM_REAL {$$ = $1; }
@@ -418,6 +445,7 @@ single_expression:
 | NUM_INTEGER { $$ = $1;  }  // integer
 | designator {}
 | function_call {  $$ = $1;}
+| function_string {}
 ;
 
 designator:

@@ -14,9 +14,6 @@ public:
 
     DTypes(const std::string &name);
     DTypes(const std::string &name, PDVariables *son);
-
-    std::string translate();
-
 };
 
 

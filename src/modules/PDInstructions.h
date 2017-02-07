@@ -18,8 +18,6 @@ public:
 
     PDInstructions(const std::string &name);
 
-    std::string translate();
-
 };
 
 #endif // PDINSTRUCTIONS_H
