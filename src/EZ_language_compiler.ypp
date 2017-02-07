@@ -63,6 +63,8 @@ extern ScopeHashTable symbolTable;
 %token REPLACE CONTAINS
 %token FIND FINDFIRSTOF FINDLASTOF
 
+%token ARRAY VECTOR LIST SET MAP OF
+
 %left PLUS MINUS EGAL
 %left NE LT LE GT GE MULT DIVISE AND OR XOR NOT MOD POW ABS OPERATOR		// Operators
 
@@ -101,8 +103,8 @@ next_line:  // one or several new line
 
 declarations_list:
   /* no declaration */
-| declaration_variables  declaration_methods  
-	{ 
+| declaration_variables  declaration_methods
+	{
 		PDVariables* vars = (PDVariables*) $1;
 		PDFunctions* functs = (PDFunctions*) $2;
 		$1->setRightSon(functs);
@@ -110,7 +112,7 @@ declarations_list:
 	}
 
 declaration_class:
-| class declaration_class next_line 
+| class declaration_class next_line
 	{
 		Class* c = (Class *) $1;
 		$1->setRightSon($2);
@@ -121,13 +123,13 @@ declaration_class:
 declaration_methods:
  	{ $$ = NULL;}
 | function next_line declaration_methods
-	{ 
+	{
 		DeclarationFunction* f = (DeclarationFunction*) $1;
 		f->setRightSon($2);
 		$$ = f;
 	}
-| procedure next_line declaration_methods 
-	{ 
+| procedure next_line declaration_methods
+	{
 		DeclarationProcedure* p = (DeclarationProcedure*) $1;
 		p->setRightSon($2);
 		$$ = p;
@@ -140,14 +142,14 @@ declaration_variables:
 	{
 	}
 | variable_without_scope declaration_variables
-	{ 
-		$$ = new Declaration(); 
+	{
+		$$ = new Declaration();
 	}
 
 class:
-  CLASS NAME next_line BEGINN next_line statement_sequence END next_endclass 
-	{ 
-		$$ = new Class(); 
+  CLASS NAME next_line BEGINN next_line statement_sequence END next_endclass
+	{
+		$$ = new Class();
 	}
 ;
 
@@ -159,50 +161,50 @@ start_with_name:
 ;
 
 variable_without_scope:
-  NAME IS  type affect  
-	{ 
-		Variable v($1,$3); 
-		symbolTable.addElement(v); 
-		$$ = new Declaration($1,$3,"",false); 
+  NAME IS  type affect
+	{
+		Variable v($1,$3);
+		symbolTable.addElement(v);
+		$$ = new Declaration($1,$3,"",false);
 	}
-| NAME noms ARE  type affect  
-	{ 
-		cout << "Declaration des variables1 "<< $1 << endl; 
+| NAME noms ARE  type affect
+	{
+		cout << "Declaration des variables1 "<< $1 << endl;
 	}
-| NAME IS SHARED type affect  
-	{ 
-		cout << "Declaration de la variable1 " << $1 << endl; 
+| NAME IS SHARED type affect
+	{
+		cout << "Declaration de la variable1 " << $1 << endl;
 	}
-| NAME noms ARE SHARED type affect  
-	{ 
-		cout << "Declaration des variables1 "<< $1 << endl; 
+| NAME noms ARE SHARED type affect
+	{
+		cout << "Declaration des variables1 "<< $1 << endl;
 	}
-| declaration_construct  
-	{ 
+| declaration_construct
+	{
 		cout << " declaration de contructeur " << endl ;
 	}
 ;
 
 variable_with_scope:
-  portee NAME IS type affect next_line 
-  	{ 
-  		Variable v($2,$4); 
-  		symbolTable.addElement(v); 
-  		$$ = new Declaration($2,$4,$1,false); 
+  portee NAME IS type affect next_line
+  	{
+  		Variable v($2,$4);
+  		symbolTable.addElement(v);
+  		$$ = new Declaration($2,$4,$1,false);
   	}
-| portee NAME noms ARE type next_line 
-	{ 
-		cout << "  Declaration des variables  avec portee "<< $2 << endl; 
+| portee NAME noms ARE type next_line
+	{
+		cout << "  Declaration des variables  avec portee "<< $2 << endl;
 	}
-| portee NAME IS SHARED type affect next_line 
-	{  
-		Variable v($2,$4); 
-		symbolTable.addElement(v); 
-		$$ = new Declaration($2,$4,$1,true);  
+| portee NAME IS SHARED type affect next_line
+	{
+		Variable v($2,$4);
+		symbolTable.addElement(v);
+		$$ = new Declaration($2,$4,$1,true);
 	}
-| portee NAME noms ARE SHARED type next_line 
-	{ 
-		cout << "  Declaration des variables  avec portee "<< $2 << endl; 
+| portee NAME noms ARE SHARED type next_line
+	{
+		cout << "  Declaration des variables  avec portee "<< $2 << endl;
 	}
 ;
 
@@ -242,7 +244,7 @@ class_liste_argument_with_assignment:
 
 function:
   SHARED FUNCTION NAME LEFT_PARENTHESIS liste_argument { symbolTable.incScope(); } RIGHT_PARENTHESIS RETURN type next_line  BEGINN  next_line statement_sequence RETURN expression next_line END next_endfunction
-	{  
+	{
 		cout << "declaration de la fonction " << $3 << endl;
 	}
 | FUNCTION NAME LEFT_PARENTHESIS liste_argument { symbolTable.incScope(); } RIGHT_PARENTHESIS RETURN type next_line  BEGINN  next_line statement_sequence RETURN expression next_line END next_endfunction{  cout << "declaration de la fonction" << $2 << endl;}
@@ -255,15 +257,15 @@ function:
 ;
 
 procedure:
-  PROCEDURE PRINT LEFT_PARENTHESIS  RIGHT_PARENTHESIS next_line statement_sequence END next_endprocedure 
+  PROCEDURE PRINT LEFT_PARENTHESIS  RIGHT_PARENTHESIS next_line statement_sequence END next_endprocedure
   	{
   		cout << "Surcharge de la methode d'affichage \"print\" "  << endl;
   	}
-| SHARED PROCEDURE NAME LEFT_PARENTHESIS liste_argument RIGHT_PARENTHESIS next_line statement_sequence END next_endprocedure 
+| SHARED PROCEDURE NAME LEFT_PARENTHESIS liste_argument RIGHT_PARENTHESIS next_line statement_sequence END next_endprocedure
 	{
 		cout << "Declaration de la procedure " << $3 << endl;
 	}
-| SHARED PROCEDURE PRINT LEFT_PARENTHESIS  RIGHT_PARENTHESIS next_line statement_sequence END next_endprocedure 
+| SHARED PROCEDURE PRINT LEFT_PARENTHESIS  RIGHT_PARENTHESIS next_line statement_sequence END next_endprocedure
 	{
 		cout << "Surcharge de la methode d'affichage \"print\" "  << endl;
 	}
@@ -328,16 +330,16 @@ statement_sequence:
 // TODO
 liste_argument:
  /* No argument */ { vector<Variable> v; $$ = v;}
- | NAME IS type 
- 	{ 
- 		vector<Variable> v; 
+ | NAME IS type
+ 	{
+ 		vector<Variable> v;
  		v.push_back(Variable($1,$3));
  		$$ = v;
  	}
- | NAME IS type COMMA liste_argument 
- 	{ 
- 		$5.push_back(Variable($1,$3)); 
- 		$$ = $5; 
+ | NAME IS type COMMA liste_argument
+ 	{
+ 		$5.push_back(Variable($1,$3));
+ 		$$ = $5;
  	}
  | NAME noms ARE type {}
 ;
@@ -412,6 +414,8 @@ NAME POINT NAME LEFT_PARENTHESIS RIGHT_PARENTHESIS {}
 | NAME POINT NAME { }
 ;
 
+
+//    -----------------------------STRING METHODS----------------------------------------
 function_string :
 NAME POINT LENGTH LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("lENGTH() called \n"); }
 | NAME POINT TOUPPERCASE LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("toUpperCase() called \n"); }
@@ -433,6 +437,46 @@ NAME POINT LENGTH LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("lENGTH() called \
 ;
 
 
+//    -----------------------------array Declaration----------------------------------------
+array_declaration :
+portee NAME IS ARRAY LEFT_BRACKET NUM_INTEGER POINT POINT NUM_INTEGER RIGHT_BRACKET OF type { printf("array declaration with lower and upper bound \n"); }
+| portee NAME IS ARRAY LEFT_BRACKET NUM_INTEGER POINT POINT NAME RIGHT_BRACKET OF type { printf("array declaration with lower and upper bound \n"); }
+| portee NAME IS ARRAY LEFT_BRACKET NAME POINT POINT NUM_INTEGER RIGHT_BRACKET OF type { printf("array declaration with lower and upper bound\n"); }
+| portee NAME IS ARRAY LEFT_BRACKET NUM_INTEGER RIGHT_BRACKET OF type { printf("array declaration with size \n"); }
+| portee NAME IS ARRAY LEFT_BRACKET NAME RIGHT_BRACKET OF type { printf("array declaration with size \n"); }
+| portee NAME IS ARRAY LEFT_BRACKET NUM_INTEGER RIGHT_BRACKET OF type EGAL LEFT_ACCOLADE noms RIGHT_ACCOLADE { printf("array declaration  with initializer list \n"); }
+| portee NAME IS ARRAY LEFT_BRACKET NAME RIGHT_BRACKET OF type EGAL LEFT_ACCOLADE noms RIGHT_ACCOLADE { printf("array declaration with size with initializer list \n"); }
+;
+
+//    -----------------------------vector Declaration----------------------------------------
+vector_declaration :
+portee NAME IS VECTOR OF type { printf("vector declaration  \n"); }
+| portee NAME IS VECTOR LEFT_BRACKET NUM_INTEGER RIGHT_BRACKET OF type { printf("vector declaration with size \n"); }
+| portee NAME IS VECTOR LEFT_BRACKET NAME RIGHT_BRACKET OF type { printf("vector declaration with size \n"); }
+| portee NAME IS VECTOR OF type EGAL LEFT_ACCOLADE noms RIGHT_ACCOLADE { printf("vector declaration with initializer list \n"); }
+;
+
+//    -----------------------------list Declaration----------------------------------------
+list_declaration :
+portee NAME IS LIST OF type { printf("list declaration  \n"); }
+| portee NAME IS LIST OF type EGAL LEFT_ACCOLADE noms RIGHT_ACCOLADE { printf("list declaration with initializer list \n"); }
+;
+
+//    -----------------------------set Declaration----------------------------------------
+set_declaration :
+portee NAME IS SET OF type { printf("set declaration  \n"); }
+| portee NAME IS SET LEFT_BRACKET NUM_INTEGER RIGHT_BRACKET OF type { printf("set declaration with size \n"); }
+| portee NAME IS SET LEFT_BRACKET NAME RIGHT_BRACKET OF type { printf("set declaration with size \n"); }
+| portee NAME IS SET OF type EGAL LEFT_ACCOLADE noms RIGHT_ACCOLADE { printf("set declaration with initializer list \n"); }
+;
+
+//    -----------------------------map Declaration----------------------------------------
+map_declaration :
+portee NAME IS MAP OF LT type COMMA type GT { printf("map declaration  \n"); }
+| map_declaration EGAL LEFT_ACCOLADE noms RIGHT_ACCOLADE { printf("map declaration with initializer list \n"); }
+;
+
+
 nbrOrName:
   NUM_INTEGER  {}
 | NUM_REAL
@@ -451,8 +495,10 @@ type:
 | TYPE_BOOLEAN  { $$ = "bool";}
 ;
 
+//    -----------------------------Initializer List----------------------------------------
 noms:
-  COMMA NAME noms {}
+NAME {}
+| COMMA NAME noms {}
 | COMMA NAME {}
 ;
 
@@ -499,6 +545,11 @@ single_expression:
 | designator {}
 | function_call {  $$ = $1;}
 | function_string {}
+| map_declaration {}
+| array_declaration {}
+| vector_declaration   {}
+| list_declaration  {}
+| set_declaration {}
 ;
 
 designator:

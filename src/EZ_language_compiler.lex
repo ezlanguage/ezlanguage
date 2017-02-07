@@ -136,6 +136,15 @@ backLine 	\n
 (findLastOf|FINDLASTOF)  		{ return(FINDLASTOF);}
 
 
+(array|ARRAY)        	return(ARRAY);
+(vector|VECTOR)        	return(VECTOR);
+(list|LIST)        		return(LIST);
+(set|SET)        		return(SET);
+(map|MAP)        		return(MAP);
+(of|OF)              	return(OF);
+
+
+
 {ID}	{	yylval.texte= yytext;
 	    		return (NAME);
 	}
