@@ -2,7 +2,6 @@
 CC = g++-5
 # flags de compilation
 CC_FLAGS = -Wall -std=c++11 #-ggdb
-EXT_SRC = 
 CC_MOD_FLAGS = -MM #-MP 
 
 # extension des fichiers lex (.XXX)
@@ -10,7 +9,6 @@ LEX_EXT = lex
 # interpréteur du fichier Lex : analyse lexicale
 LEX = flex
 LEX_FlAGS =
-
 
 # extension des fichiers yacc (.XXX)
 YACC_EXT = ypp
@@ -21,7 +19,6 @@ YACC_FLAGS =
 #sources cpp
 # --- RAJOUTER CHAQUE FICHIER CPP DE MODULES ICI ! ---
 # --- FAIRE UN FICHIER CPP POUR CHAQUE FICHIER H S'IL Y A UNE CLASSE DEDANS ---
-
 MOD_CPP = src/modules/ArrayAccess.cpp src/modules/ArrayDeclaration.cpp src/modules/Class.cpp src/modules/If.cpp src/modules/Node.cpp src/modules/Operator.cpp src/modules/Program.cpp src/modules/Range.cpp
 MOD_CPP += src/modules/Declaration.cpp src/modules/DeclarationFunction.cpp src/modules/DeclarationProcedure.cpp
 MOD_CPP += src/modules/Foreach.cpp src/modules/Forall.cpp src/modules/Repeat.cpp src/modules/While.cpp
@@ -36,6 +33,9 @@ ADDONS_CPP += src/addons/String_addon.cpp
 
 # sources table des symboles
 HT_CPP = src/hash_table/HashElement.cpp src/hash_table/Function.cpp src/hash_table/HashTable.cpp src/hash_table/ScopeHashTable.cpp src/hash_table/Variable.cpp src/hash_table/ClassDeclaration.cpp src/hash_table/ClassHashTable.cpp
+
+#sources de tests cpp
+MOD_CPPUNIT = tests/cppunit/TesterRunner.cpp tests/cppunit/arraytest.cpp 
 
 ALL_CPP = ${MOD_CPP} ${ADDONS_CPP} ${HT_CPP}
 
@@ -55,7 +55,7 @@ EXEC = EZ_language_compiler
 
 
 #compilateur
-all: $(EXEC)
+all: $(EXEC) 
 
 EZ_language_compiler: obj/lex.yy.c obj/EZ_language_compiler.tab.cpp obj/EZ_language_compiler.tab.hpp $(ALL_OBJ) 
 	@echo -e "\033[1;33mCréation du compilateur en compilant les sources\033[0m"
@@ -91,6 +91,7 @@ obj/%.d: src/addons/%.cpp
 #include ici  --- A NE PAS DEPLACER
 -include $(ALL_DPDCY) 
 
+
 #objets
 obj/%.o: src/modules/%.cpp
 	@echo -e "\033[1;33mFichier objet pour le fichier $< créé : \033[0m"
@@ -106,6 +107,12 @@ obj/%.o: src/addons/%.cpp
 	@echo -e "\033[1;33mFichier objet pour le fichier $< créé : \033[0m"
 	$(CC) -c $< -o $@ $(CC_FLAGS)
 	@echo ""
+
+
+#tests
+unittests: $(ALL_OBJ) $(MOD_CPPUNIT)
+	$(CC) $(CC_FLAGS) $^ -o bin/$@ -lcppunit
+
 
 #clean  
 clean:
@@ -133,6 +140,7 @@ doc:
 	@echo -e "\n\033[1;33mOuverture de la documentation ...\033[0m"
 	@xdg-open  docs/html/index.html
 
+
 #aide
 aide: help
 
@@ -144,4 +152,3 @@ help:
 	@echo ""
 	@echo -e "\033[3mVersions requises : g++ (5.4.0), lex (2.6.0), yacc (3.0.4)\033[0m"
 	@echo "" 
-
