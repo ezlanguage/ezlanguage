@@ -10,7 +10,7 @@
  * @class DeclarationContainer
  * @brief Class representing the declarations of data structer
  * 
- * @author LAHYANI Zakaria
+ * @author LAHYANI Zakaria - Ismail ELFAQIR
  */
 class DeclarationContainer 
 {
@@ -20,14 +20,14 @@ class DeclarationContainer
     /* * * * * * * * *
     * CONSTRUCTORS  *
     * * * * * * * * */
-		
+        
 
     /**
     * Minimal constructor Takes the container type, and name (its name)
     * 
     * @param : variable 
     *
-    * @author LAHYANI Zakaria
+    * @author LAHYANI Zakaria - Ismail ELFAQIR
     */
     DeclarationContainer(Variable *);
 
@@ -36,7 +36,7 @@ class DeclarationContainer
     * @param : variable 
     * @param : size
     *
-    * @author LAHYANI Zakaria
+    * @author LAHYANI Zakaria - Ismail ELFAQIR
     */
     DeclarationContainer(Variable *,  int);
 
@@ -48,6 +48,16 @@ class DeclarationContainer
     * @author LAHYANI Zakaria
     */
     DeclarationContainer(Variable *, std::vector<std::string>);
+
+    /**
+    * Constructor Takes the container variable, name and its initial values
+    * @param : variable 
+    * @param : size 
+    * @param : intial values
+    *
+    * @author LAHYANI Zakaria
+    */
+    DeclarationContainer(Variable *, int, std::vector<std::string>);
 
     /**
     * Copy COnstructor 
@@ -74,7 +84,7 @@ class DeclarationContainer
     /**
     * getter of Variable
     *
-    * @author LAHYANI Zakaria
+    * @author LAHYANI Zakaria - Ismail ELFAQIR
     */
     Variable * get_variable() const;
 
@@ -95,7 +105,7 @@ class DeclarationContainer
     /**
     * getter of container's size
     *
-    * @author LAHYANI Zakaria
+    * @author LAHYANI Zakaria - Ismail ELFAQIR
     */
     int get_size() const;
 
@@ -104,7 +114,8 @@ class DeclarationContainer
     * setter of variable
     *
     * @param v : the Variable of the container
-    * @author LAHYANI Zakaria
+    *
+    * @author LAHYANI Zakaria - Ismail ELFAQIR
     */
     void container_variable(Variable *);
 
@@ -121,7 +132,8 @@ class DeclarationContainer
     * setter of container's size
     *
     * @param v : initial values of the container
-    * @author LAHYANI Zakaria
+    *
+    * @author LAHYANI Zakaria - Ismail ELFAQIR
     */
     void container_size(int);
 

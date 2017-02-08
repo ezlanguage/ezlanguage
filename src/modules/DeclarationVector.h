@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <iostream>
+
 #include "Node.h"
 #include "../hash_table/Variable.h"
 #include "DeclarationContainer.h"
@@ -14,15 +15,15 @@
  * @author LAHYANI Zakaria
  */
 
-class DeclarationVector : public Node , DeclarationContainer
+class DeclarationVector : public Node , public DeclarationContainer
 {
    public:
-		
+        
 
     /* * * * * * * * *
     * CONSTRUCTORS  *
     * * * * * * * * */
-		
+        
 
     /**
     * Minimal constructor Takes the container type, and name (its name)
@@ -66,7 +67,7 @@ class DeclarationVector : public Node , DeclarationContainer
     /* * * * * * * *
     * Translation  *
     * * * * * * * **/
-		
+        
 
     /**
      * @brief Translation of the instruction into it's C++ counterpart
