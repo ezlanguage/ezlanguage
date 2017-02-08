@@ -41,7 +41,7 @@ string If::preTranslate() const
 	    break;	
     }
     
-    res=block+"{\n";
+    res=block+"{";
     
     return res;
 }
@@ -49,5 +49,5 @@ string If::preTranslate() const
 
 string If::postTranslate() const
 {
-    return "}\n";
+    return "}";
 }
