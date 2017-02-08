@@ -1,35 +1,18 @@
-// possibilite de declaration des variables sans précision de leurs portée
-// - retour en ligne(new_line) ne peut pas etre vide
-// - l'affichage => à ameliorer, mais il faut attendre que kamal finit son travail
-// - les commentaires : à ameliorer
+program person_main
 
+import person
+include "usr/include/math.h"
+library "/usr/lib/src -lm"
 
-y is real
-global rr,e are integer
+ // ceci est un programme main qui utilise le module « person »
+ procedure person_main()
+    driss is person(1,"Driss", 40)
+    hossam is person(2, "Hossam", 20)
+    if driss.isOlderThan(hossam.age) then
+       print driss.name," is older than ", hossam.name
+    else
+    print hossam.name," is older than ", driss.name
+    end // il est tout à fait possible d’écrire end if aussi
+ end procedure
 
- function test() return INTEGER
-   x = 5 
-return 5+9
-end function
-
-local i,y are integer
-x = 5
---x
- x,y are integer
-local r is real
-
-if (5<a) do
-print "ok"
-end 
-
-while adam > driss do
-	print "adam m9owd"
-end while
-
-repeat x = x +1
-UNTIL 
-	5>B
-END REPEAT
-
-
-
+function cos(x is real) is extern cos

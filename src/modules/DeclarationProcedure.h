@@ -2,6 +2,9 @@
 #define DECLARATION_PROCEDURE_H
 
 #include "Node.h"
+#include "../hash_table/Variable.h"
+
+#include <vector>
 
 /**
  * @brief Allows the declaration of procedures
@@ -16,7 +19,7 @@ class DeclarationProcedure
 
 protected:
     std::string procedure_name;
-    Node* arguments;
+    std::vector<Variable> arguments;
 
 public:
     /**
@@ -30,19 +33,19 @@ public:
      * @param args : arguments list of the procedure
      * @param instructions : instructions of the procedure
      */
-    DeclarationProcedure(std::string name, Node* args, Node* instructions);
+    DeclarationProcedure(std::string name, std::vector<Variable> args, Node* instructions);
 
     /**
      * @brief Getter for the procedure's name
      * @return name of the procedure
      */
-    std::string getProcedureName(){return procedure_name;}
+    std::string getProcedureName() const {return procedure_name;}
 
     /**
      * @brief Getter for the argument's list
      * @return List of arguments
      */
-    Node* getArguments(){return arguments;}
+    std::vector<Variable> getArguments() const {return arguments;}
 
     /**
      * @brief Setter of the procedure's name
@@ -54,12 +57,25 @@ public:
      * @brief Setter of the list of arguments
      * @param arguments : list of the arguments of the function
      */
-    void setArguments(Node* args){arguments= args;}
-
+    void setArguments(std::vector<Variable> args){arguments= args;}
+    
     /**
-    * @brief : translate the procedure in C++
-    */
-    std::string translate();
+     * @brief Translate the begining part of the Procedure
+     * @return a string containing the C++ code of the instruction
+     *
+     * All subclasses, should reimplement this method so that the translation corresponds
+     * to their specifications, specificities and own values
+     */
+    virtual std::string preTranslate() const;
+    
+    /**
+     * @brief Translate the end part of the Procedure
+     * @return a string containing the C++ code of the instruction
+     *
+     * All subclasses, should reimplement this method so that the translation corresponds
+     * to their specifications, specificities and own values
+     */
+    virtual std::string postTranslate() const;
 
 };
 
