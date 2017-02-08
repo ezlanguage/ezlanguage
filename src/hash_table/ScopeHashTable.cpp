@@ -65,26 +65,6 @@ void ScopeHashTable::addElement(Variable& v)
 
 
 
-/*void ScopeHashTable::removeElement(const Variable& v)
-{
-  if (this->empty() || (v.get_scope() > (_scopeStack.size() -1))) throw string("Error, the Variable is not in the hash table");
-  else if ((_scopeStack.size() > 0)&&(_scopeStack.size() > (v.get_scope() + 1))) throw string("Error, can not remove a Variable with such a small scope");
-  else {
-    list<list<Variable>::iterator>::iterator it;
-    bool found = false;
-    for (it = _scopeStack.top().begin(); (it != _scopeStack.top().end())&&(!found); ++it) {
-      if (**it == v) {
-	this->at(hash(v.get_id())).erase(*it);
-	_scopeStack.top().erase(it);
-	found = true;
-      }
-    }
-    if (!found) throw string("Error, the Variable is not in the hash table");
-  }
-}*/
-
-
-
 string ScopeHashTable::get_type(const string& id) const
 {
     int index = hash(id);

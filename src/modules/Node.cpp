@@ -8,6 +8,9 @@ Node::Node()
 Node::Node(const string &name) : name(name), left_son(nullptr), right_son(nullptr)
 {}
 
+Node::Node(Node* left, Node* right): left_son(left), right_son(right)
+{}
+
 Node::~Node()
 {
     delete left_son;
