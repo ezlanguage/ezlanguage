@@ -4,19 +4,19 @@
 
 using namespace std;
 
-If::If():Conditionnal_instruction(), block_type(3)
+If::If():condition(nullptr), block_type(3)
 {}
 
-If::If(int bt):Conditionnal_instruction(), block_type(bt)
+If::If(int bt):condition(nullptr), block_type(bt)
 {}
 
-If::If(Condition *c):Conditionnal_instruction(c), block_type(3)
+If::If(Condition *c):condition(c), block_type(3)
 {}
 
-If::If(Condition *c, int bt):Conditionnal_instruction(c),block_type(bt)
+If::If(Condition *c, int bt):condition(c),block_type(bt)
 {}
 
-If::If(const If &obj):Conditionnal_instruction(obj),block_type(obj.block_type)
+If::If(const If &obj):condition(obj.condition),block_type(obj.block_type)
 {}
 
 If::~If()
@@ -30,16 +30,24 @@ void If::set_block_type(int bt){
 	block_type=bt;
 }
 
+const Condition & If::get_condition() const {
+	return *condition;
+}
+
+void If::set_condition(Condition * c) {
+	condition=c;
+}
+
 string If::preTranslate() const
 {
     string res="", block;
     
     switch (block_type) {
 	case block_if :
-	    block="if("+ get_condition().translate()+")";
+	    block="if("+ condition->preTranslate()+")";
 	    break;
 	case block_else_if :
-	    block= "else if("+get_condition().translate()+")";
+	    block= "else if("+condition->preTranslate()+")";
 	    break;
 	case block_else :
 	    block= "else";

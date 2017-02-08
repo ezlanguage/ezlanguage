@@ -29,7 +29,7 @@ MOD_CPP += src/modules/Holder.cpp src/modules/DTypes.cpp src/modules/DConstants.
 MOD_CPP += src/modules/PDInstructions.cpp src/modules/PDFunctions.cpp src/modules/PDVariables.cpp
 
 # Fichiers cpp existants, mais dont la méthode preTranslate() est manquante dans la classe
-UNIMPLEMENTED_MOD_CPP =  src/modules/Condition.cpp src/modules/ExpressionConditionnelle.cpp src/modules/Instruction.cpp src/modules/Conditionnal_instruction.cpp  src/modules/Iterative_instruction.cpp
+UNIMPLEMENTED_MOD_CPP =  src/modules/Condition.cpp src/modules/ExpressionConditionnelle.cpp src/modules/Instruction.cpp src/modules/Iterative_instruction.cpp
 MOD_CPP += $(UNIMPLEMENTED_MOD_CPP)
 
 ADDONS_CPP += src/addons/String_addon.cpp
