@@ -6,12 +6,12 @@
 #define DFUNCTIONS_H
 
 
-#include "PDInstructions.h"
+#include "Node.h"
 
 /**
  * This class represents the functions declaration part
  */
-class PDFunctions : public Holder {
+class PDFunctions : public Node {
 
 public:
     PDFunctions();
