@@ -1,3 +1,12 @@
+# OS detection : ROUINEB Hamza
+OS := $(shell uname)
+FLAG=-lfl 
+ifeq ($(OS),Darwin)
+# Run MacOS commands
+	FLAG=-ll
+endif
+# OS detection
+
 #compilateur utilisé
 CC = g++-5
 # flags de compilation
@@ -52,6 +61,7 @@ ALL_DPDCY = $(ALL_OBJ:%.o=%.d)
 #executables
 # nom de l'exe, doit avoir le meme nom que le fichier lex
 EXEC = EZ_language_compiler
+EXEC_TEST = unittests
 
 
 #compilateur
@@ -59,7 +69,7 @@ all: $(EXEC)
 
 EZ_language_compiler: obj/lex.yy.c obj/EZ_language_compiler.tab.cpp obj/EZ_language_compiler.tab.hpp $(ALL_OBJ) 
 	@echo -e "\033[1;33mCréation du compilateur en compilant les sources\033[0m"
-	$(CC) -o bin/$@ obj/EZ_language_compiler.tab.cpp obj/lex.yy.c $(ALL_OBJ) -lfl $(CC_FLAGS)
+	$(CC) -o bin/$@ obj/EZ_language_compiler.tab.cpp obj/lex.yy.c $(ALL_OBJ) $(FLAG) $(CC_FLAGS)
 
 obj/lex.yy.c: src/EZ_language_compiler.$(LEX_EXT) obj/EZ_language_compiler.tab.hpp
 	@echo -e "\033[1;33mInterprétation du fichier Lex\033[0m"
@@ -126,6 +136,7 @@ mrproper: clean
 	@echo ""
 	@echo -e "\033[1;33mSuppression de l'exécutable\033[0m"
 	rm -rf bin/$(EXEC)
+	rm -rf bin/$(EXEC_TEST)
 	rm -rf docs/html/*
 
 launch: all
