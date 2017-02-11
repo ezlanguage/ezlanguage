@@ -16,8 +16,7 @@
  *              return variable;
  *          end function
  */
-class DeclarationFunction
-    : public Node {
+class DeclarationFunction : public Node {
 
 protected:
     std::string function_name;
