@@ -1,7 +1,7 @@
 #compilateur utilisé
 CC = g++-5
 # flags de compilation
-CC_FLAGS = -Wall -std=c++11 #-ggdb
+CC_FLAGS = -Wall -std=c++11 -ggdb
 EXT_SRC = 
 CC_MOD_FLAGS = -MM #-MP 
 
@@ -23,17 +23,11 @@ YACC_FLAGS =
 # --- FAIRE UN FICHIER CPP POUR CHAQUE FICHIER H S'IL Y A UNE CLASSE DEDANS ---
 
 # Divers
-MOD_CPP = src/modules/ArrayAccess.cpp src/modules/Class.cpp src/modules/If.cpp src/modules/Node.cpp src/modules/Operator.cpp src/modules/Program.cpp src/modules/Range.cpp
+MOD_CPP = src/modules/ArrayAccess.cpp src/modules/Class.cpp src/modules/If.cpp src/modules/Node.cpp src/modules/Operator.cpp src/modules/Program.cpp src/modules/Range.cpp src/modules/ExpressionConditionnelle.cpp
 # Déclarations
 MOD_CPP += src/modules/DeclarationVariable.cpp src/modules/DeclarationFunction.cpp src/modules/DeclarationProcedure.cpp src/modules/DeclarationContainer.cpp 
 # Boucles
 MOD_CPP += src/modules/Foreach.cpp src/modules/Forall.cpp src/modules/Repeat.cpp src/modules/While.cpp
-# Holder et sous classes (à revoir)
-MOD_CPP += src/modules/DConstants.cpp
-
-# Fichiers cpp existants, mais dont la méthode preTranslate() est manquante dans la classe
-UNIMPLEMENTED_MOD_CPP = src/modules/Condition.cpp src/modules/Instruction.cpp src/modules/Iterative_instruction.cpp
-MOD_CPP += $(UNIMPLEMENTED_MOD_CPP)
 
 ADDONS_CPP += src/addons/String_addon.cpp
 
