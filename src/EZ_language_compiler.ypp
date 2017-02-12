@@ -79,7 +79,7 @@ ROOT:
 ;
 
 // zero or several new lines
-next_line_null: 
+next_line_null:
 | next_line {}
 ;
 

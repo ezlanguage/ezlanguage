@@ -54,12 +54,16 @@ void ScopeHashTable::addElement(Variable& v)
   if (this->empty()) throw string("Error, can not add a Variable because the size of the hash table is null");
   else if (this->contains(v.get_id(), _currentScope)) throw string("Variable "+v.get_id()+" already defined");
   else {
-    
-    v.set_scope(_currentScope);
     int index = hash(v.get_id());
-    this->at(index).push_front(v);
-    _scopeStack.top().push_front(this->at(index).begin());
-    
+    if (v.is_static()) {
+    	v.set_scope(0);
+    	this->at(index).push_front(v);
+    }
+    else {
+    	v.set_scope(_currentScope);
+    	this->at(index).push_front(v);
+    	_scopeStack.top().push_front(this->at(index).begin());
+    }
   }
 }
 

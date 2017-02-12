@@ -2,9 +2,7 @@
 #define DECLARATION_PROCEDURE_H
 
 #include "Node.h"
-#include "../hash_table/Variable.h"
 
-#include <vector>
 
 /**
  * @brief Allows the declaration of procedures
@@ -14,26 +12,22 @@
  *              instruction(s);
  *         end procedure
  */
-class DeclarationProcedure
-    : public Node {
+class DeclarationProcedure : public Node {
 
 protected:
     std::string procedure_name;
-    std::vector<Variable> arguments;
+    std::vector<std::pair<std::string, std::string> > arguments;
 
 public:
-    /**
-     * @brief : Default constructor
-     */
-    DeclarationProcedure();
 
     /**
      * @brief : Constructor
+     * @param left : left son
+     * @param right : right son
      * @param name : procedure's name
      * @param args : arguments list of the procedure
-     * @param instructions : instructions of the procedure
      */
-    DeclarationProcedure(std::string name, std::vector<Variable> args, Node* instructions);
+    DeclarationProcedure(Node * left, Node * right, const std::string & name, const std::vector<std::pair<std::string, std::string> > & args);
 
     /**
      * @brief Getter for the procedure's name
