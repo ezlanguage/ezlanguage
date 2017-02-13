@@ -66,6 +66,13 @@ string get_argument_value(string & str ){
 
 %token ARRAY VECTOR LIST SET MAP OF     
 
+%token SIZE IS_EMPTY CLEAR FILL
+%token RANDOMIZE COUNT MAX MIN SORT
+%token SUM REMOVE RANGE PUT_FIRST PUT_LAST
+%token REMOVE_LAST REMOVE_FIRST AVERAGE STORE
+%token RESTORE FIRST LAST REMOVE_AT
+%token PUT_AT INSERT EXIST
+
 %left PLUS MINUS EGAL
 %left NE LT LE GT GE MULT DIVISE AND OR XOR NOT MOD POW ABS OPERATOR		// Operators
 
@@ -368,6 +375,7 @@ function_call :
 | NAME POINT NAME { }  
 | function_string { $$ = $1;}
 | function_regex { }
+| containers_methods { }
 ;
 
 simple_function:
@@ -454,6 +462,53 @@ map_declaration :
 portee NAME IS MAP OF LT type COMMA type GT { printf("map declaration  \n"); }
 | map_declaration EGAL LEFT_ACCOLADE noms RIGHT_ACCOLADE { printf("map declaration with initializer list \n"); }
 ;
+
+
+//    ---------------------------------------------------------------------------------------
+//    -----------------------------Containers Methods----------------------------------------
+//
+//    ---------------------------------------------------------------------------------------
+//    -----------------------------Container's methods---------------------------------------
+//    ---------------------------------------------------------------------------------------
+
+containers_methods : 
+NAME POINT SIZE LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("utilisation de la méthode size  \n"); }
+| NAME POINT IS_EMPTY LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("utilisation de la méthode size  \n"); }
+| NAME POINT CLEAR LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("utilisation de la méthode size  \n"); }
+| NAME POINT PRINT LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("utilisation de la méthode size  \n"); }
+| NAME POINT FILL LEFT_PARENTHESIS nbrOrName RIGHT_PARENTHESIS { printf("fill(value) called \n"); }
+| NAME POINT RANDOMIZE LEFT_PARENTHESIS nbrOrName COMMA nbrOrName RIGHT_PARENTHESIS { printf("randomize(min,max) called \n"); }
+| NAME POINT MAX LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("MAX() called \n"); }
+| NAME POINT MAX LEFT_PARENTHESIS nbrOrName RIGHT_PARENTHESIS { printf("MAX(attr) called \n"); }
+| NAME POINT MIN LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("MIN() called \n"); }
+| NAME POINT MIN LEFT_PARENTHESIS nbrOrName RIGHT_PARENTHESIS { printf("MIN(attr) called \n"); }
+| NAME POINT SORT LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("SORT() called \n"); }
+| NAME POINT SORT LEFT_PARENTHESIS nbrOrName RIGHT_PARENTHESIS { printf("SORT(attr) called \n"); }
+| NAME POINT SUM LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("SUM() called \n"); }
+| NAME POINT SUM LEFT_PARENTHESIS nbrOrName RIGHT_PARENTHESIS { printf("SUM(attr) called \n"); }
+| NAME POINT COUNT LEFT_PARENTHESIS nbrOrName RIGHT_PARENTHESIS { printf("COUNT(val) called \n"); }
+| NAME POINT REMOVE LEFT_PARENTHESIS nbrOrName RIGHT_PARENTHESIS { printf("remove(val) called \n"); }
+| NAME POINT RANGE LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("range() called \n"); }
+| NAME POINT FIND LEFT_PARENTHESIS nbrOrName RIGHT_PARENTHESIS { printf("find(val) called \n"); }
+| NAME POINT FIND LEFT_PARENTHESIS NAME COMMA nbrOrName RIGHT_PARENTHESIS { printf("find(attr,val) called \n"); }
+| NAME POINT COUNT LEFT_PARENTHESIS NAME COMMA nbrOrName RIGHT_PARENTHESIS { printf("COUNT(attr,val) called \n"); }
+| NAME POINT PUT_FIRST LEFT_PARENTHESIS nbrOrName RIGHT_PARENTHESIS { printf("PUT_FIRST(elem) called \n"); }
+| NAME POINT PUT_LAST LEFT_PARENTHESIS nbrOrName RIGHT_PARENTHESIS { printf("PUT_Last(elem) called \n"); }
+| NAME POINT REMOVE_LAST LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("remove_Last() called \n"); }
+| NAME POINT REMOVE_FIRST LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("remove_Last() called \n"); }
+| NAME POINT AVERAGE LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("average() called \n"); }
+| NAME POINT AVERAGE LEFT_PARENTHESIS nbrOrName RIGHT_PARENTHESIS { printf("average(attr) called \n"); }
+| NAME POINT STORE LEFT_PARENTHESIS NAME RIGHT_PARENTHESIS { printf("STORE(val) called \n"); }
+| NAME POINT RESTORE LEFT_PARENTHESIS NAME RIGHT_PARENTHESIS { printf("RESTORE(val) called \n"); }
+| NAME POINT FIRST LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("first() called \n"); }
+| NAME POINT LAST LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("last() called \n"); }
+| NAME POINT REMOVE_AT LEFT_PARENTHESIS NUM_INTEGER RIGHT_PARENTHESIS { printf("REMOVE_AT(pos) called \n"); }
+| NAME POINT PUT_AT LEFT_PARENTHESIS NUM_INTEGER COMMA nbrOrName RIGHT_PARENTHESIS { printf("put_at(pos, val) called \n"); }
+| NAME POINT INSERT LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("insert() called \n"); }
+| NAME POINT INSERT LEFT_PARENTHESIS nbrOrName COMMA nbrOrName RIGHT_PARENTHESIS { printf("insert(key,val called \n"); }
+| NAME POINT EXIST LEFT_PARENTHESIS nbrOrName RIGHT_PARENTHESIS { printf("insert() called \n"); }
+;
+
 
 
 nbrOrName:
