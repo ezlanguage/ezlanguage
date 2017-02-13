@@ -33,7 +33,7 @@ public:
     * @param bt : block if, else or elseif
     * @author Ismail ELFAQIR
     */
-    If(Node * left, Node * right, Node * condition, const std::string & bt = "if");
+    If (Node * left, Node * right, Node * condition, const std::string & bt = "if");
 
 	/**
     * Constructor with parameters

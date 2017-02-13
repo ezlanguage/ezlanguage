@@ -1,5 +1,5 @@
-#ifndef EXPRESSIONCONDITIONNELLE_H
-#define EXPRESSIONCONDITIONNELLE_H
+#ifndef CONDITIONALEXPRESSION_H
+#define CONDITIONALEXPRESSION_H
 
 #include <string>
 #include "Node.h"
@@ -9,28 +9,28 @@
  * @brief
  * @author Antoine GARNIER && Valentin GINISTY
  */
-class ExpressionConditionnelle :
+class ConditionalExpression :
         public Node {
 
 private:
     std::string operateur;
     std::string valeur;
-    const ExpressionConditionnelle * left_part;
-    const ExpressionConditionnelle * right_part;
+    const ConditionalExpression * left_part;
+    const ConditionalExpression * right_part;
 protected:
 
 public:
     /**
      * @brief Constructor
      */
-    ExpressionConditionnelle();
+    ConditionalExpression();
 
     /**
      * @brief Constructor
      * @param operateur_unaire : unary operator (with one parameter)
      * @param operande : conditionnal expression
      */
-    ExpressionConditionnelle(std::string operateur_unaire, const ExpressionConditionnelle* operande);
+    ConditionalExpression(std::string operateur_unaire, const ConditionalExpression* operande);
 
     /**
      * @brief Constructor
@@ -38,13 +38,13 @@ public:
      * @param left_operande : conditionnal expression which is the first operand
      * @param right_operande : conditionnal expression which is the second operand
      */
-    ExpressionConditionnelle(std::string operateur_binaire, const ExpressionConditionnelle* left_operande, const ExpressionConditionnelle* right_operande);
+    ConditionalExpression(std::string operateur_binaire, const ConditionalExpression* left_operande, const ConditionalExpression* right_operande);
 
     /**
      * @brief Constructor
      * @param operande : value of the expression
      */
-    ExpressionConditionnelle(std::string operande);
+    ConditionalExpression(std::string operande);
 
     /**
      * @brief Translate the begining part of the Forall
