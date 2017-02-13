@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE MODE SYSTEM "xmode.dtd">
+
+<!-- Edit mode for ezlanguage properties file              -->
+<!-- contributed by BARRY Mamadou <barrybhoye05@gmail.com> -->
+<!-- 23/11/2016: initial version                           -->
+
+
+<MODE>
+    <PROPS>
+        <PROPERTY NAME="lineComment" VALUE="//" />
+	<PROPERTY NAME="commentStart" VALUE="/*" />
+	<PROPERTY NAME="commentEnd" VALUE="*/" />
+    </PROPS>
+
+    <RULES DEFAULT="KEYWORD3" HIGHLIGHT_DIGITS="TRUE">
+        <SPAN TYPE="LITERAL1" DELEGATE="DOUBLEQUOTE_LITERAL" NO_LINE_BREAK="TRUE">
+			<BEGIN>"</BEGIN>
+			<END>"</END>
+	</SPAN>
+
+	<!-- Function calls -->
+	<MARK_PREVIOUS TYPE="FUNCTION" MATCH_TYPE="OPERATOR">(</MARK_PREVIOUS>
+	<SEQ TYPE="OPERATOR">)</SEQ>
+
+	<KEYWORDS>
+			<!--{{{ MOTS CLES-->
+			<KEYWORD1>if</KEYWORD1>
+			<KEYWORD1>else</KEYWORD1>
+			<KEYWORD1>for</KEYWORD1>
+			<KEYWORD1>while</KEYWORD1>
+			<KEYWORD1>return</KEYWORD1>
+			<KEYWORD1>when</KEYWORD1>
+			<KEYWORD1>case</KEYWORD1>
+			<KEYWORD1>default</KEYWORD1>
+			<KEYWORD1>do</KEYWORD1>
+			<KEYWORD1>repeat</KEYWORD1>
+			<KEYWORD1>until</KEYWORD1>
+			<KEYWORD1>end</KEYWORD1>
+			<KEYWORD1>procedure</KEYWORD1>
+			<KEYWORD1>function</KEYWORD1>
+			<KEYWORD1>print</KEYWORD1>
+			<KEYWORD1>program</KEYWORD1> 
+			<KEYWORD1>endif</KEYWORD1> 
+			<KEYWORD1>on</KEYWORD1> 
+			<KEYWORD1>are</KEYWORD1> 			
+  
+
+			<!--{{{ structuretypes -->
+			<KEYWORD2>constant</KEYWORD2>
+			<KEYWORD2>string</KEYWORD2>
+			<KEYWORD2>integer</KEYWORD2>
+			<KEYWORD2>real</KEYWORD2>
+			<KEYWORD2>class</KEYWORD2>
+			<KEYWORD2>variable</KEYWORD2>
+			<KEYWORD2>regex</KEYWORD2>
+			<KEYWORD2>boolean</KEYWORD2>
+
+			<!--{{{ structure Containeurs -->
+			<KEYWORD3>vector</KEYWORD3>
+			<KEYWORD3>list</KEYWORD3>
+			<KEYWORD3>array</KEYWORD3>
+			<KEYWORD3>map</KEYWORD3>
+			<KEYWORD3>set</KEYWORD3>	
+
+			<!--{{{ structure opérateurs -->
+			<KEYWORD3>and</KEYWORD3>
+			<KEYWORD3>or</KEYWORD3>	
+			<KEYWORD3>xor</KEYWORD3>	
+			<KEYWORD3>not</KEYWORD3>			
+			
+	</KEYWORDS>
+
+	<IMPORT DELEGATE="LEX"/>
+
+        <!-- Directives -->
+        <KEYWORDS>
+		       <MARKUP>program</MARKUP>
+		       <MARKUP>structure</MARKUP>
+		       <MARKUP>local</MARKUP>
+		       <MARKUP>procedure</MARKUP>
+		       <MARKUP>line</MARKUP>
+		       <MARKUP>undef</MARKUP>
+		       <MARKUP>warning</MARKUP>
+		       <MARKUP>global</MARKUP>
+		      
+        </KEYWORDS>
+    </RULES>       
+
+</MODE>
