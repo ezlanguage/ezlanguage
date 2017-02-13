@@ -22,7 +22,7 @@ YACC_FLAGS =
 # --- RAJOUTER CHAQUE FICHIER CPP DE MODULES ICI ! ---
 # --- FAIRE UN FICHIER CPP POUR CHAQUE FICHIER H S'IL Y A UNE CLASSE DEDANS ---
 
-MOD_CPP = src/modules/ArrayAccess.cpp src/modules/ArrayDeclaration.cpp src/modules/Class.cpp src/modules/If.cpp src/modules/Node.cpp src/modules/Operator.cpp src/modules/Program.cpp src/modules/Range.cpp
+MOD_CPP = src/modules/File.cpp src/modules/DeclarationFile.cpp src/modules/ArrayAccess.cpp src/modules/ArrayDeclaration.cpp src/modules/Class.cpp src/modules/If.cpp src/modules/Node.cpp src/modules/Operator.cpp src/modules/Program.cpp src/modules/Range.cpp
 MOD_CPP += src/modules/Declaration.cpp src/modules/DeclarationFunction.cpp src/modules/DeclarationProcedure.cpp src/modules/DeclarationContainer.cpp src/modules/DeclarationSet.cpp src/modules/DeclarationVector.cpp src/modules/DeclarationList.cpp src/modules/DeclarationMap.cpp 
 MOD_CPP += src/modules/Foreach.cpp src/modules/Forall.cpp src/modules/Repeat.cpp src/modules/While.cpp
 MOD_CPP += src/modules/Holder.cpp src/modules/DTypes.cpp src/modules/DConstants.cpp

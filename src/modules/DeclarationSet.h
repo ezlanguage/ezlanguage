@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <iostream>
+
 #include "Node.h"
 #include "DeclarationContainer.h"
 #include "../hash_table/Variable.h"
