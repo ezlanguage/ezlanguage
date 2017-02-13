@@ -9,7 +9,7 @@
 #include "../hash_table/Variable.h"
 
 /**
- * @class DeclarationList
+ * @class DeclarationMap
  * @brief Class representing list's data structer declarations
  * 
  * @author LAHYANI Zakaria
