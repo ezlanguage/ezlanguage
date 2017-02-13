@@ -4,11 +4,12 @@
 
 #include <vector>
 #include <iostream>
+
 #include "Node.h"
 #include "../hash_table/Variable.h"
 
 /**
- * @class DeclarationList
+ * @class DeclarationMap
  * @brief Class representing list's data structer declarations
  * 
  * @author LAHYANI Zakaria
@@ -22,7 +23,7 @@ class DeclarationMap : public Node
     /* * * * * * * * *
     * CONSTRUCTORS  *
     * * * * * * * * */
-		
+        
 
     /**
     * Minimal constructor Takes the container type & key, and name (its name)
@@ -35,7 +36,7 @@ class DeclarationMap : public Node
     */
     DeclarationMap(Variable *,std::string, std::string) ;
 
-	/**
+    /**
     * Minimal constructor Takes the container type & key, and name and initial values
     * 
     * @param : variable 
@@ -97,7 +98,7 @@ class DeclarationMap : public Node
     * @author LAHYANI Zakaria
     */
     std::vector<std::string> get_key() const;
-	
+    
     /**
     * get values
     *
@@ -118,7 +119,7 @@ class DeclarationMap : public Node
     /* * * * * * * *
     * Translation  *
     * * * * * * * **/
-		
+        
 
     /**
      * @brief Translation of the instruction into it's C++ counterpart

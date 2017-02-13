@@ -37,6 +37,12 @@ DeclarationContainer::DeclarationContainer(Variable *v,  int s) : var(v), size(s
 }
 
 
+DeclarationContainer::DeclarationContainer(Variable *v,  int s, vector<string> il) : var(v), size(s), initializer(il)
+{
+    //ctor
+}
+
+
 DeclarationContainer::DeclarationContainer(Variable *v, vector<string> il) : var(v), size(initializer.size()), initializer(il)
 {
     //ctor
