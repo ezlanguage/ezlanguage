@@ -1,0 +1,14 @@
+/*
+* Par ANDRES Hervé
+*/
+
+program TestVariable
+
+procedure TestVariable ()
+    variable a, b, c are interger
+    a = 10
+    b = 20
+    c = a + b
+    print "C = ", c
+end procedure
+

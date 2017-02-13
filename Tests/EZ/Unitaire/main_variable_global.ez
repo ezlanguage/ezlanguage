@@ -1,0 +1,15 @@
+/*
+* Par ANDRES Hervé
+*/
+
+program TestGlobal
+
+global g is integer = 0
+
+procedure TestGlobal ()
+    variable a, b are integer
+    a = 10
+    b = 20
+    g = a + b
+    print "G = ", g
+end procedure

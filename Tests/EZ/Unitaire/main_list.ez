@@ -1,0 +1,13 @@
+/*
+* Par ANDRES Hervé
+*/
+
+program TestList
+
+procedure TestList ()
+    variable l is list of 10 integer
+    
+    l.randomize(1,100)
+    
+    l.print()
+end procedure

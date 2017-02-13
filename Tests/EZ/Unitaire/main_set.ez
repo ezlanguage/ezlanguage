@@ -1,0 +1,24 @@
+/*
+* Par ANDRES Hervé
+*/
+
+program TestSet
+
+procedure TestSet ()
+    variable s is set of integer = {10,5,2}
+    s.insert(20)
+    s.print()
+    
+    
+    variable min is integer = s.min()
+    variable max is integer = s.max()
+    variable sum is integer = s.sum()
+    
+    print "Min : ", min
+    print "Max : ", max
+    print "Sum : ", sum
+    
+    s.remove(2)
+    s.print()
+    
+end procedure
