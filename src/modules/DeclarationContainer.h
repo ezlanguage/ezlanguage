@@ -7,7 +7,7 @@
  * @class DeclarationContainer
  * @brief Node of the tree whhich represent the declaration of a container
  * 
- * @author LAHYANI Zakaria
+ * @author LAHYANI Zakaria - Ismail ELFAQIR
  */
 class DeclarationContainer : public Node {
 	
@@ -25,7 +25,7 @@ class DeclarationContainer : public Node {
      * * * * * * * * */
 		
 
-    /**
+   /**
     * Constructor with parameters
     * @param left: left son 
     * @param right : right son
@@ -39,7 +39,7 @@ class DeclarationContainer : public Node {
 
 
 
-	/**
+   /**
     * Constructor with parameters
     * @param left: left son 
     * @param right : right son
@@ -56,7 +56,6 @@ class DeclarationContainer : public Node {
 	 * @brief Translate the node after the translation of the left son
 	 */
 	virtual std::string preTranslate() const;
-
 };
 
 #endif // DECLARATIONCONTAINER_H

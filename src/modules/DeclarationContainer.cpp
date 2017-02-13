@@ -3,10 +3,6 @@
 using namespace std;
 
 
-DeclarationContainer::DeclarationContainer(Node * left, Node * right, const string & nameC, const string & typeC, const string & typeE, int s): Node(left, right), nameContainer(nameC), typeContainer(typeC), typeElement(typeE), size(s)
-{}
-
-
 DeclarationContainer::DeclarationContainer(Node * left, Node * right, const string & nameC, const string & typeC, const string & typeE, const string & listI): Node(left, right), nameContainer(nameC), typeContainer(typeC), typeElement(typeE), listInit(listI)
 {}
 

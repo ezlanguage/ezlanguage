@@ -87,8 +87,8 @@ minus     [-]
 (pow|POW)            return(POW);
 (abs|ABS)            return(ABS);
 
-(const|CONST)        return(CONST);
-(local|LOCAL)        return(LOCAL);
+(constant|CONSTANT)  return(CONSTANT);
+(variable|VARIABLE)  return(VARIABLE);
 (global|GLOBAL)      return(GLOBAL);
 (is|IS)              return(IS) ;
 (are|ARE)            return(ARE) ;
@@ -154,8 +154,41 @@ minus     [-]
 (list|LIST)        		return(LIST);
 (set|SET)        		return(SET);
 (map|MAP)        		return(MAP);
-(of|OF)              	return(OF);
+(of|OF)             	return(OF);
 
+(regex|REGEX)        	return(REGEX);
+(match|MATCH)        	return(MATCH);
+(search|SEARCH)         return(SEARCH);
+(replace|REPLACE)       return(REPLACE);
+
+
+(size|SIZE)             return(SIZE);
+(is_empty|IS_EMPTY)     return(IS_EMPTY);
+(clear|CLEAR)           return(CLEAR);
+
+(fill|FILL)           	return(FILL);
+(randomize|RANDOMIZE)   return(RANDOMIZE);
+(count|COUNT)           return(COUNT);
+(max|MAX)           	return(MAX);
+(min|MIN)           	return(MIN);
+(sort|SORT)           	return(SORT);
+(sum|SUM)           	return(SUM);
+(remove|REMOVE)         return(REMOVE);
+
+(put_first|PUT_FIRST)           return(PUT_FIRST);
+(put_last|PUT_LAST)           	return(PUT_LAST);
+(remove_last|REMOVE_LAST)       return(REMOVE_LAST);
+(remove_first|REMOVE_FIRST)     return(REMOVE_FIRST);
+(average|AVERAGE)      			return(AVERAGE);
+(store|STORE)      				return(STORE);
+(restore|RESTORE)      			return(RESTORE);
+(range|RANGE)      				return(RANGE);
+(first|FIRST)      				return(FIRST);
+(last|LAST)      				return(LAST);
+(remove_at|REMOVE_AT)      		return(REMOVE_AT);
+(put_at|PUT_AT)      			return(PUT_AT);
+(insert|INSERT)      			return(INSERT);
+(exist|EXIST)      				return(EXIST);
 
 
 {ID}	{	yylval.texte= yytext;
