@@ -87,8 +87,8 @@ minus     [-]
 (pow|POW)            return(POW);
 (abs|ABS)            return(ABS);
 
-(const|CONST)        return(CONST);
-(local|LOCAL)        return(LOCAL);
+(constant|CONSTANT)  return(CONSTANT);
+(variable|VARIABLE)  return(VARIABLE);
 (global|GLOBAL)      return(GLOBAL);
 (is|IS)              return(IS) ;
 (are|ARE)            return(ARE) ;
@@ -151,12 +151,15 @@ minus     [-]
 
 (array|ARRAY)        	return(ARRAY);
 (vector|VECTOR)        	return(VECTOR);
-(list|LIST)        		return(LIST);
-(set|SET)        		return(SET);
-(map|MAP)        		return(MAP);
+(list|LIST)        	return(LIST);
+(set|SET)        	return(SET);
+(map|MAP)        	return(MAP);
 (of|OF)              	return(OF);
 
-
+(regex|REGEX)        	return(REGEX);
+(match|MATCH)        	return(MATCH);
+(search|SEARCH)         return(SEARCH);
+(replace|REPLACE)       return(REPLACE);
 
 {ID}	{	yylval.texte= yytext;
 	    		return (NAME);
