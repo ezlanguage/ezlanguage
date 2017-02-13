@@ -15,8 +15,6 @@
 
 class List : public Node
 {
-    public:
-        List();
   public:
 
     /**
