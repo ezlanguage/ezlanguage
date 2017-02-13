@@ -28,6 +28,7 @@ MOD_CPP += src/modules/Declaration.cpp src/modules/DeclarationFunction.cpp src/m
 MOD_CPP += src/modules/Foreach.cpp src/modules/Forall.cpp src/modules/Repeat.cpp src/modules/While.cpp
 MOD_CPP += src/modules/Holder.cpp src/modules/DTypes.cpp src/modules/DConstants.cpp
 MOD_CPP += src/modules/PDInstructions.cpp src/modules/PDFunctions.cpp src/modules/PDVariables.cpp
+MOD_CPP += src/modules/case.cpp src/modules/when.cpp
 
 # Fichiers cpp existants, mais dont la méthode preTranslate() est manquante dans la classe
 UNIMPLEMENTED_MOD_CPP =  src/modules/Condition.cpp src/modules/ExpressionConditionnelle.cpp src/modules/Instruction.cpp src/modules/Conditionnal_instruction.cpp  src/modules/Iterative_instruction.cpp
