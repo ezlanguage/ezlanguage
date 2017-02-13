@@ -19,4 +19,4 @@ local i, max are integer
   print "maximum of ages = "
 end procedure
 
-test = 2
+test = a.ok().size()
