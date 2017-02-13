@@ -21,7 +21,7 @@ string For::preTranslate() const
 		res += ind_name + " = " + ind_begin + "; " + ind_name + " <= " + ind_end + "; " + ind_name + " += " + step + ") {";
 	}
 	else {
-		res += "auto " + ind_name + " : " + container_name + ") {"
+		res += "auto " + ind_name + " : " + container_name + ") {";
 	}
 	return res;
 }

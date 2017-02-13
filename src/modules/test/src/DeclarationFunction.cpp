@@ -1,9 +1,9 @@
 //@author Antoine GARNIER
-#include "DeclarationFunction.h"
+#include "../include/DeclarationFunction.h"
 
 using namespace std;
 
-DeclarationFunction::DeclarationFunction(Node * left, Node * right, const string & name, const vector<pair<string, string> > & args, const string & type): Node(left, right), function_name(name), arguments(args), return_type(type)
+DeclarationFunction::DeclarationFunction(Node * left, Node * right, const string & name, const vector<pair<string, string> > & args, const string & type): Node(left, right), function_name(name), return_type(type), arguments(args)
 {}
 
 string DeclarationFunction::preTranslate() const {

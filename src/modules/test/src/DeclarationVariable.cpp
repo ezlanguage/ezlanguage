@@ -1,5 +1,5 @@
 //@author : GINISTY Valentin
-#include "DeclarationVariable.h"
+#include "../include/DeclarationVariable.h"
 
 using namespace std;
 

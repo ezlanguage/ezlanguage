@@ -23,7 +23,7 @@ YACC_FLAGS =
 # --- FAIRE UN FICHIER CPP POUR CHAQUE FICHIER H S'IL Y A UNE CLASSE DEDANS ---
 
 # Divers
-MOD_CPP = src/modules/ArrayAccess.cpp src/modules/Class.cpp src/modules/If.cpp src/modules/Node.cpp src/modules/Operator.cpp src/modules/Program.cpp src/modules/ConditionalExpression.cpp
+MOD_CPP = src/modules/ArrayAccess.cpp src/modules/Class.cpp src/modules/If.cpp src/modules/Node.cpp src/modules/Operator.cpp src/modules/ConditionalExpression.cpp
 # Déclarations
 MOD_CPP += src/modules/DeclarationVariable.cpp src/modules/DeclarationVariableWithAffectation.cpp src/modules/DeclarationFunction.cpp src/modules/DeclarationProcedure.cpp src/modules/DeclarationContainer.cpp 
 # Boucles

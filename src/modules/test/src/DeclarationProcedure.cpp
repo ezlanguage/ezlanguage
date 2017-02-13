@@ -1,5 +1,5 @@
 //@author GARNIER Antoine
-#include "DeclarationProcedure.h"
+#include "../include/DeclarationProcedure.h"
 
 using namespace std;
 

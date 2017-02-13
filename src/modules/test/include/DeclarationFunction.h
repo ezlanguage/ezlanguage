@@ -18,8 +18,8 @@ class DeclarationFunction : public Node {
 
 protected:
     std::string function_name;
-    std::vector<std::pair<std::string, std::string> > arguments;
     std::string return_type;
+    std::vector<std::pair<std::string, std::string> > arguments;
 
 public:
 

@@ -4,13 +4,14 @@
 #include "Node.h"
 
 /**
- * @brief Represent a node of the tree which will traduct a forall loop
+ * @brief Represent a node of the tree which will traduct a "for" loop
  * @author : GINISTY Valentin
  * 
  * example : forall i in 1..10 step 2 (step is optionnal)
  * Use Declaration, Condition and Instruction
  */
 class For : public Node {
+	
 protected:
 	std::string ind_name;
     std::string ind_begin;

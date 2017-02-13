@@ -13,7 +13,7 @@ string Repeat::preTranslate() const
 
 string Repeat::postTranslate() const
 {   
-	string res = "} while(" + condition->translate() + ");"
+	string res = "} while(" + condition->translate() + ");";
     return res;
 }
 
