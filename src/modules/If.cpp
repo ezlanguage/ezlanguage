@@ -26,13 +26,6 @@ void If::set_block_type(int bt){
 	block_type = bt;
 }
 
-const Condition & If::get_condition() const {
-	return *condition;
-}
-
-void If::set_condition(Condition * c) {
-	condition=c;
-}
 
 string If::preTranslate() const
 {
