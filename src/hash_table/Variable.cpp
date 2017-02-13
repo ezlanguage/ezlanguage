@@ -3,17 +3,22 @@
 using namespace std;
 
 
-Variable::Variable(): HashElement(), _type(""), _scope(0)
+Variable::Variable(): HashElement(), _type(""), _scope(0), _const(false), _static(false)
 {}
 
 
 
-Variable::Variable(const string & i, const string & t, bool c): HashElement(i), _type(t), _scope(0), _const(c)
+Variable::Variable(const string & i, const string & t, bool c): HashElement(i), _type(t), _scope(0), _const(c), _static(false)
 {}
 
 
 
-Variable::Variable(const Variable& v): HashElement(v), _type(v.get_type()), _scope(v.get_scope()), _const(v.is_const())
+Variable::Variable(const string & i, const string & t, bool c, bool s): HashElement(i), _type(t), _scope(0), _const(c), _static(s)
+{}
+
+
+
+Variable::Variable(const Variable& v): HashElement(v), _type(v.get_type()), _scope(v.get_scope()), _const(v.is_const()), _static(v.is_static())
 {}
 
 
@@ -45,6 +50,8 @@ void Variable::print(ostream& flux) const
   flux << "  ;  type = " << _type << "  ;  scope = " << _scope;
   if (_const) flux << "  ;  const";
   else flux << "  ;  not const";
+  if (_static) flux << "  ;  static";
+  else flux << "  ;  not static";
 }
 
 

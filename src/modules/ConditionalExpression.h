@@ -1,57 +1,54 @@
-#ifndef EXPRESSIONCONDITIONNELLE_H
-#define EXPRESSIONCONDITIONNELLE_H
+#ifndef CONDITIONALEXPRESSION_H
+#define CONDITIONALEXPRESSION_H
 
 #include <string>
 #include "Node.h"
 #include "../addons/String_addon.h"
 
 /**
- * @brief
+ * @brief Represent a node of the tree which will traduct a condtional expression such as : (a and b) or (b or c)
  * @author Antoine GARNIER && Valentin GINISTY
  */
-class ExpressionConditionnelle :
-        public Node {
+class ConditionalExpression : public Node {
 
 private:
     std::string operateur;
     std::string valeur;
-    const ExpressionConditionnelle * left_part;
-    const ExpressionConditionnelle * right_part;
-protected:
+    const ConditionalExpression * left_part;
+    const ConditionalExpression * right_part;
 
 public:
-    /**
-     * @brief Constructor
-     */
-    ExpressionConditionnelle();
 
     /**
      * @brief Constructor
+     * @param left : left son
+     * @param right : right son
      * @param operateur_unaire : unary operator (with one parameter)
      * @param operande : conditionnal expression
      */
-    ExpressionConditionnelle(std::string operateur_unaire, const ExpressionConditionnelle* operande);
+    ConditionalExpression(Node * left, Node * right, const std::string & operateur_unaire, const ConditionalExpression* operande);
 
     /**
      * @brief Constructor
+     * @param left : left son
+     * @param right : right son
      * @param operateur_unaire : binary operator (with two parameters)
      * @param left_operande : conditionnal expression which is the first operand
      * @param right_operande : conditionnal expression which is the second operand
      */
-    ExpressionConditionnelle(std::string operateur_binaire, const ExpressionConditionnelle* left_operande, const ExpressionConditionnelle* right_operande);
+    ConditionalExpression(Node * left, Node * right, const std::string & operateur_binaire, const ConditionalExpression* left_operande, const ConditionalExpression* right_operande);
 
     /**
      * @brief Constructor
+     * @param left : left son
+     * @param right : right son
      * @param operande : value of the expression
      */
-    ExpressionConditionnelle(std::string operande);
+    ConditionalExpression(Node * left, Node * right, const std::string & operande);
 
     /**
      * @brief Translate the begining part of the Forall
      * @return a string containing the C++ code of the node
-     *
-     * All subclasses, should reimplement this method so that the translation corresponds
-     * to their specifications, specificities and own values
      */
 
     virtual std::string preTranslate() const;

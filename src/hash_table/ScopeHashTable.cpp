@@ -54,34 +54,18 @@ void ScopeHashTable::addElement(Variable& v)
   if (this->empty()) throw string("Error, can not add a Variable because the size of the hash table is null");
   else if (this->contains(v.get_id(), _currentScope)) throw string("Variable "+v.get_id()+" already defined");
   else {
-    
-    v.set_scope(_currentScope);
     int index = hash(v.get_id());
-    this->at(index).push_front(v);
-    _scopeStack.top().push_front(this->at(index).begin());
-    
+    if (v.is_static()) {
+    	v.set_scope(0);
+    	this->at(index).push_front(v);
+    }
+    else {
+    	v.set_scope(_currentScope);
+    	this->at(index).push_front(v);
+    	_scopeStack.top().push_front(this->at(index).begin());
+    }
   }
 }
-
-
-
-/*void ScopeHashTable::removeElement(const Variable& v)
-{
-  if (this->empty() || (v.get_scope() > (_scopeStack.size() -1))) throw string("Error, the Variable is not in the hash table");
-  else if ((_scopeStack.size() > 0)&&(_scopeStack.size() > (v.get_scope() + 1))) throw string("Error, can not remove a Variable with such a small scope");
-  else {
-    list<list<Variable>::iterator>::iterator it;
-    bool found = false;
-    for (it = _scopeStack.top().begin(); (it != _scopeStack.top().end())&&(!found); ++it) {
-      if (**it == v) {
-	this->at(hash(v.get_id())).erase(*it);
-	_scopeStack.top().erase(it);
-	found = true;
-      }
-    }
-    if (!found) throw string("Error, the Variable is not in the hash table");
-  }
-}*/
 
 
 
