@@ -23,10 +23,12 @@ YACC_FLAGS =
 # --- FAIRE UN FICHIER CPP POUR CHAQUE FICHIER H S'IL Y A UNE CLASSE DEDANS ---
 
 MOD_CPP = src/modules/ArrayAccess.cpp src/modules/ArrayDeclaration.cpp src/modules/Class.cpp src/modules/If.cpp src/modules/Node.cpp src/modules/Operator.cpp src/modules/Program.cpp src/modules/Range.cpp
+MOD_CPP += src/modules/Vector.cpp src/modules/Array.cpp src/modules/List.cpp src/modules/Set.cpp src/modules/Map.cpp  
 MOD_CPP += src/modules/Declaration.cpp src/modules/DeclarationFunction.cpp src/modules/DeclarationProcedure.cpp src/modules/DeclarationContainer.cpp src/modules/DeclarationSet.cpp src/modules/DeclarationVector.cpp src/modules/DeclarationList.cpp src/modules/DeclarationMap.cpp 
 MOD_CPP += src/modules/Foreach.cpp src/modules/Forall.cpp src/modules/Repeat.cpp src/modules/While.cpp
 MOD_CPP += src/modules/Holder.cpp src/modules/DTypes.cpp src/modules/DConstants.cpp
 MOD_CPP += src/modules/PDInstructions.cpp src/modules/PDFunctions.cpp src/modules/PDVariables.cpp
+MOD_CPP += src/modules/case.cpp src/modules/when.cpp
 
 # Fichiers cpp existants, mais dont la méthode preTranslate() est manquante dans la classe
 UNIMPLEMENTED_MOD_CPP =  src/modules/Condition.cpp src/modules/ExpressionConditionnelle.cpp src/modules/Instruction.cpp src/modules/Iterative_instruction.cpp

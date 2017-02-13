@@ -44,7 +44,7 @@ string get_argument_value(string & str ){
 %token<texte> TYPE_INTEGER TYPE_REAL TYPE_STRING TYPE_BOOLEAN			// variables type
 %token  EGAL NE LT LE GT GE PLUS MINUS MULT DIVISE
 %token<texte>	LEFT_PARENTHESIS RIGHT_PARENTHESIS LEFT_ACCOLADE RIGHT_ACCOLADE LEFT_BRACKET RIGHT_BRACKET FIN BACK_LINE	// Special Characters
-%token<texte> CONST  LOCAL  GLOBAL  IS  ARE SHARED		      		         // variables declaration
+%token<texte> CONSTANT  VARIABLE  GLOBAL  IS  ARE SHARED          	      // variables declaration
 %token IMPORT INCLUDE LIBRARY  EXTERN						 // importe module - code c++
 %token IF THEN ELSE   						 // if else 
 %token WHEN CASE  DEFAULT ENDWHEN				 // switch case ...
@@ -57,6 +57,7 @@ string get_argument_value(string & str ){
 %token END_OF_FILE
 %token CLASS PROGRAM  DESTRUCT						//class
 %token ARGUMENTS AS							// arguments	
+%token REGEX SEARCH MATCH 					// Regular expression
 
 %token LENGTH TOUPPERCASE TOLOWERCASE     
 %token SUBSTRING SPLIT STRIP    
@@ -65,11 +66,19 @@ string get_argument_value(string & str ){
 
 %token ARRAY VECTOR LIST SET MAP OF     
 
+%token SIZE IS_EMPTY CLEAR FILL
+%token RANDOMIZE COUNT MAX MIN SORT
+%token SUM REMOVE RANGE PUT_FIRST PUT_LAST
+%token REMOVE_LAST REMOVE_FIRST AVERAGE STORE
+%token RESTORE FIRST LAST REMOVE_AT
+%token PUT_AT INSERT EXIST
+
 %left PLUS MINUS EGAL
 %left NE LT LE GT GE MULT DIVISE AND OR XOR NOT MOD POW ABS OPERATOR		// Operators
 
-%type<reel_value> expression single_expression designator statement_sequence function_call    
-%type<texte>  function procedure  string operators noms portee type  nbrOrName  params param_args param_type
+%type<reel_value> expression single_expression designator statement_sequence function_call function_string map_declaration array_declaration vector_declaration list_declaration set_declaration    
+%type<texte>  function procedure  string operators noms portee type  nbrOrName  params param_args param_type  
+
 
 %start ROOT
 %%
@@ -144,6 +153,8 @@ variable_without_scope:
 |    NAME noms ARE  type affect  { cout << "Declaration des variables1 "<< $1 << endl; }
 |    NAME IS SHARED type affect  { cout << "Declaration de la variable1 " << $1 << endl; }
 |    NAME noms ARE SHARED type affect  { cout << "Declaration des variables1 "<< $1 << endl; }
+//|    NAME IS REGEX next_line { cout << " Declaration l'expression réguliere  " << $1 << endl; }
+//|    NAME IS REGEX EGAL string next_line { cout << " Declaration  l'expression réguliere " << $1 << endl; }
 |    declaration_construct  { cout << " declaration de contructeur " << endl ;}
 ;
 
@@ -152,6 +163,19 @@ variable_with_scope:
 |   portee NAME noms ARE type next_line { cout << "  Declaration des variables  avec portee "<< $2 << endl; }
 |   portee NAME IS SHARED type affect next_line { cout << "= Declaration de la variable avec portee " << $2 << endl; }
 |   portee NAME noms ARE SHARED type next_line { cout << "  Declaration des variables  avec portee "<< $2 << endl; }
+/* regular expression */
+|    portee NAME IS REGEX next_line { cout << " Declaration l'expression réguliere  " << $2 << endl; }
+|    portee NAME IS REGEX EGAL string next_line { cout << " Declaration  l'expression réguliere " << $2 << endl; }
+;
+
+variable_constant:
+     CONSTANT NAME IS  type affect  { cout << "Declaration de la variable constante " << $1 << endl; }
+|    CONSTANT NAME noms ARE  type affect  { cout << "Declaration des variables constante "<< $1 << endl; }
+|    CONSTANT NAME IS SHARED type affect  { cout << "Declaration de la variable constante " << $1 << endl; }
+|    CONSTANT NAME noms ARE SHARED type affect  { cout << "Declaration des variables constante "<< $1 << endl; }
+/* regular expression */
+|    CONSTANT NAME IS REGEX next_line { cout << " Declaration l'expression réguliere  " << $2 << endl; }
+|    CONSTANT NAME IS REGEX EGAL string next_line { cout << " Declaration  l'expression réguliere " << $2 << endl; }
 ;
 
 declaration_construct:
@@ -296,6 +320,7 @@ operators:
 statement:
   next_line
 | variable_with_scope  {} 
+| variable_constant {}
 | start_with_name {}  // variables - functions - construct
 | declaration_methods {}
 | destruct {}
@@ -345,8 +370,12 @@ for :
 
 function_call : 
   NAME POINT simple_function {}
+| function_call POINT simple_function {}
 | simple_function { }
-| NAME POINT NAME { } 
+| NAME POINT NAME { }  
+| function_string { $$ = $1;}
+| function_regex { }
+| containers_methods { }
 ;
 
 simple_function:
@@ -361,6 +390,17 @@ params:
 | expression COMMA params { $$ = $1 ;}
 ;
 
+//    -----------------------------REGEX METHODS-----------------------------------------
+function_regex:
+  NAME POINT MATCH  LEFT_PARENTHESIS strOrName RIGHT_PARENTHESIS { cout << " expression régulière MATCH " << endl ;}
+| NAME POINT SEARCH  LEFT_PARENTHESIS strOrName COMMA strOrName RIGHT_PARENTHESIS { cout << " expression régulière SEARCH " << endl ;}
+|   NAME POINT REPLACE  LEFT_PARENTHESIS strOrName COMMA strOrName RIGHT_PARENTHESIS { cout << " expression régulière REPLACE " << endl ;}
+;
+
+strOrName:
+  string { }
+| NAME { } 
+;
 
 //    -----------------------------STRING METHODS----------------------------------------
 function_string : 
@@ -424,6 +464,53 @@ portee NAME IS MAP OF LT type COMMA type GT { printf("map declaration  \n"); }
 ;
 
 
+//    ---------------------------------------------------------------------------------------
+//    -----------------------------Containers Methods----------------------------------------
+//
+//    ---------------------------------------------------------------------------------------
+//    -----------------------------Container's methods---------------------------------------
+//    ---------------------------------------------------------------------------------------
+
+containers_methods : 
+NAME POINT SIZE LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("utilisation de la méthode size  \n"); }
+| NAME POINT IS_EMPTY LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("utilisation de la méthode size  \n"); }
+| NAME POINT CLEAR LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("utilisation de la méthode size  \n"); }
+| NAME POINT PRINT LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("utilisation de la méthode size  \n"); }
+| NAME POINT FILL LEFT_PARENTHESIS nbrOrName RIGHT_PARENTHESIS { printf("fill(value) called \n"); }
+| NAME POINT RANDOMIZE LEFT_PARENTHESIS nbrOrName COMMA nbrOrName RIGHT_PARENTHESIS { printf("randomize(min,max) called \n"); }
+| NAME POINT MAX LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("MAX() called \n"); }
+| NAME POINT MAX LEFT_PARENTHESIS nbrOrName RIGHT_PARENTHESIS { printf("MAX(attr) called \n"); }
+| NAME POINT MIN LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("MIN() called \n"); }
+| NAME POINT MIN LEFT_PARENTHESIS nbrOrName RIGHT_PARENTHESIS { printf("MIN(attr) called \n"); }
+| NAME POINT SORT LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("SORT() called \n"); }
+| NAME POINT SORT LEFT_PARENTHESIS nbrOrName RIGHT_PARENTHESIS { printf("SORT(attr) called \n"); }
+| NAME POINT SUM LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("SUM() called \n"); }
+| NAME POINT SUM LEFT_PARENTHESIS nbrOrName RIGHT_PARENTHESIS { printf("SUM(attr) called \n"); }
+| NAME POINT COUNT LEFT_PARENTHESIS nbrOrName RIGHT_PARENTHESIS { printf("COUNT(val) called \n"); }
+| NAME POINT REMOVE LEFT_PARENTHESIS nbrOrName RIGHT_PARENTHESIS { printf("remove(val) called \n"); }
+| NAME POINT RANGE LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("range() called \n"); }
+| NAME POINT FIND LEFT_PARENTHESIS nbrOrName RIGHT_PARENTHESIS { printf("find(val) called \n"); }
+| NAME POINT FIND LEFT_PARENTHESIS NAME COMMA nbrOrName RIGHT_PARENTHESIS { printf("find(attr,val) called \n"); }
+| NAME POINT COUNT LEFT_PARENTHESIS NAME COMMA nbrOrName RIGHT_PARENTHESIS { printf("COUNT(attr,val) called \n"); }
+| NAME POINT PUT_FIRST LEFT_PARENTHESIS nbrOrName RIGHT_PARENTHESIS { printf("PUT_FIRST(elem) called \n"); }
+| NAME POINT PUT_LAST LEFT_PARENTHESIS nbrOrName RIGHT_PARENTHESIS { printf("PUT_Last(elem) called \n"); }
+| NAME POINT REMOVE_LAST LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("remove_Last() called \n"); }
+| NAME POINT REMOVE_FIRST LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("remove_Last() called \n"); }
+| NAME POINT AVERAGE LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("average() called \n"); }
+| NAME POINT AVERAGE LEFT_PARENTHESIS nbrOrName RIGHT_PARENTHESIS { printf("average(attr) called \n"); }
+| NAME POINT STORE LEFT_PARENTHESIS NAME RIGHT_PARENTHESIS { printf("STORE(val) called \n"); }
+| NAME POINT RESTORE LEFT_PARENTHESIS NAME RIGHT_PARENTHESIS { printf("RESTORE(val) called \n"); }
+| NAME POINT FIRST LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("first() called \n"); }
+| NAME POINT LAST LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("last() called \n"); }
+| NAME POINT REMOVE_AT LEFT_PARENTHESIS NUM_INTEGER RIGHT_PARENTHESIS { printf("REMOVE_AT(pos) called \n"); }
+| NAME POINT PUT_AT LEFT_PARENTHESIS NUM_INTEGER COMMA nbrOrName RIGHT_PARENTHESIS { printf("put_at(pos, val) called \n"); }
+| NAME POINT INSERT LEFT_PARENTHESIS RIGHT_PARENTHESIS { printf("insert() called \n"); }
+| NAME POINT INSERT LEFT_PARENTHESIS nbrOrName COMMA nbrOrName RIGHT_PARENTHESIS { printf("insert(key,val called \n"); }
+| NAME POINT EXIST LEFT_PARENTHESIS nbrOrName RIGHT_PARENTHESIS { printf("insert() called \n"); }
+;
+
+
+
 nbrOrName:
   NUM_INTEGER  { $$ = to_string($1);}
 | NUM_REAL {$$ = $1; }
@@ -431,7 +518,7 @@ nbrOrName:
 ;
 
 portee: 
- LOCAL {$$ = $1;}
+  VARIABLE {$$ = $1;}
 | GLOBAL {$$ = $1;}
 ;
 
@@ -490,18 +577,17 @@ single_expression:
 | LEFT_PARENTHESIS expression RIGHT_PARENTHESIS { $$ = $2 ;}
 | NUM_REAL { $$ = $1;} //real
 | NUM_INTEGER { $$ = $1;  }  // integer
-| designator {}
+| designator { $$ = $1;}
 | function_call {  $$ = $1;}
-| function_string {}
-| map_declaration {}
-| array_declaration {}
-| vector_declaration   {}
-| list_declaration  {}
-| set_declaration {}
+| map_declaration {$$ = $1;}
+| array_declaration { $$ = $1;}
+| vector_declaration   {$$ = $1;}
+| list_declaration  { $$ = $1;}
+| set_declaration {$$ = $1;}
 ;
 
 designator:
-  NAME {  }
+  NAME { /* $$ = value of $1*/  }
 
 ;
 
