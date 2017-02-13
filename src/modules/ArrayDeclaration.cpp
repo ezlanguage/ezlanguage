@@ -1,53 +1,119 @@
-//@author : Ismail ELFAQIR
+#include <iostream>
+#include <string>
+
 #include "ArrayDeclaration.h"
-//#include "String_addon.cpp"
 
 using namespace std;
 
+/**
+ * @brief 
+ * 
+ * @details Use :
+ * 				Scope array_name is array[lower_bound..upper_bound] of type
+ * 				Scope array_name is array[size] of type 
+ * 				Scope vector_name is array[size] of type = {val_1, val_2, ..., val_n}
+ * 
+ * @author  LAHYANI Zakaria - Ismail ELFAQIR
+ */
 
-ArrayDeclaration::ArrayDeclaration():var(NULL), size(0){
-	name= "Array Declaration";
-}
 
-ArrayDeclaration::ArrayDeclaration(Variable *v, int s):var(v), size(s){
-	name= "Array Declaration";
-}
 
-ArrayDeclaration::ArrayDeclaration(Variable *v):var(v), size(0){
-	name= "Array Declaration";
-}
+// /* * * * * * * * *
+// * CONSTRUCTORS   *
+// * * * * * * * * */
 
-ArrayDeclaration::ArrayDeclaration(const ArrayDeclaration & cpy):var(cpy.var), size(cpy.size){
-	name= "Array Declaration";
-}
 
-ArrayDeclaration::~ArrayDeclaration(){
-}
 
-Variable* ArrayDeclaration::get_variable() const {
-	return var;
-}
 
-int ArrayDeclaration::get_size() const {
-	return size;
-}
-void ArrayDeclaration::set_variable(Variable *v){
-	var=v;
+ArrayDeclaration::ArrayDeclaration(Variable *v, int s, vector<string> il) : DeclarationContainer(v, s, il)
+{
+	name= "Array Declaration with initializer list";
 }
 
-void ArrayDeclaration::set_size(int s){
-	size=s;
+
+ArrayDeclaration::ArrayDeclaration(Variable *v, int lb, int ub) : DeclarationContainer(v, ub - lb), lower_bound(lb), upper_bound(ub)
+{
+	name= "Array Declaration with size";
 }
+
+
+ArrayDeclaration::ArrayDeclaration(Variable *v, int s) : DeclarationContainer(v,s)
+{
+	name= "Array Declaration with size";
+}
+
+
+ArrayDeclaration::ArrayDeclaration(const ArrayDeclaration & cpy):DeclarationContainer(cpy)
+{
+	name= "Array Declaration - Copy Constructor";
+}
+
+
+ArrayDeclaration::~ArrayDeclaration()
+{
+	// dtor
+}
+
+
+
+/* * * * * * * * * * * * * *
+* ACCESSORS  AND MUTATORS *
+* * * * * * * * * * * * * */
+
+
+
+int ArrayDeclaration::get_lower_bound() const 
+{
+	return lower_bound;
+}
+
+
+int ArrayDeclaration::get_upper_bound() const 
+{
+	return upper_bound;
+}
+
+
+void ArrayDeclaration::set_lower_bound(int lb)
+{
+	lower_bound = lb;
+}
+
+
+void ArrayDeclaration::set_upper_bound(int s)
+{
+	upper_bound = s;
+}
+
+
+
+/* * * * * * * *
+* Translation  *
+* * * * * * * **/
+
+
 
 string ArrayDeclaration::preTranslate() const
 {
-    string result="";
-    if(size!=0) {
-	result = var->get_type()+" "+var->get_id()+"["+std::to_string(size)+"]";
-    }
+   
+    string str = "";
+	if (!initializer.empty())
+	{
+		str += "std::array<" + var->get_type() + "," + std::to_string(size) + ">" + var->get_id() + " = {" ;
+		
+		for (unsigned int i = 0; i < initializer.size() - 1 ; ++i)
+		{
+			str += initializer[i] + ", ";
+		}
 
-    //Here the array have no size that not possible for c++ it has to be a pointer (maybe)
-    else result = var->get_type()+" *"+var->get_id();
+		str += initializer.back() + " };";
+	}
+	else 
+	{
+		str += "std::array<" + var->get_type() + "," + std::to_string(size) + ">" + var->get_id()  + " ;" ;
 
-    return result;
+	}
+
+	return str;
 }
+

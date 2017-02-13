@@ -2,49 +2,64 @@
 #define ARRAYDECLARATION_H
 
 #include <string>
+#include <vector>
+
 #include "Node.h"
 #include "../hash_table/Variable.h"
+#include "DeclarationContainer.h"
 
 /**
- * @brief 
- * @author : Ismail ELFAQIR
+ * @brief : class representing the array declaration
+ *
+ * @author : Ismail ELFAQIR, LAHYANI Zakaria
  * 
  */
-class ArrayDeclaration :
-public Node {
-protected:
-    Variable *var;
-    int size;
+class ArrayDeclaration : public Node, public DeclarationContainer
+{
+private:
+    int lower_bound;
+    int upper_bound;
+
 public:
 
     /* * * * * * * * *
     * CONSTRUCTORS  *
     * * * * * * * * */
 
+    /**
+    * Constructor with parameters
+    * Set the Variable the the upper bound and the lower bound of tehe array by the parameters passed to the constructor
+    *
+    * @param  : pointer to the Variable
+    * @param  : the upper bound
+    * @param  : the lower bound
+    *
+    * @author Lahyani Zakaria 
+    */
+    ArrayDeclaration(Variable *,int, int);
+
 
     /**
-    * Default constructor
-    * Set Variable to NULL and size to 0
-    * @author Ismail ELFAQIR
+    * Constructor with parameters
+    * 
+    * @param : pointer to the Variable
+    * @param : array size
+    * @param : initializer list
+    *
+    * @author LAHYANI Zakaria 
     */
-    ArrayDeclaration();
+    ArrayDeclaration(Variable *v, int, std::vector<std::string>);
+
 
     /**
     * Constructor with parameters
     * Set the Variable and the size of array by the parameters passed to the constructor
     * @param v : pointer to the Variable
     * @param s : size of array
-    * @author Ismail ELFAQIR
+    * @author Ismail ELFAQIR 
     */
-    ArrayDeclaration(Variable *v, int s );
+    ArrayDeclaration(Variable *v, int s);
 
-    /**
-    * Constructor with parameters
-    * Set only the Variable without specify the size of array
-    * @param v : pointer to the Variable
-    * @author Ismail ELFAQIR
-    */
-    ArrayDeclaration(Variable *v);
 
     /**
     * Copy constructor
@@ -59,39 +74,55 @@ public:
     */
     virtual ~ArrayDeclaration();
 
+
+
     /* * * * * * * * * * * * * *
     * ACCESSORS  AND MUTATORS *
     * * * * * * * * * * * * * */
 
-    /**
-    * getter of Variable
-    * @author Ismail ELFAQIR
-    */
-    Variable * get_variable() const;
 
     /**
-    * getter of size
-    * @author Ismail ELFAQIR
+    * lower bound's getter
+    *
+    * @author : Lahyani Zakaria
     */
-    int get_size() const;
+
+    int get_lower_bound() const;
+
 
     /**
-    * setter of size
-    * @param v : the Variable of this array
-    * @author Ismail ELFAQIR
+    * upper bound's getter
+    *
+    * @author : Lahyani Zakaria
     */
-    void set_variable(Variable *v);
+    int get_upper_bound() const;
+
 
     /**
-    * setter of size
-    * @param s : value of the size
-    * @author Ismail ELFAQIR
+    * upper bound's setter 
+    * @param v : the upper bound value
+    *
+    * @author Lahyani Zakaria
     */
-    void set_size(int s);
+    void set_lower_bound(int);
+
+
+    /**
+    * lower bound's setter 
+    * @param s : lower bound value 
+    * 
+    * @author Lahyani Zakaria
+    */
+    void set_upper_bound(int);
+
+
+
 
     /* * * * * * * *
     * Translation  *
     * * * * * * * **/
+
+
 
     /**
      * @brief Translate the begining part of the ArrayDeclaration
@@ -101,6 +132,8 @@ public:
      * to their specifications, specificities and own values
      */
     virtual std::string preTranslate() const;
+
+
 };
 
 #endif
