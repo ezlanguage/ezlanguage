@@ -2,6 +2,7 @@
 #define DECLARATION_FUNCTION_H
 
 #include "Node.h"
+#include <vector>
 
 /**
  * @brief Allows the declaration of functions
@@ -13,88 +14,79 @@
  *              return variable;
  *          end function
  */
-class DeclarationFunction
-    : public Node {
+class DeclarationFunction : public Node {
 
 protected:
     std::string function_name;
+    std::vector<std::pair<std::string, std::string> > arguments;
     std::string return_type;
-
-    Node* args;
-//    std::vector<std::string> arguments;
-    std::string return_variable;
 
 public:
 
     /**
-     * @brief Default constructor
-     */
-    DeclarationFunction();
-
-    /**
-     * @brief Constructor
+     * @brief Constructor with parameters
+     * @param left : left son
+     * @param right : right son
      * @param name : function's name
      * @param arguments : arguments list of the function
      * @param type : return type of the function
-     * @param instructions : instructions of the function
-     * @param return_variable : name of the variable used as a return value
      */
-    DeclarationFunction(std::string name, Node* arguments, std::string type, Node* instructions, std::string return_variable);
+    DeclarationFunction(Node * left, Node * right, const std::string & name, const std::vector<std::pair<std::string, std::string> > & arguments, const std::string & type);
 
     /**
      * @brief Getter for the function's name
      * @return name of the function
      */
-    std::string getFunctionName(){return function_name;}
+    std::string getFunctionName() const {return function_name;}
 
     /**
      * @brief Getter for the return's type
      * @return return's type
      */
-    std::string getReturnType(){return return_type;}
+    std::string getReturnType() const {return return_type;}
 
     /**
      * @brief Getter for the argument's list
      * @return List of arguments
      */
-    Node* getArguments(){return args;}
-//    std::vector<std::string> getArguments(){return arguments;}
-
-    /**
-     * @brief Getter for the name of the variable used as the return variable
-     * @return name of the variable returned by the function
-     */
-    std::string getVariable(){return return_variable;}
+    std::vector<std::pair<std::string, std::string> > getArguments() const {return arguments;}
 
     /**
      * @brief Setter of the function's name
      * @param name : name of the function
      */
-    void setFunctionName(std::string name){function_name= name;}
+    void setFunctionName(const std::string & name){function_name= name;}
 
     /**
      * @brief Setter of the return type
      * @param type : return type of the function
      */
-    void setReturnType(std::string type){return_type= type;}
+    void setReturnType(const std::string & type){return_type= type;}
 
     /**
      * @brief Setter of the list of arguments
      * @param arguments : list of the arguments of the function
      */
-    void setArguments(Node* arguments){args= arguments;}
-//    void setArguments(Node* args){arguments= args;}
+    void setArguments(const std::vector<std::pair<std::string, std::string>> & args){arguments= args;}
 
+    
     /**
-     * @brief Setter of the variable's name used as the return value
-     * @param variable : variable's name used as the return value of the function
+     * @brief Translate the begining part of the DeclarationFunction
+     * @return a string containing the C++ code of the instruction
+     *
+     * All subclasses, should reimplement this method so that the translation corresponds
+     * to their specifications, specificities and own values
      */
-    void setVariable(std::string variable){return_variable= variable;}
-
+    virtual std::string preTranslate() const;
+    
     /**
-     * @brief : translate the function in C++
+     * @brief Translate the end part of the DeclarationFunction
+     * @return a string containing the C++ code of the instruction
+     *
+     * All subclasses, should reimplement this method so that the translation corresponds
+     * to their specifications, specificities and own values
      */
-    std::string translate();
+    virtual std::string postTranslate() const;
 
 };
 

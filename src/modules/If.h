@@ -1,103 +1,91 @@
 #ifndef IF_H
 #define IF_H
 
-#include "Conditionnal_instruction.h"
+#include "Node.h"
 
 #define block_if 1  
 #define block_else_if 2 
 #define block_else 3
 
 /**
- * @brief 
+
+ * @brief Node of the tree which represent a condition if, else or elseif
  * @author : Ismail ELFAQIR
- * 
  */
-class If 
-	: public Conditionnal_instruction {
-		
-	protected:
-		int block_type; 
-	
-	public:
-		/* * * * * * * * *
-		* CONSTRUCTORS  *
-		* * * * * * * * */
-	
-	
-		/**
-		* Default constructor
-		* Set block_type to block_else
-		* @author Ismail ELFAQIR
-		*/
-		If();
-		
-		/**
-		* Constructor with parameters
-		* Set the block_type to the parameter passed to the constructor
-		* @param bt : the block_type
-		* @author Ismail ELFAQIR
-		*/		
-		If(int bt);
 
-		/**
-		* Constructor with parameters
-		* Set the condition to the parameter passed to the constructor and the block_type to block_else
-		* @param c : pointer to the condition
-		* @author Ismail ELFAQIR
-		*/		
-		If(Condition *c);
+class If : Node {
 		
-		/**
-		* Constructor with parameters
-		* Set the block_type and the condition to the parameter passed to the constructor
-		* @param c : pointer to the condition
-		* @param bt : the block_type
-		* @author Ismail ELFAQIR
-		*/		
-		If(Condition *c, int bt);
-		
-		/**
-		* Copy constructor
-		* @param obj : the If to copy
-		* @author Ismail ELFAQIR
-		*/
-		If(const If &obj);
+protected:
+	Node * cond;
+    int block_type;
 	
-		/**
-		* Destructor
-		* @author Ismail ELFAQIR
-		*/	
-		virtual ~If();
+public:
+    /* * * * * * * * *
+    * CONSTRUCTORS  *
+    * * * * * * * * */
 
-		/* * * * * * * * * * * * * *
-		* ACCESSORS  AND MUTATORS *
-		* * * * * * * * * * * * * */
-		
-		/**
-		* getter of the block_type
-		* @author Ismail ELFAQIR
-		*/		
-		int get_block_type() const;
-		
-		/**
-		* setter of block_type
-		* @param bt : the block_type
-		* @author Ismail ELFAQIR
-		*/
-		void set_block_type(int bt);
 
-		/* * * * * * * *
-		* Translation  *
-		* * * * * * * **/
-		
-		/**
-		 * @brief Translation of the instruction into it's C++ counterpart
-		 * @return a string containing the C++ code of the instruction
-		 * 
-		 * The instance will be translated with it's C++ equivalent using its informations
-		 * The translation corresponds to its specifications, specificities and values
-		 */
-		std::string translate() const;
-	
+    /**
+    * Constructor with parameters
+    * Set the block_type to the parameter passed to the constructor
+    * @param condition : the condition of the if
+    * @param left : left son
+    * @param right : right son
+    * @param bt : block if, else or elseif
+    * @author Ismail ELFAQIR
+    */
+    If (Node * left, Node * right, Node * condition, const std::string & bt = "if");
+
+	/**
+    * Constructor with parameters
+    * Set the block_type to the parameter passed to the constructor
+    * @param left : left son
+    * @param right : right son
+    * @param bt : block if, else or elseif
+    * @author Ismail ELFAQIR
+    */
+    If(Node * left, Node * right, const std::string & bt = "else");
+
+    /* * * * * * * * * * * * * *
+    * ACCESSORS  AND MUTATORS *
+    * * * * * * * * * * * * * */
+
+    /**
+    * getter of the block_type
+    * @author Ismail ELFAQIR
+    */
+    int get_block_type() const;
+
+
+    /**
+    * setter of block_type
+    * @param bt : the block_type
+    * @author Ismail ELFAQIR
+    */
+    void set_block_type(int bt);
+
+
+    /* * * * * * * *
+     * Translation *
+     * * * * * * * */
+    
+    /**
+     * @brief Translate the begining part of the If
+     * @return a string containing the C++ code of the If
+     *
+     * All subclasses, should reimplement this method so that the translation corresponds
+     * to their specifications, specificities and own values
+     */
+    virtual std::string preTranslate() const;
+    
+    /**
+     * @brief Translate the end part of the If
+     * @return a string containing the C++ code of the If
+     *
+     * All subclasses, should reimplement this method so that the translation corresponds
+     * to their specifications, specificities and own values
+     */
+    virtual std::string postTranslate() const;
+
 };
 #endif

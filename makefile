@@ -1,7 +1,7 @@
 #compilateur utilisé
 CC = g++-5
 # flags de compilation
-CC_FLAGS = -Wall -std=c++11 #-ggdb
+CC_FLAGS = -Wall -std=c++11 -ggdb
 EXT_SRC = 
 CC_MOD_FLAGS = -MM #-MP 
 
@@ -22,20 +22,30 @@ YACC_FLAGS =
 # --- RAJOUTER CHAQUE FICHIER CPP DE MODULES ICI ! ---
 # --- FAIRE UN FICHIER CPP POUR CHAQUE FICHIER H S'IL Y A UNE CLASSE DEDANS ---
 
-MOD_CPP = src/modules/Array.cpp src/modules/ArrayDeclaration.cpp src/modules/ArrayAccess.cpp src/modules/Condition.cpp src/modules/Conditionnal_instruction.cpp src/modules/Declaration.cpp src/modules/Foreach.cpp src/modules/Forall.cpp src/modules/If.cpp src/modules/Instruction.cpp src/modules/Iterative_instruction.cpp src/modules/Node.cpp src/modules/Operator.cpp src/modules/Range.cpp src/modules/Repeat.cpp src/modules/While.cpp
-MOD_CPP += src/modules/Holder.cpp src/modules/DTypes.cpp src/modules/DConstants.cpp
-MOD_CPP += src/modules/DeclarationFunction.cpp src/modules/DeclarationProcedure.cpp
+
+# Divers
+MOD_CPP = src/modules/ArrayAccess.cpp src/modules/Class.cpp src/modules/If.cpp src/modules/Node.cpp src/modules/Operator.cpp src/modules/ConditionalExpression.cpp
+# Déclarations
+MOD_CPP += src/modules/DeclarationVariable.cpp src/modules/DeclarationMultipleVariable.cpp src/modules/DeclarationFunction.cpp src/modules/DeclarationProcedure.cpp src/modules/DeclarationContainer.cpp 
+# Boucles
+MOD_CPP += src/modules/For.cpp src/modules/Repeat.cpp src/modules/While.cpp
+
+ADDONS_CPP += src/addons/String_addon.cpp
 
 # sources table des symboles
-ST_CPP = src/modules/HashElement.cpp src/modules/Function.cpp src/modules/HashTable.cpp src/modules/ScopeHashTable.cpp src/modules/Variable.cpp
+HT_CPP = src/hash_table/HashElement.cpp src/hash_table/Function.cpp src/hash_table/HashTable.cpp src/hash_table/ScopeHashTable.cpp src/hash_table/Variable.cpp src/hash_table/ClassDeclaration.cpp src/hash_table/ClassHashTable.cpp
 
-ALL_CPP = ${MOD_CPP} ${ST_CPP}
+ALL_CPP = ${MOD_CPP} ${ADDONS_CPP} ${HT_CPP}
 
 #fichiers objets
-MOD_OBJ = $(ALL_CPP:src/modules/%.cpp=obj/%.o)
-#fichiers de dependances
-MOD_DPDCY = $(ALL_CPP:src/modules/%.cpp=obj/%.d)
+MOD_OBJ = $(MOD_CPP:src/modules/%.cpp=obj/%.o)
+ADDONS_OBJ = $(ADDONS_CPP:src/addons/%.cpp=obj/%.o)
+HT_OBJ = $(HT_CPP:src/hash_table/%.cpp=obj/%.o)
 
+ALL_OBJ = ${MOD_OBJ} ${ADDONS_OBJ} ${HT_OBJ}
+
+#fichiers de dependances
+ALL_DPDCY = $(ALL_OBJ:%.o=%.d)
 
 #executables
 # nom de l'exe, doit avoir le meme nom que le fichier lex
@@ -45,9 +55,9 @@ EXEC = EZ_language_compiler
 #compilateur
 all: $(EXEC)
 
-EZ_language_compiler: obj/lex.yy.c obj/EZ_language_compiler.tab.cpp obj/EZ_language_compiler.tab.hpp $(MOD_OBJ) 
+EZ_language_compiler: obj/lex.yy.c obj/EZ_language_compiler.tab.cpp obj/EZ_language_compiler.tab.hpp $(ALL_OBJ) 
 	@echo -e "\033[1;33mCréation du compilateur en compilant les sources\033[0m"
-	$(CC) -o bin/$@ obj/EZ_language_compiler.tab.cpp obj/lex.yy.c $(MOD_OBJ) -lfl $(CC_FLAGS)
+	$(CC) -o bin/$@ obj/EZ_language_compiler.tab.cpp obj/lex.yy.c $(ALL_OBJ) -lfl $(CC_FLAGS)
 
 obj/lex.yy.c: src/EZ_language_compiler.$(LEX_EXT) obj/EZ_language_compiler.tab.hpp
 	@echo -e "\033[1;33mInterprétation du fichier Lex\033[0m"
@@ -63,15 +73,35 @@ obj/EZ_language_compiler.tab.cpp obj/EZ_language_compiler.tab.hpp:  src/EZ_langu
 #dependances
 obj/%.d: src/modules/%.cpp
 	@echo -e "\033[1;33mDépendance pour le fichier $< créée : \033[0m" 
-	$(CC) $< -MT $@ -MT obj/$*.o -o $@ $(CC_MOD_FLAGS)	
+	$(CC) $< -MT $@ -MT obj/$*.o -o $@ $(CC_MOD_FLAGS)
 	@echo ""
-
+	
+obj/%.d: src/hash_table/%.cpp
+	@echo -e "\033[1;33mDépendance pour le fichier $< créée : \033[0m" 
+	$(CC) $< -MT $@ -MT obj/$*.o -o $@ $(CC_MOD_FLAGS)
+	@echo ""
+	
+obj/%.d: src/addons/%.cpp
+	@echo -e "\033[1;33mDépendance pour le fichier $< créée : \033[0m" 
+	$(CC) $< -MT $@ -MT obj/$*.o -o $@ $(CC_MOD_FLAGS)
+	@echo ""
+	
 #include ici  --- A NE PAS DEPLACER
--include $(MOD_DPDCY) 
+-include $(ALL_DPDCY) 
 
 #objets
-obj/%.o: src/modules/%.cpp 
-	@echo -e "\033[1;33mFichier objet pour le fichier $< créé : \033[0m" 
+obj/%.o: src/modules/%.cpp
+	@echo -e "\033[1;33mFichier objet pour le fichier $< créé : \033[0m"
+	$(CC) -c $< -o $@ $(CC_FLAGS)
+	@echo ""
+	
+obj/%.o: src/hash_table/%.cpp
+	@echo -e "\033[1;33mFichier objet pour le fichier $< créé : \033[0m"
+	$(CC) -c $< -o $@ $(CC_FLAGS)
+	@echo ""
+
+obj/%.o: src/addons/%.cpp
+	@echo -e "\033[1;33mFichier objet pour le fichier $< créé : \033[0m"
 	$(CC) -c $< -o $@ $(CC_FLAGS)
 	@echo ""
 

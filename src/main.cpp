@@ -65,9 +65,7 @@ bool file_test_exists(string filename){
  * @param fic_ezl
  * @param input_files
  */
-
 void parse_to_cpp(vector<char*> fic_ezl, string &input_files){
-
 	if(!directinput){
 		for(unsigned int i=0; i<fic_ezl.size(); ++i){
 		    cout << "\033[1;36mFile parsing : \033[1;37m" << fic_ezl[i] << endl;
@@ -112,6 +110,12 @@ void display(vector<char*> fic_ezl){
 	}
 }
 
+/**
+ * Compiles les fichiers cpp générer
+ * @brief exec_cpp
+ * @param commande_gpp commande gpp execute
+ * @param output_name nom de l'output
+ */
 void exec_cpp(std::string commande_gpp, std::string output_name){
 	//cout << "commande cpp: " << commande_gpp << endl;
 	if(help != 1){
@@ -139,6 +143,7 @@ void exec_cpp(std::string commande_gpp, std::string output_name){
  * @return
  */
 int main(int argc , char ** argv){
+	int no_options = 0;
     int opt;
     string output_name = "";
 
@@ -181,6 +186,7 @@ int main(int argc , char ** argv){
 		switch(opt){
 			//flags
 			case 0:
+				no_options = 1;
 				// flag indiquant que l' exécutable ne doit pas être lancé après la compilation
 				if (string(long_options[option_index].name) == "noexec"){
 					clog << "Not launching .exe file after compiling..." << endl;
@@ -197,6 +203,7 @@ int main(int argc , char ** argv){
 			// Compiler options computing
 			// Affiche l'aide
 			case 'h':
+				no_options = 1;
 				help = 1;		
 				// teste l'existence du fichier d'aide
 				cout << AIDE_PROG << endl;
@@ -204,20 +211,24 @@ int main(int argc , char ** argv){
 
 			// Ajoute le fichier de sortie au compilateur g++
 			case 'o':
+				no_options = 1;
 				//cout << "Indicates the name of the output file" << endl;
 				commande_gpp += "-o "+string(optarg)+" ";
 				output_name = string(optarg);
 				break;
 			case 'v':
+				no_options = 1;
 				verbose_flag = 1;
 				break;
 			case 'w':
 				//cout << "Displays warning messages" << endl;
+				no_options = 1;
 				commande_gpp += "-Wall ";
 				break;
 
 			// Ajoute l'option -o(1..3) au compilateur g++
 			case 'O':
+				no_options = 1;
 				//cout << "Optimization option level: " << optarg << endl;
 				if(atoi(optarg) >= 1 && atoi(optarg) <= 3){
 					commande_gpp += "-O"+string(optarg)+" "; 
@@ -225,11 +236,12 @@ int main(int argc , char ** argv){
 				break;
 			// Option inconnue, s'il y a une option avec un tiret ou deux, c'est forcement autre chose qu'un fichier donc erreur
 			case '?':
-				cout << "Unknown option : " << option_index << endl;
-				exit(EXIT_FAILURE);
+				//exit(EXIT_FAILURE);
+				break;
 			//defaut
 			default:
-				abort ();
+				//exit(EXIT_FAILURE);
+				break;
 		}
 	}
 	
@@ -262,7 +274,12 @@ int main(int argc , char ** argv){
 	commande_gpp += " " + input_files;
 
 	//execution des cpp
-	exec_cpp(commande_gpp, output_name);
+	if(no_options == 0 && fic_ezl.size() == 0){
+				cout << "Usage : EZ_language_compiler [OPTION]... FILE [FILES]..." << endl;
+				cout << "Try « EZ_language_compiler --help » for more information." << endl;
+				cout << endl;
+	}
+	if(fic_ezl.size() != 0)	exec_cpp(commande_gpp, output_name);
 
     exit(EXIT_SUCCESS);
 }

@@ -1,32 +1,36 @@
 //@author Antoine GARNIER
 #include "DeclarationFunction.h"
-#include "String_addon.h"
 
-DeclarationFunction::DeclarationFunction(std::string name, Node* arguments, std::string type, Node* instructions, std::string return_variable)
-    :function_name(name), return_type(type) {
+using namespace std;
 
-    this->setArguments(arguments);
-    this->set_left_son(instructions);
-}
+DeclarationFunction::DeclarationFunction(Node * left, Node * right, const string & name, const vector<pair<string, string> > & args, const string & type): Node(left, right), function_name(name), arguments(args), return_type(type)
+{}
 
-std::string DeclarationFunction::translate() {
-    std::string res= "";
+string DeclarationFunction::preTranslate() const {
+    string res= "";
 
-    res= getReturnType() + " " + getFunctionName() + " (";
+    res = return_type + " " + getFunctionName() + "(";
 
     //translation of the arguments
-    this->getArguments()->translate();
+    if(!arguments.empty()) {
+		
+        if (arguments.size() >= 1) {
+            res += arguments[0].first + " " + arguments[0].second;
+        }
+        if (arguments.size() > 1) {
+            for (unsigned int i = 1; i < arguments.size(); ++i) {
+                res += ", " + arguments[i].first + " " + arguments[i].second;
+            }
+        }
+    }
 
-    res+= "){\n";
-    res+= getReturnType() + " " + getVariable() + ";";
+    res+= ") {";
 
-    //translation of the instructions
-    res+= " "+ this->get_left_son()->translate();
-
-
-    res+= "return " + getVariable() + ";\n";
-    res+= "}";
-
-    res= this->get_right_son()->translate();
     return res;
 }
+
+string DeclarationFunction::postTranslate() const
+{    
+    return "}";
+}
+
