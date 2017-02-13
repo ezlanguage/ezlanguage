@@ -12,6 +12,7 @@ If::If(Node * left, Node * right, Node * condition, const string & bt): Node(lef
 	else block_type = 1;
 }
 
+
 If::If(Node * left, Node * right, const string & bt): Node(left, right)
 {
 	block_type = 3;
@@ -23,6 +24,14 @@ int If::get_block_type() const{
 
 void If::set_block_type(int bt){
 	block_type = bt;
+}
+
+const Condition & If::get_condition() const {
+	return *condition;
+}
+
+void If::set_condition(Condition * c) {
+	condition=c;
 }
 
 string If::preTranslate() const

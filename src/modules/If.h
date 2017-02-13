@@ -8,10 +8,11 @@
 #define block_else 3
 
 /**
+
  * @brief Node of the tree which represent a condition if, else or elseif
  * @author : Ismail ELFAQIR
- * TODO: Changer le type du paramètre cond avec le type que vont créer Antoine et Valentin
  */
+
 class If : Node {
 		
 protected:
@@ -56,11 +57,25 @@ public:
     int get_block_type() const;
 
     /**
+     * @brief getter of the condition
+     * @author Ismail ELFAQIR
+     */
+    const Condition & get_condition() const;
+
+
+    /**
     * setter of block_type
     * @param bt : the block_type
     * @author Ismail ELFAQIR
     */
     void set_block_type(int bt);
+
+    /**
+     * @brief setter of condition
+     * @param c : pointer on the condition
+     * @author Ismail ELFAQIR
+     */
+    void set_condition(Condition * c);
 
     /* * * * * * * *
      * Translation *
