@@ -6,7 +6,7 @@ Don't move these files, they are needed in the makefile !
 
 Implemented classes :
  + ArrayAccess : Array access operator `[..]`
- + Class : 
+ + Class : Class declaration
  + ConditionalExpression : Expression of a condition (ex : (a or b) and (b and c) )
  + DeclarationContainer : Declaration of all container (vector, set, map, list and array)
  + DeclarationVariable : Variable declaration

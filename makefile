@@ -22,6 +22,7 @@ YACC_FLAGS =
 # --- RAJOUTER CHAQUE FICHIER CPP DE MODULES ICI ! ---
 # --- FAIRE UN FICHIER CPP POUR CHAQUE FICHIER H S'IL Y A UNE CLASSE DEDANS ---
 
+
 # Divers
 MOD_CPP = src/modules/ArrayAccess.cpp src/modules/Class.cpp src/modules/If.cpp src/modules/Node.cpp src/modules/Operator.cpp src/modules/ConditionalExpression.cpp
 # Déclarations
