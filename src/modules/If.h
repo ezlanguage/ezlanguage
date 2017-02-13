@@ -1,21 +1,23 @@
 #ifndef IF_H
 #define IF_H
 
-#include "Conditionnal_instruction.h"
+#include "Node.h"
+#include "Condition.h"
 
 #define block_if 1  
 #define block_else_if 2 
 #define block_else 3
 
 /**
- * @brief 
+ * @brief Traduction of the block if
  * @author : Ismail ELFAQIR
  * 
  */
 class If 
-	: public Conditionnal_instruction {
+	: public Node {
 		
 protected:
+    Condition *condition;
     int block_type;
 	
 public:
@@ -80,11 +82,25 @@ public:
     int get_block_type() const;
 
     /**
+     * @brief getter of the condition
+     * @author Ismail ELFAQIR
+     */
+    const Condition & get_condition() const;
+
+
+    /**
     * setter of block_type
     * @param bt : the block_type
     * @author Ismail ELFAQIR
     */
     void set_block_type(int bt);
+
+    /**
+     * @brief setter of condition
+     * @param c : pointer on the condition
+     * @author Ismail ELFAQIR
+     */
+    void set_condition(Condition * c);
 
     /* * * * * * * *
     * Translation  *
