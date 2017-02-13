@@ -1,7 +1,6 @@
 #ifndef WHEN_H
 #define WHEN_H
 
-#include "Conditionnal_instruction.h"
 #include "Instruction.h"
 #include <vector>
 
@@ -10,7 +9,7 @@
  * 
  */
 class When
-        : public Conditionnal_instruction {
+        : public Node {
 
 protected:
     Instruction* instruction;

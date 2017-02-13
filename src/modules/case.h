@@ -1,7 +1,6 @@
 #ifndef CASE_H
 #define CASE_H
 
-#include "Conditionnal_instruction.h"
 #include "../hash_table/Variable.h"
 #include "Instruction.h"
 #include <vector>
