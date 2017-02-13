@@ -1,6 +1,5 @@
 //@author : GARNIER Antoine
 #include "Operator.h"
-#include <iostream>
 
 using namespace std;
 

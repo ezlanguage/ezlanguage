@@ -28,7 +28,7 @@ public:
      * @brief constructor with parameters
      * @param left : left son
      * @param right : right son
-     * @param cond : condition
+     * @param cond : condition of the loop
      */
     Repeat(Node * left, Node* right , Node * cond);
     

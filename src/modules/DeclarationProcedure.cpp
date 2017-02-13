@@ -8,23 +8,26 @@ DeclarationProcedure::DeclarationProcedure(Node * left, Node * right, const stri
 
 std::string DeclarationProcedure::preTranslate() const {
     string res= "";
+	
+	if (name == "main") res = "int main(int argc, char ** argv) {";
+	else {
+		res= "void " + getProcedureName() + " (";
 
-    res= "void " + getProcedureName() + " (";
+		//translation of the arguments
+		if(!arguments.empty()) {
+			
+			if (arguments.size() >= 1) {
+				res += arguments[0].first + " " + arguments[0].second;
+			}
+			if (arguments.size() > 1) {
+				for (unsigned int i = 1; i < arguments.size(); ++i) {
+					res += ", " + arguments[i].first + " " + arguments[i].second;
+				}
+			}
+		}
 
-    //translation of the arguments
-    if(!arguments.empty()) {
-		
-        if (arguments.size() >= 1) {
-            res += arguments[0].first + " " + arguments[0].second;
-        }
-        if (arguments.size() > 1) {
-            for (unsigned int i = 1; i < arguments.size(); ++i) {
-                res += ", " + arguments[i].first + " " + arguments[i].second;
-            }
-        }
-    }
-
-    res+= ") {";
+		res+= ") {";
+	}
 
     return res;
 }

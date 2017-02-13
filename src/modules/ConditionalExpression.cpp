@@ -3,18 +3,15 @@
 
 using namespace std;
 
-ConditionalExpression::ConditionalExpression(): operateur(""), valeur(""), left_part(nullptr), right_part(nullptr){
-
-}
-ConditionalExpression::ConditionalExpression(string operateur_unaire, const ExpressionConditionnelle* operande):
-        operateur(operateur_unaire), valeur(""), left_part(operande), right_part(nullptr)
+ConditionalExpression::ConditionalExpression(Node * left, Node * right, const string & operateur_unaire, const ExpressionConditionnelle* operande):
+        Node(left, right), operateur(operateur_unaire), valeur(""), left_part(operande), right_part(nullptr)
 { }
-ConditionalExpression::ConditionalExpression(string operateur_binaire, const ExpressionConditionnelle* left_operande, const ExpressionConditionnelle* right_operande):
-        operateur(operateur_binaire), valeur(""), left_part(left_operande), right_part(right_operande)
+ConditionalExpression::ConditionalExpression(Node * left, Node * right, const string & operateur_binaire, const ExpressionConditionnelle* left_operande, const ExpressionConditionnelle* right_operande):
+        Node(left, right), operateur(operateur_binaire), valeur(""), left_part(left_operande), right_part(right_operande)
 {
 }
-ConditionalExpression::ConditionalExpression(string operande):
-        operateur(""), valeur(operande), left_part(nullptr), right_part(nullptr)
+ConditionalExpression::ConditionalExpression(Node * left, Node * right, const string & operande):
+        Node(left, right), operateur(""), valeur(operande), left_part(nullptr), right_part(nullptr)
 {
 
 }

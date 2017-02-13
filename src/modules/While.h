@@ -18,12 +18,17 @@
 class While : public Node {
 	
 protected:
-	std::string condition;
+	Node * condition;
 	
 public:
     
-
-    While(Node * left, Node * right, const std::string & cond);
+	/**
+     * @brief constructor with parameters
+     * @param left : left son
+     * @param right : right son
+     * @param cond : condition of the loop
+     */
+    While(Node * left, Node * right, Node * cond);
 
 
     
