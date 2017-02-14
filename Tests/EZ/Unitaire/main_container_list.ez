@@ -1,3 +1,9 @@
+//Created by NAJI Ibtissam
+
+program p
+procedure p()
+begin
+
 l is list of 10 integer 
 
 l.fill(5)
@@ -35,4 +41,5 @@ l.first()
 
 l.last()
 
+end
 
