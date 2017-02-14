@@ -1,0 +1,68 @@
+/**
+ * Created by : Fatima AMZIL
+ * About : this is a simple test program about set container in EZ
+ */
+
+
+ program TestSet
+
+
+ /*PERSON CLASS*/
+ class Person
+
+  name is string
+  age is integer
+
+  procedure print()
+    print  name, "," , age
+  end procedure
+
+ end class
+ /*END CLASS PERSON*/
+
+ /*MAIN PROGRM*/
+ procedure TestSet()
+
+/* Declaring a set of integers and persons*/
+s is set of integer = {10,5,2}
+persons is set of Person
+p1 is Person("person1",20)
+p2 is Person("person2",50)
+
+/*insert in set container*/
+s.insert(20)
+persons.insert(p1)
+persons.insert(p2)
+
+/*max and min in integer set*/
+max is integer = s.max()
+print "max integer= ", max
+min is integer = s.min()
+print "min integer= ", min
+
+
+/*max and min age within persons set*/
+oldest is Person = persons.max(age)
+print "The oldest= ", oldest
+youngest is Person = persons.min(age)
+print "The youngest= ", youngest
+
+
+/*remove element*/
+s.remove(2)
+persons.remove(p2)
+
+/*print out sets*/
+s.print()
+persons.print()
+
+/*clear if empty*/
+if s.is_empty() then
+  s.clear()
+end if
+if persons.is_empty() then
+  persons.clear()
+end if
+
+end procedure
+ /*END PROGRAM*/

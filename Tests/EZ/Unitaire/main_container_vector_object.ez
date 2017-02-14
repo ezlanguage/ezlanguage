@@ -1,0 +1,106 @@
+/**
+ * Created by : Fatima AMZIL
+ * About : this is a simple test program about vectors in EZ language on object type.
+ */
+
+ program TestVectorObject
+
+
+/*PERSON CLASS*/
+class Person
+
+  name is string
+  age is integer
+
+  procedure print()
+    print  name, "," , age
+  end procedure
+
+end class
+/*END CLASS PERSON*/
+
+/*MAIN PROGRM*/
+ procedure TestVectorObject()
+ print "###### Test program of vector of object ######"
+
+/*declaring a vector of type Person*/
+ v is vector of Person
+
+/*initialize the vector */
+for i in 1..100 do
+  p is Person()
+  v[i]=p
+end for
+
+/*randomizing the person's name*/
+v.randomize(3,8,name)
+
+/*randomizing the person's age*/
+v.randomize(10,90,age)
+
+/*print out result*/
+v.print()
+
+/*get max age*/
+max is integer
+for i in v.range() do
+  if v[i].age > max then
+    max=v[i].age
+  end if
+end for
+
+print "max= ", max
+
+/*sort vector by age (by default ascendant order) */
+v.sort(age)
+
+/*print out sorted by age vector*/
+v.print()
+
+/*put first and last*/
+p is Person("test",20)
+v.put_first(p)
+v.put_last(p)
+
+/*count*/
+occ is integer = v.count(20, age)
+print "Age 20 occurred ", occ, " time(s)"
+
+/*remove first and last*/
+v.remove_first()
+v.remove_last()
+
+/*sum of person's age for example*/
+sum is integer = v.sum(age)
+print "sum: ", sum
+
+/*remove p if exist*/
+v.remove(p)
+v.print()
+/*remove person at index 4*/
+v.remove_at(4)
+
+
+/*find by age*/
+v.find(age, p.age)
+
+/*store vector's data in file*/
+v.store("../data/data.txt")
+
+
+/*restore from file into vector*/
+v2 is vector of Person
+v2.restore("../data/data.txt")
+
+/*clear vectors if they're empty*/
+if v.is_empty() then
+  v.clear()
+end if
+
+if v2.is_empty() then
+  v2.clear()
+end if
+
+
+end procedure
+/*END PROGRAM*/

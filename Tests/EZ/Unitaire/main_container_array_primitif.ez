@@ -1,0 +1,57 @@
+//
+//  Created by  Fatima AMZIL
+//  About : Simple test program about array container for objects in EZ language
+//
+program TestArrayPrimitif
+
+/*MAIN PROGRAM*/
+procedure TestArrayPrimitif()
+
+print "###### Test program of array of primitif ######"
+
+/*declaring an array of 10 integers*/
+tab is array[1..10] of integer
+
+/*fill in the array with 1*/
+tab.fill(1)
+
+/*randomize the array with values between [1,100[*/
+tab.randomize(1,100)
+
+/* print out the result*/
+tab.print()
+
+/* get the maximum value (since this is just an array of type prmitif we don't need a param for max function)*/
+tab.max();
+
+/*get minimum value*/
+tab.min()
+
+/*sort array's elements (again no need for param to sort it's just an array of primitif type)*/
+tab.sort()
+
+/*print the sorted array*/
+tab.print()
+
+/*print the sum of elements in the array*/
+print "sum=", tab.sum()
+
+/*print how much we have of 88 occurrences in the array*/
+print "88 occurred ", tab.count(88), " time(s)"
+
+/*remove the value 10 from the array if it exists*/
+tab.remove(10)
+
+/*print tab manually*/
+for i in tab.range() do
+  print tab[i], " "
+end for
+
+/*clear the array if it's not already empty*/
+if !tab.is_empty() then
+  tab.clear()
+end if
+
+
+end procedure
+/*END PROGRAM*/

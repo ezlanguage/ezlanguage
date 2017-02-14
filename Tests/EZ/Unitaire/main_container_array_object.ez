@@ -1,0 +1,39 @@
+//
+// Created by Fatima AMZIL about test example of array container of type object in EZL
+//
+program TestArrayObject
+
+/*class Person*/
+class Person
+   name is string
+   age is integer
+
+
+   procedure print()
+	  print "  Name: " name, "  Age: ",age
+   end procedure
+
+end class
+
+
+procedure TestArrayPrimitif ()
+
+/*declaring an array of 10 integers*/
+tab is array[10] of Person
+
+/*randomize array with person's age value between 1 and 100*/
+tab.randomize(1,100,age)
+
+/*print out result*/
+tab.print()
+
+/*max age (works if the attribute passed as param is already a member of class Person)*/
+tab.max(age)
+
+/*sort by age ascendantly by default*/
+tab.sort(age)
+
+/*print result*/
+tab.print()
+
+end procedure
